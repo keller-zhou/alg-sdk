@@ -1,0 +1,95 @@
+<resources>
+    <string name="app_name">AlgTaskLibrary</string>
+    <string name="i_know">我知道了</string>
+    <!-- 图像文件夹 -->
+    <string name="Image">Image</string>
+    <!-- 缩略图文件夹 -->
+    <string name="Thumbnail">Thumbnail</string>
+    <!-- 视频文件夹 -->
+    <string name="Video">Video</string>
+    <!-- -->
+    <string name="vide_identify">video</string>
+    <string name="text_slicejobs_hint">小零提示</string>
+    <string name="save_success">已保存</string>
+    <string name="save_failed">保存失败</string>
+
+    <string name="telephone_number">请输入手机号</string>
+    <string name="vcode_empty">请输入验证码</string>
+    <string name="get_vcode">获取验证码</string>
+    <string name="password">请输入密码&#160;</string>
+    <string name="forget_pwd">忘记密码？</string>
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="register_telephone_number">请输入注册用户手机号</string>
+    <string name="cellphone_format_err">手机号格式错误</string>
+    <string name="affirmpassword_notnull">确认密码不能为空！</string>
+    <string name="hint_getsjauth_fail">SJ_AUTH为null，请联系客服!</string>
+    <string name="server_error">服务器开小差了</string>
+    <string name="not_receive_check_code"><u>若您长时间没有收到验证码，请点此联系客服！</u></string>
+    <string name="if_call_service_phone">是否拨打客服电话？</string>
+    <string name="confirm">确认</string>
+    <string name="cancel">取消</string>
+    <string name="msg_send_success">发送成功</string>
+    <string name="vcode_send_again">重新发送</string>
+    <string name="lookfor_password">找回密码</string>
+    <string name="text_no_sdcard">未插入SD卡</string>
+    <string name="text_no_camera">未找到相机程序</string>
+    <string name="text_image_fail">手机内存不足,请清除缓存后,尝试重新拍摄</string>
+    <string name="finish_record">完成录制</string>
+    <string name="hint_record_again">重新录制将覆盖当前已录制的录音，确认重新录制吗？</string>
+    <string name="stop_record">结束录音</string>
+    <!-- 照片暗拍提示 -->
+    <string name="camera_hide_help_text_photo">点击暗访模式，进入黑屏拍照，黑屏后可按音量键进行拍照</string>
+    <!-- 视频暗拍提示 -->
+    <string name="camera_hide_help_text_video">点击开始视频拍摄后，可点击暗访模式，进入黑屏录制（切勿手动锁屏）</string>
+    <string name="upload_evidence">上传凭证</string>
+    <string name="msg_network_notavailable">当前网络不可用,请更换网络</string>
+    <string name="text_cache_finlish_if_commit">凭证已上传完毕，请确认是否提交</string>
+    <string name="task_closed">已关闭</string>
+    <string name="upload_success">提交完成</string>
+    <string name="text_upload_status">状态：%s</string>
+    <string name="upload_failed">上传失败</string>
+    <string name="upload_status_wait">等待上传</string>
+    <string name="uploadsucceed">上传成功</string>
+    <string name="text_upload_progress">上传进度：%s</string>
+    <string name="text_cache_finlish">凭证已上传完毕，请点击提交</string>
+    <string name="hint_submit">提交</string>
+
+    <string name="text_nationwide_task">全国任务</string>
+    <string name="fmt_balance">￥%s</string>
+    <string name="hint_task_distance">%skm</string>
+    <string name="task_status_assign">已接单</string>
+    <string name="task_status_process">进行中</string>
+    <string name="task_status_finished">已完成</string>
+    <string name="task_status_failed">审核未通过</string>
+    <string name="task_type_org">理货</string>
+    <string name="task_type_hire">招聘</string>
+    <string name="task_type_promotion">促销</string>
+    <string name="task_type_distribute">派发</string>
+    <string name="task_type_survey">检查</string>
+    <string name="task_type_data">数据</string>
+    <string name="task_type_offer">悬赏</string>
+    <string name="task_type_audit">审核</string>
+    <string name="task_type_entering">录入</string>
+    <string name="task_type_other">其他</string>
+    <string name="task_type_experience">体验</string>
+    <string name="task_type_interaction">互动</string>
+    <string name="task_type_share">分享</string>
+    <string name="task_type_activity">活动</string>
+    <string name="task_type_exam">考试</string>
+    <string name="task_type_research">调研</string>
+    <string name="task_type_expand">推广</string>
+    <string name="view_archived_tasks">查看三个月前订单</string>
+    <string name="map_search_result">共搜索到%s条任务</string>
+
+    <!-- 路线规划提示 -->
+    <string name="route_plan_help_text">点击这里，可以查看去往目标门店的路线规划</string>
+    <!-- 添加门店规划提示 -->
+    <string name="add_market_to_route_plan_help_text">将1个门店加入路线规划（最多可加入5个）</string>
+    <!-- 多门店路线规划提示 -->
+    <string name="multi_market_route_plan_help_text">点击这里开始多门店路线规划</string>
+    <string name="hint_maptask_loadover">%s公里地图任务已全部加载</string>
+    <string name="store_task">门店赚</string>
+    <string name="title_add_market">关注门店</string>
+</resources>

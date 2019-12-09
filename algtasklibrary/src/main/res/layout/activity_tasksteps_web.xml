@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_bg"
+    android:fitsSystemWindows="true"
+    android:id="@+id/rootView">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:background="@color/color_white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/text_color7"
+            android:textSize="15sp"
+            android:text="任务步骤"/>
+
+        <LinearLayout
+            android:id="@+id/action_return"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|center_vertical"
+            android:background="@drawable/ease_common_tab_bg"
+            >
+            <ImageView
+                android:layout_width="13dp"
+                android:layout_height="20dp"
+                android:gravity="center"
+                android:src="@drawable/back_icon"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+        <!--<TextView
+            android:id="@+id/online_service"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/ease_common_tab_bg"
+            android:layout_gravity="right"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="18dp"
+            android:paddingRight="18dp"
+            android:text="联系客服"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_default_size" />-->
+        <!--<FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
+            android:layout_gravity="right|center_vertical">
+            <ImageView
+                android:id="@+id/online_service"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_service_help"
+                />
+        </FrameLayout>-->
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/tasksteps_view"
+        android:layout_marginTop="43dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </RelativeLayout>
+    <FrameLayout
+        android:id="@+id/indicator_upload_status"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginRight="8dp"
+        android:layout_gravity="right|top"
+        android:background="@drawable/shape_orange_circle"
+        android:visibility="gone">
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@drawable/icon_save_upload"
+            android:layout_gravity="center"/>
+    </FrameLayout>
+</FrameLayout>

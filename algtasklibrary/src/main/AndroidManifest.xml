@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.slicejobs.algsdk.algtasklibrary">
+
+    <!-- 检测网络状态 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"></uses-permission>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 环信需要添加额外的权限  ! -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- 读取手机信息 !-->
+    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+
+    <uses-permission android:name="android.permission.MANAGE_LOCATION_POLICY" />
+
+    <application>
+
+        <meta-data android:name="android.max_aspect" android:value="2.4" />
+        <!-- 百度定位 -->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="t787pNusCOwogDY63yx1FxFd" />
+
+        <!-- 友盟 -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="55d35476e0f55a6c7100598f" />
+
+        <provider
+
+            android:name="android.support.v4.content.FileProvider"
+
+            android:authorities="com.slicejobs.algsdk.algtasklibrary.fileProvider"
+
+            android:grantUriPermissions="true"
+
+            android:exported="false">
+
+            <meta-data
+
+                android:name="android.support.FILE_PROVIDER_PATHS"
+
+                android:resource="@xml/file_paths"/>
+
+        </provider>
+        <service android:name="com.slicejobs.algsdk.algtasklibrary.service.TaskResultUploadService">
+            <intent-filter>
+                <action android:name="com.slicejobs.algsdk.algtasklibrary.TASK_RESULT_UPLOAD_SERVICE"></action>
+            </intent-filter>
+        </service>
+        <service android:name="com.slicejobs.algsdk.algtasklibrary.service.JsDownloadService">
+            <intent-filter>
+                <action android:name="com.slicejobs.algsdk.algtasklibrary.JS_DOWNLOAD_SERVICE"></action>
+            </intent-filter>
+        </service>
+        <service android:name="com.slicejobs.algsdk.algtasklibrary.service.FloatingRecordService">
+            <intent-filter>
+                <action android:name="com.slicejobs.algsdk.algtasklibrary.FLOAT_RECORD_SERVICE"></action>
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name="com.slicejobs.algsdk.algtasklibrary.ui.activity.MainActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.slicejobs.algsdk.algtasklibrary.ui.activity.BigImageSelectActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.slicejobs.algsdk.algtasklibrary.ui.activity.LoginActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.slicejobs.algsdk.algtasklibrary.ui.activity.MediaPlayerActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.slicejobs.algsdk.algtasklibrary.ui.activity.ModifyPasswordActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.slicejobs.algsdk.algtasklibrary.ui.activity.SelectTaskPhotoActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.slicejobs.algsdk.algtasklibrary.ui.activity.TaskPackageDetailActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.slicejobs.algsdk.algtasklibrary.ui.activity.TaskPackageListActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.slicejobs.algsdk.algtasklibrary.ui.activity.TaskStepsWebActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.slicejobs.algsdk.algtasklibrary.ui.activity.ViewImageActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.slicejobs.algsdk.algtasklibrary.ui.activity.TaskWebDetailActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.slicejobs.algsdk.algtasklibrary.ui.activity.WebviewActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.slicejobs.algsdk.algtasklibrary.ui.activity.WeexPublicActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity android:name="com.slicejobs.algsdk.algtasklibrary.ui.activity.CameraKitActivity"
+            android:screenOrientation="portrait">
+            <intent-filter >
+                <action android:name="com.slicejobs.algsdk.algtasklibrary.MY_CAMERA_KIT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.slicejobs.algsdk.algtasklibrary.ui.activity.UploadCacheActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.slicejobs.algsdk.algtasklibrary.ui.activity.MapActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.slicejobs.algsdk.algtasklibrary.ui.activity.HallTaskActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.slicejobs.algsdk.algtasklibrary.ui.activity.AddMarketActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.slicejobs.algsdk.algtasklibrary.ui.activity.MarketInfoGatherTaskStepsActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+    </application>
+
+</manifest>

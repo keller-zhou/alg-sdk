@@ -1,0 +1,153 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:fitsSystemWindows="true">
+
+    <com.slicejobs.algsdk.algtasklibrary.ui.widget.imagelook.ViewPagerFixed
+        android:id="@+id/imageViewPager"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="35dp"
+        android:layout_marginTop="40dp"
+       >
+    </com.slicejobs.algsdk.algtasklibrary.ui.widget.imagelook.ViewPagerFixed>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom"
+        >
+
+        <TextView
+            android:id="@+id/tv_previous"
+            android:layout_width="107dp"
+            android:layout_height="35dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/bg_item_button_select"
+            android:textColor="@color/color_white"
+            android:gravity="center"
+            android:textSize="16dp"
+            android:text="上一张"/>
+
+        <TextView
+            android:id="@+id/tv_hint_currphoto_page"
+            android:layout_width="wrap_content"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/color_white"
+            android:textSize="16dp"
+            android:gravity="center"
+            android:text="8/25"/>
+
+        <TextView
+            android:id="@+id/tv_next"
+            android:gravity="center"
+            android:layout_width="107dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/bg_item_button_select"
+            android:textColor="@color/color_white"
+            android:textSize="16dp"
+            android:text="下一张"
+            />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/layout_top"
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:background="@color/color_white"
+        >
+        <LinearLayout
+            android:id="@+id/action_return"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|center_vertical"
+            android:background="@drawable/ease_common_tab_bg"
+            >
+            <ImageView
+                android:layout_width="13dp"
+                android:layout_height="20dp"
+                android:gravity="center"
+                android:src="@drawable/back_icon"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/photo_delete"
+            android:layout_width="43dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="46dp"
+            android:background="@drawable/ease_common_tab_bg"
+            android:gravity="center"
+            android:visibility="gone">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:src="@drawable/ease_mm_title_remove" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/action_more"
+            android:layout_width="43dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right|center_vertical"
+            android:background="@drawable/ease_common_tab_bg"
+            android:gravity="center"
+            android:layout_marginRight="3dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:src="@drawable/ic_more" />
+
+        </LinearLayout>
+    </FrameLayout>
+
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:layout_marginBottom="28dp"
+        />
+
+    <FrameLayout
+        android:id="@+id/rootView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+        <LinearLayout
+            android:id="@+id/decode_barcode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|top"
+            android:orientation="horizontal"
+            android:background="@drawable/menu_bg_one_item"
+            android:layout_marginTop="40dp"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/view_title_btn_qrcode_normal"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="识别二维码"
+                android:textColor="@color/text_color7"
+                />
+        </LinearLayout>
+    </FrameLayout>
+</FrameLayout>

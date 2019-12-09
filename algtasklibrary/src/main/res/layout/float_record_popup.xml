@@ -1,0 +1,19 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="70dp"
+    android:layout_width="70dp"
+    android:background="@drawable/selector_button_white_corners">
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/hd_record_menu_mic_recording"
+        android:layout_gravity="center_horizontal"
+        />
+    <TextView
+        android:id="@+id/float_record_time"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:textColor="@color/color_money_text"
+        android:text="00:00"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"/>
+</FrameLayout>

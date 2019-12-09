@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <FrameLayout
+        android:id="@+id/camera_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></FrameLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/my_camera_photos"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#8fffffff"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="55dp"
+        android:scrollbars="horizontal"
+        android:visibility="gone"
+        />
+    <ImageView
+        android:id="@+id/iv_camera_help_line"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="119dp"
+        android:visibility="gone"/>
+</FrameLayout>
