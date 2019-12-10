@@ -74,7 +74,6 @@ public class SliceApp{
             intent = new Intent(CONTEXT, LoginActivity.class);
         }
         CONTEXT.startActivity(intent);
-        WXBaseEventModule.writeStorage();
     }
 
     private boolean isLogin() {
@@ -177,6 +176,9 @@ public class SliceApp{
 
     public static void resetAccount() {
         PrefUtil.make(CONTEXT, PrefUtil.PREFERENCE_NAME).putSaveToken(AppConfig.AUTH_KEY, SliceStaticStr.INVALID_TOKEN);
+        Intent intent = new Intent(CONTEXT, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        CONTEXT.startActivity(intent);
     }
 
 }

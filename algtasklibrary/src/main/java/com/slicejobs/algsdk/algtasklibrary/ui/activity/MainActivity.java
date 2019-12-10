@@ -12,6 +12,7 @@ import com.slicejobs.algsdk.algtasklibrary.R;
 import com.slicejobs.algsdk.algtasklibrary.R2;
 import com.slicejobs.algsdk.algtasklibrary.net.AppConfig;
 import com.slicejobs.algsdk.algtasklibrary.ui.base.BaseActivity;
+import com.slicejobs.algsdk.algtasklibrary.ui.weex.weexmodule.WXBaseEventModule;
 import com.slicejobs.algsdk.algtasklibrary.utils.BusProvider;
 import com.slicejobs.algsdk.algtasklibrary.view.IJsRenderListener;
 import com.taobao.weex.WXSDKInstance;
@@ -38,6 +39,7 @@ public class MainActivity extends BaseActivity implements IJsRenderListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_index);
+        WXBaseEventModule.writeStorage();
         ButterKnife.bind(this);
         BusProvider.getInstance().register(this);
         renderJs(AppConfig.HOME_VIEW_FILE,null,"首页",this);

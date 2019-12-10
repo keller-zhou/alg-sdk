@@ -368,4 +368,8 @@ public class WXBaseEventModule extends WXModule {
         });
     }
 
+    @WXModuleAnno
+    public void unregisterXiaoMiPush() {
+
+    }
 }
