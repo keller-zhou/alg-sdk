@@ -4,11 +4,11 @@
     android:background="@color/black_deep"
     android:fitsSystemWindows="true">
 
-    <com.slicejobs.ailinggong.ui.widget.imagelook.ViewPagerFixed
+    <com.slicejobs.algsdk.algtasklibrary.ui.widget.imagelook.ViewPagerFixed
         android:id="@+id/imageViewPager"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
-    </com.slicejobs.ailinggong.ui.widget.imagelook.ViewPagerFixed>
+    </com.slicejobs.algsdk.algtasklibrary.ui.widget.imagelook.ViewPagerFixed>
     <FrameLayout
         android:id="@+id/title_layout"
         android:layout_width="match_parent"
