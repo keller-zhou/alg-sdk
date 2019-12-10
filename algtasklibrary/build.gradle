@@ -92,5 +92,4 @@ dependencies {
     implementation files('libs/aliyun-oss-sdk-android-2.3.0.jar')
     implementation files('libs/org.apache.http.legacy.jar')
     implementation 'com.github.ome450901:SimpleRatingBar:1.4.2'
-    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
 }

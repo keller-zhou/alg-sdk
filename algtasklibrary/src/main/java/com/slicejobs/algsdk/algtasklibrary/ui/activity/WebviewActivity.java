@@ -40,9 +40,6 @@ import com.slicejobs.algsdk.algtasklibrary.ui.widget.ProgressWebView;
 import com.slicejobs.algsdk.algtasklibrary.utils.AndroidUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.StringUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.imagedecode.ImageDecodeUtil;
-import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -337,19 +334,6 @@ public class WebviewActivity extends BaseActivity {
         public void openWebview(String gameUrl, String useJs, String jsText) {
             Intent intent = WebviewActivity.getStartIntentCustomJavaScript(WebviewActivity.this, gameUrl, useJs, jsText);
             startActivity(intent);
-        }
-
-        /**
-         * 这个方法提供给js，打开小程序
-         */
-        @JavascriptInterface
-        public void openMiniprogram(String miniprogramSouceId, int miniprogramType, String miniprogramPath) {
-            IWXAPI api = WXAPIFactory.createWXAPI(WebviewActivity.this, AppConfig.WX_APP_ID);//填应用AppId
-            WXLaunchMiniProgram.Req req = new WXLaunchMiniProgram.Req();
-            req.userName = miniprogramSouceId; // 填小程序原始id
-            req.miniprogramType = miniprogramType;// 可选打开 开发版，体验版和正式版
-            req.path = miniprogramPath;
-            api.sendReq(req);
         }
 
         /**

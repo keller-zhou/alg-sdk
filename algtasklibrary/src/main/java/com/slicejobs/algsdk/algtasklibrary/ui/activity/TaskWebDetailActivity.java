@@ -464,12 +464,6 @@ public class TaskWebDetailActivity extends BaseActivity implements IJsRenderList
                     mWXSDKInstance.fireGlobalEventCallback("taskDetailChange", params);
                 }
                 BusProvider.getInstance().post(new AppEvent.RefreshTaskEvent("my_task_list"));//刷新一下任务列表
-            } else if (requestCode == WXBaseEventModule.LIVE_ACTIVITY_REQUEST_CODE) {
-                if(mWXSDKInstance != null) {
-                    params.put("updateType", "all");
-                    mWXSDKInstance.fireGlobalEventCallback("taskDetailChange", params);
-                }
-                BusProvider.getInstance().post(new AppEvent.RefreshTaskEvent("my_task_list"));//刷新一下任务列表
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
