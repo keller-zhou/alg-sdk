@@ -15,6 +15,7 @@ import com.slicejobs.algsdk.algtasklibrary.R;
 import com.slicejobs.algsdk.algtasklibrary.R2;
 import com.slicejobs.algsdk.algtasklibrary.model.TaskImage;
 import com.slicejobs.algsdk.algtasklibrary.model.TaskStepResult;
+import com.slicejobs.algsdk.algtasklibrary.net.AppConfig;
 import com.slicejobs.algsdk.algtasklibrary.net.ISODateAdapter;
 import com.slicejobs.algsdk.algtasklibrary.ui.adapter.MyTaskPhotosAdapter;
 import com.slicejobs.algsdk.algtasklibrary.ui.base.BaseActivity;
@@ -85,7 +86,7 @@ public class SelectTaskPhotoActivity extends BaseActivity {
                 List<String> photos = result.getPhotos();
                 if(photos != null && photos.size() != 0){
                     for (String photoPath:photos) {
-                        if(!photoPath.contains("_thumbnail") && photoPath.startsWith("/storage/emulated/0/Android/data/com.slicejobs.ailinggong/files/currTaskCache")){
+                        if(!photoPath.contains("_thumbnail") && photoPath.startsWith(AppConfig.TEMP_CACHE_DIR)){
                             if(!photoList.contains(photoPath)) {
                                 photoList.add(photoPath);
                                 myPhotosAdapter.addImage(new TaskImage(photoPath, false));

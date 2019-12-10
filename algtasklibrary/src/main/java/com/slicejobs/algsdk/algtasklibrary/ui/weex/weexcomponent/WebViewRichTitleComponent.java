@@ -12,6 +12,7 @@ import android.webkit.WebViewClient;
 
 import com.slicejobs.algsdk.algtasklibrary.ui.activity.WebviewActivity;
 import com.slicejobs.algsdk.algtasklibrary.ui.widget.MyRichTextView;
+import com.slicejobs.algsdk.algtasklibrary.utils.DensityUtil;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.annotation.Component;
 import com.taobao.weex.ui.action.BasicComponentData;
@@ -104,15 +105,8 @@ public class WebViewRichTitleComponent extends WXComponent<MyRichTextView> {
             // height is in DP units. Convert it to PX if you are adjusting the WebView's height.
             // height could be 0 if WebView visibility is Visibility.GONE.
             // If changing the WebView height, do it on the main thread!
-            int h = 0;
-            if(content.length() < 30){
-                h = (int) (Integer.parseInt(height)) / 2;
-            }else {
-                h = (int) (Integer.parseInt(height) * 2.3);
-            }
-            if(h < 120){
-                h = 120;
-            }
+            int h = DensityUtil.dip2px(mInstance.getContext(), Float.parseFloat(height));
+
             Map<String, Object> params = new HashMap<>();
             params.put("titleHeight", h);
             //发送全局监听
