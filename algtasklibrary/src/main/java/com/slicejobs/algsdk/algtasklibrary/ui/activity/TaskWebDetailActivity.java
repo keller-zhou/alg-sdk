@@ -318,6 +318,9 @@ public class TaskWebDetailActivity extends BaseActivity implements IJsRenderList
                     taskMoreMenuView.startAnimation(zoomOutSa);
                 }
             });
+        } else if (event.eventType.equals("goBackHomePage")) {
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
         } else if (event.eventType.equals("taskEvaluateFinished")) {
             if (mWXSDKInstance != null) {
                 params.put("updateType", "refreshEvalStatus");
