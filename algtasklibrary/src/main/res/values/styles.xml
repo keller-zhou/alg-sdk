@@ -57,7 +57,7 @@
 
     <style name="LoginEditStyle">
         <item name="android:singleLine">true</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/text_color2</item>
         <item name="android:background">@null</item>
     </style>

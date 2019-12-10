@@ -44,6 +44,7 @@ import com.slicejobs.algsdk.algtasklibrary.net.RestClient;
 import com.slicejobs.algsdk.algtasklibrary.net.response.Response;
 import com.slicejobs.algsdk.algtasklibrary.ui.adapter.TaskMoreMenuAdapter;
 import com.slicejobs.algsdk.algtasklibrary.ui.base.BaseActivity;
+import com.slicejobs.algsdk.algtasklibrary.ui.weex.weexmodule.WXBaseEventModule;
 import com.slicejobs.algsdk.algtasklibrary.utils.BusProvider;
 import com.slicejobs.algsdk.algtasklibrary.utils.DateUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.PrefUtil;
@@ -457,6 +458,12 @@ public class TaskWebDetailActivity extends BaseActivity implements IJsRenderList
                     } else {
                         params.put("updateType", "taskCommitSuccess");
                     }
+                    mWXSDKInstance.fireGlobalEventCallback("taskDetailChange", params);
+                }
+                BusProvider.getInstance().post(new AppEvent.RefreshTaskEvent("my_task_list"));//刷新一下任务列表
+            } else if (requestCode == WXBaseEventModule.LIVE_ACTIVITY_REQUEST_CODE) {
+                if(mWXSDKInstance != null) {
+                    params.put("updateType", "all");
                     mWXSDKInstance.fireGlobalEventCallback("taskDetailChange", params);
                 }
                 BusProvider.getInstance().post(new AppEvent.RefreshTaskEvent("my_task_list"));//刷新一下任务列表

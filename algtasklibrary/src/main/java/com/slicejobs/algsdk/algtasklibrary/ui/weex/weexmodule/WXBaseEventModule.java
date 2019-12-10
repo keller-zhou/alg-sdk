@@ -68,6 +68,7 @@ import java.util.Map;
 
 public class WXBaseEventModule extends WXModule {
 
+    public static final int LIVE_ACTIVITY_REQUEST_CODE = 123;
     //通知客户端更新用户信息
     @WXModuleAnno
     public void setUserInfo(String strJson) {//不能，否则json出异常Map<String,Object> params
@@ -149,11 +150,21 @@ public class WXBaseEventModule extends WXModule {
 
     @WXModuleAnno
     public void openWebview( Map<String,Object> params){//用户处理网页端想打开webview
-
-        if (null != params.get("data")) {
-            mWXSDKInstance.getContext().startActivity(WebviewActivity.getStartIntentCustom(mWXSDKInstance.getContext(), params.get("url").toString(), params));
+        if (null != params.get("requestCode")) {
+            int requestCode = (int) params.get("requestCode");
+            if (requestCode == 1) {
+                Intent intent = WebviewActivity.getStartIntentCustom(mWXSDKInstance.getContext(), params.get("url").toString(), params);
+                if (mWXSDKInstance.getContext() instanceof Activity) {
+                    Activity activity = (Activity) mWXSDKInstance.getContext();
+                    activity.startActivityForResult(intent, LIVE_ACTIVITY_REQUEST_CODE);
+                }
+            }
         } else {
-            mWXSDKInstance.getContext().startActivity(WebviewActivity.getStartIntent(mWXSDKInstance.getContext(), params.get("url").toString()));
+            if (null != params.get("data")) {
+                mWXSDKInstance.getContext().startActivity(WebviewActivity.getStartIntentCustom(mWXSDKInstance.getContext(), params.get("url").toString(), params));
+            } else {
+                mWXSDKInstance.getContext().startActivity(WebviewActivity.getStartIntent(mWXSDKInstance.getContext(), params.get("url").toString()));
+            }
         }
         Log.i("---","openWebview url="+params.get("url").toString());
     }

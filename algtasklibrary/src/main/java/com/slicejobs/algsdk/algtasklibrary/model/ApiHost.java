@@ -22,7 +22,7 @@ public class ApiHost implements Serializable {
     private String serverApiHost = "release".equals(BuildConfig.BUILD_TYPE)
             ? BASE_HTTPS_SERVER_RELEASE : ("ci".equals(BuildConfig.BUILD_TYPE)
             ? BASE_HTTP_SERVER_CI :("dev".equals(BuildConfig.BUILD_TYPE)
-            ?BASE_HTTP_SERVER_DEV : BASE_HTTP_SERVER_DEBUG));
+            ?BASE_HTTP_SERVER_DEV : BASE_HTTP_SERVER_CI));
 
 
 
