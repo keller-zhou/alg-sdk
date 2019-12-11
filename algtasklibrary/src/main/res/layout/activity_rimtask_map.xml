@@ -1,0 +1,110 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:background="@color/color_white">
+
+        <TextView
+            android:id="@+id/title_homepage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="周边任务"
+            android:textColor="@color/text_color7"
+            android:textSize="15dp" />
+
+        <LinearLayout
+            android:id="@+id/action_return"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|center_vertical"
+            android:background="@drawable/ease_common_tab_bg"
+            >
+            <ImageView
+                android:layout_width="13dp"
+                android:layout_height="20dp"
+                android:gravity="center"
+                android:src="@drawable/back_icon"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/action_store_task"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="35dp"
+            android:padding="7dp"
+            android:src="@drawable/ic_store"
+            />
+
+        <ImageView
+            android:id="@+id/action_search_task"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="right|center_vertical"
+            android:src="@drawable/ic_search_image_gray"
+            android:padding="8dp"
+            />
+
+        <FrameLayout
+            android:id="@+id/tasks_search_layout"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="43dp"
+            >
+
+            <EditText
+                android:id="@+id/et_search_task"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:minHeight="40dp"
+                android:background="@drawable/shape_search_task"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:layout_gravity="center_vertical"
+                android:textColorHint="@color/text_color1"
+                android:textColor="@color/text_color1"
+                android:textSize="13sp"
+                android:singleLine="true"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="60dp"
+                android:drawableLeft="@drawable/ic_search_image"
+                android:drawablePadding="10dp"
+                android:hint="任务标题/门店关键字" />
+            <TextView
+                android:id="@+id/cacel_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="取消"
+                android:textSize="14sp"
+                android:textColor="@color/text_color7"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="20dp"
+                />
+        </FrameLayout>
+    </FrameLayout>
+
+
+
+
+    <RelativeLayout
+        android:layout_marginTop="43dp"
+        android:id="@+id/neartask_web_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        >
+
+    </RelativeLayout>
+
+</FrameLayout>

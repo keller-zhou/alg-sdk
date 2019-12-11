@@ -54,7 +54,7 @@
             android:maxLines="2"
             android:ellipsize="end"
             android:textColor="@color/text_color7"
-            android:textSize="15sp"
+            android:textSize="15dp"
             tools:text=""/>
 
         <TextView

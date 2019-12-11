@@ -22,7 +22,7 @@
             android:layout_gravity="center"
             android:text="相册"
             android:textColor="@color/text_color7"
-            android:textSize="15sp" />
+            android:textSize="15dp" />
 
         <LinearLayout
             android:id="@+id/action_return"

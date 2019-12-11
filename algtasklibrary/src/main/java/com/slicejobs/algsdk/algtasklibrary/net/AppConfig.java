@@ -69,6 +69,9 @@ public class AppConfig {
 
     public static final String MODIFY_PASSWORD_VIEW_FILE = "modify-pwd.js";
 
+    //周边赚
+    public static final String TASK_LIST_NEARBY_VIEW_FILE = "nearby-tasklist.js";
+
     //任务详情
     public static final String TASK_DETAIL_VIEW_FILE = "task-detail.js";
 

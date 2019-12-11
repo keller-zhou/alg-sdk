@@ -155,6 +155,10 @@
             android:name="com.slicejobs.algsdk.algtasklibrary.ui.activity.MarketInfoGatherTaskStepsActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.slicejobs.algsdk.algtasklibrary.ui.activity.RimTaskMapActivity"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

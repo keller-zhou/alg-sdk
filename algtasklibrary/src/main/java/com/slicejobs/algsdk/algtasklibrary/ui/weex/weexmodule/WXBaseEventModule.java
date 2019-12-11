@@ -48,6 +48,7 @@ import com.slicejobs.algsdk.algtasklibrary.net.ISODateAdapter;
 import com.slicejobs.algsdk.algtasklibrary.ui.activity.HallTaskActivity;
 import com.slicejobs.algsdk.algtasklibrary.ui.activity.MapActivity;
 import com.slicejobs.algsdk.algtasklibrary.ui.activity.MediaPlayerActivity;
+import com.slicejobs.algsdk.algtasklibrary.ui.activity.RimTaskMapActivity;
 import com.slicejobs.algsdk.algtasklibrary.ui.activity.TaskPackageListActivity;
 import com.slicejobs.algsdk.algtasklibrary.ui.activity.TaskWebDetailActivity;
 import com.slicejobs.algsdk.algtasklibrary.ui.activity.WebviewActivity;
@@ -160,7 +161,10 @@ public class WXBaseEventModule extends WXModule {
 
     @WXModuleAnno
     public void openModule(String modelName, Map<String, Object> params) {
-        if (StringUtil.isNotBlank(modelName)) {
+        if (modelName.equals("周边赚")) {
+            Intent intentMap =new Intent(mWXSDKInstance.getContext(),RimTaskMapActivity.class);
+            mWXSDKInstance.getContext().startActivity(intentMap);
+        } else if (StringUtil.isNotBlank(modelName)) {
             if (modelName.equals("地图")) {
                 Double userLat = 0.0;
                 Double userLon = 0.0;

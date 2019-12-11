@@ -61,7 +61,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="39dp"
                     android:text="待抢单"
-                    android:textSize="15sp"
+                    android:textSize="15dp"
                     android:textColor="@color/color_base"
                     android:gravity="center"/>
                 <TextView
@@ -81,7 +81,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="39dp"
                     android:text="已抢单"
-                    android:textSize="15sp"
+                    android:textSize="15dp"
                     android:textColor="@color/text_color6"
                     android:gravity="center"/>
                 <TextView
