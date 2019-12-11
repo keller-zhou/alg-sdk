@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_base">#ff9901</color>
+    <color name="color_base">#C80000</color>
     <!--<color name="color_base">#fd9a01</color>-->
-    <color name="color_base_dark">#ffba801c</color>
+    <color name="color_base_dark">#8B0000</color>
     <color name="color_bg">#F7F7F7</color>
     <color name="color_gray_bg">#F5F5F5</color>
     <color name="text_color1">#B4B4B8</color>
@@ -14,7 +14,6 @@
     <color name="text_color7">#333333</color>
     <color name="color_dialog_bg">#b3020202</color>
     <color name="color_divider">#dbdbdb</color>
-    <color name="color_dialog_yellow">#f5a623</color>
     <color name="color_dialog_green">#4fe3c1</color>
     <color name="color_white">#ffffff</color>
     <color name="color_black">#000000</color>
@@ -24,8 +23,8 @@
     <color name="color_correct_green">#99ce26</color>
     <color name="color_blue">#87CEEB</color>
     <color name="color_progress_bg1">#eaeeef</color>
-    <color name="color_progress_bg2">#ff9702</color>
-    <color name="color_progress_bg3">#face2f</color>
+    <color name="color_progress_bg2">#C80000</color>
+    <color name="color_progress_bg3">#8B0000</color>
     <color name="color_button_yellow">#ff7400</color>
     <color name="color_android_defaultbg">#f7f7f7</color>
     <color name="color_money_text">#ff409d81</color>

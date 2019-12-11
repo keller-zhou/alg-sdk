@@ -230,7 +230,7 @@ public class ActionSheetDialog {
     }
 
     public enum SheetItemColor {
-        Blue("#037BFF"), Red("#FD4A2E"),Black("#333333"),ThemeColor("#FF9900");
+        Blue("#037BFF"), Red("#FD4A2E"),Black("#333333"),ThemeColor("#C80000");
 
         private String name;
 
