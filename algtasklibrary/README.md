@@ -53,4 +53,14 @@ algtasklibrary通过集成module的方式接入工程。以下主要说明通过
 
     进入到爱零工的任务列表，然后进行抢单-做单-提交等一系列操作。
 
+3,如果遇到sdk初始化报错的话，比如 "java.lang.UnsatisfiedLinkError: No implementation found for int com.baidu.mapsdkplatform.comjni.tools.JNITools.initClass"
+    需要工程支持ndk，在工程层级的 gradle.properties 文件中添加
+    android.useDeprecatedNdk=true
+    然后在app层级的build.gradle文件中，defaultConfog{}中添加
+    ndk {
+        abiFilters "x86"
+        abiFilters "armeabi"
+    }，
+    然后sync now
+
 
