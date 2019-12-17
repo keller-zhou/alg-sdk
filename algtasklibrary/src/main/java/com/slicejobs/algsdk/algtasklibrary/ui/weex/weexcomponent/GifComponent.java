@@ -54,7 +54,7 @@ public class GifComponent extends WXComponent<GifImageView> {
                     Field field = null;
                     try {
                         field = R.drawable.class.getField(gifNameStr);
-                        int drawableId = field.getInt(new R.drawable());
+                        int drawableId = field.getInt(field.getName());
                         gifImageView.setBackgroundResource(drawableId);
                     } catch (NoSuchFieldException e) {
                         e.printStackTrace();

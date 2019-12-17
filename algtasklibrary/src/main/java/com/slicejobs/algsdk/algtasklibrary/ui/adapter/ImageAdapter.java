@@ -67,7 +67,7 @@ public class ImageAdapter implements IWXImgLoaderAdapter {
                                 Field field = null;
                                 try {
                                     field = R.drawable.class.getField(gifNameStr);
-                                    int DrawableId = field.getInt(new R.drawable());
+                                    int DrawableId = field.getInt(field.getName());
                                     Glide.with(WXEnvironment.getApplication()).load(DrawableId).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(view);
                                 } catch (NoSuchFieldException e) {
                                     e.printStackTrace();
