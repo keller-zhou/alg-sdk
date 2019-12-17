@@ -29,14 +29,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
-        dev {
-            debuggable true
-            signingConfig signingConfigs.release
-        }
-        ci {
-            debuggable true
-            signingConfig signingConfigs.release
-        }
         debug {
             debuggable true
             signingConfig signingConfigs.release
