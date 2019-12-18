@@ -5,7 +5,7 @@ android {
         release {
             keyAlias 'slicejobs-sdk'
             keyPassword 'slicejobs'
-            storeFile file('/Users/joel/Documents/alg-project/AlgSDK/key/apk_sign.jks')
+            storeFile file('../key/apk_sign.jks')
             storePassword 'slicejobs'
         }
     }

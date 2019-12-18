@@ -1,14 +1,12 @@
 package com.slicejobs.algsdk.algtasklibrary.app;
 
 
-import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.util.Log;
-
 import com.baidu.mapapi.SDKInitializer;
 import com.hjq.toast.ToastUtils;
 import com.hjq.toast.style.ToastAliPayStyle;
@@ -63,17 +61,15 @@ public class SliceApp{
         mainProcessInit();
     }
 
-    public void openAlg () {
-        if (CONTEXT == null) {
-            return;
-        }
+    public void openAlg (Context context) {
+
         Intent intent = null;
         if (isLogin()) {
-            intent = new Intent(CONTEXT, MainActivity.class);
+            intent = new Intent(context, MainActivity.class);
         } else {
-            intent = new Intent(CONTEXT, LoginActivity.class);
+            intent = new Intent(context, LoginActivity.class);
         }
-        CONTEXT.startActivity(intent);
+        context.startActivity(intent);
     }
 
     private boolean isLogin() {
