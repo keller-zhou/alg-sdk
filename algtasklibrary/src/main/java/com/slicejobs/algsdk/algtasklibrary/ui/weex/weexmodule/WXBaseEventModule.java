@@ -85,7 +85,7 @@ public class WXBaseEventModule extends WXModule {
 
     @WXModuleAnno
     public void resetAccount() {
-        SliceApp.resetAccount();
+        SliceApp.resetAccount(mWXSDKInstance.getContext());
     }
 
     @WXModuleAnno
@@ -348,7 +348,7 @@ public class WXBaseEventModule extends WXModule {
             e.printStackTrace();
         }
         webConfig.version =  AppVersion;
-        webConfig.env = BuildConfig.BUILD_TYPE;
+        webConfig.env = PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).getBoolean(AppConfig.IS_RELEASE, false)?"release":"debug";
         webConfig.phoneVersion = android.os.Build.VERSION.RELEASE;
 
         WXStorageModule storageModule = new WXStorageModule();

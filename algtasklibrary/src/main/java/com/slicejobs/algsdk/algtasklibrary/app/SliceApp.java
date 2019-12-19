@@ -55,9 +55,10 @@ public class SliceApp{
         return instance;
     }
 
-    public void init (Application application) {
+    public void init (Application application,boolean isRelease) {
         this.mApplication = application;
         CONTEXT = application.getApplicationContext();
+        PrefUtil.make(CONTEXT, PrefUtil.PREFERENCE_NAME).putBoolean(AppConfig.IS_RELEASE, isRelease);
         mainProcessInit();
     }
 
@@ -170,11 +171,11 @@ public class SliceApp{
     }
 
 
-    public static void resetAccount() {
+    public static void resetAccount(Context context) {
         PrefUtil.make(CONTEXT, PrefUtil.PREFERENCE_NAME).putSaveToken(AppConfig.AUTH_KEY, SliceStaticStr.INVALID_TOKEN);
         Intent intent = new Intent(CONTEXT, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        CONTEXT.startActivity(intent);
+        context.startActivity(intent);
     }
 
 }

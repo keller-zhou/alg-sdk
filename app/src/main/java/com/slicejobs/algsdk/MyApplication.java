@@ -17,6 +17,6 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        SliceApp.getInstance().init(this);
+        SliceApp.getInstance().init(this,false);
     }
 }

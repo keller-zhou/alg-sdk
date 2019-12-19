@@ -1,6 +1,9 @@
 package com.slicejobs.algsdk.algtasklibrary.model;
 
 import com.slicejobs.algsdk.algtasklibrary.BuildConfig;
+import com.slicejobs.algsdk.algtasklibrary.app.SliceApp;
+import com.slicejobs.algsdk.algtasklibrary.net.AppConfig;
+import com.slicejobs.algsdk.algtasklibrary.utils.PrefUtil;
 
 import java.io.Serializable;
 
@@ -13,7 +16,7 @@ public class WebHost implements Serializable {
 
     public static final String BASE_HTTP_APP_WEB_RELEASE = "https://app.slicejobs.com";//3.2.2以前：https://mobile.slicejobs.com
 
-    private String appWebHost ="release".equals(BuildConfig.BUILD_TYPE)
+    private String appWebHost = PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).getBoolean(AppConfig.IS_RELEASE, false)
             ? BASE_HTTP_APP_WEB_RELEASE : BASE_HTTP_APP_WEB_DEBUG;
 
 

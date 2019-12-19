@@ -42,7 +42,7 @@ public class OssUploader {
     public OssUploader(Context context) {
         this.context = context;
 
-        if (BuildConfig.BUILD_TYPE.equals("dev") || BuildConfig.BUILD_TYPE.equals("debug") || BuildConfig.BUILD_TYPE.equals("ci")) {
+        if (!PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).getBoolean(AppConfig.IS_RELEASE, false)) {
             BUCKET_IMAGE += "dev";
             BUCKET_VIDEO += "dev";
             BUCKET_AUDIO += "dev";

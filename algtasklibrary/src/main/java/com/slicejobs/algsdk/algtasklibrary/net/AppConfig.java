@@ -126,5 +126,6 @@ public class AppConfig {
     public static final int SERVICE_VIDEO_CAMERA_SELECT_ALG = 1;
     public static final int SERVICE_VIDEO_CAMERA_SELECT_SYSTEM = 2;
 
-
+    //当前是否编译release
+    public static final String IS_RELEASE = "is_release";
 }

@@ -1,6 +1,9 @@
 package com.slicejobs.algsdk.algtasklibrary.model;
 
 import com.slicejobs.algsdk.algtasklibrary.BuildConfig;
+import com.slicejobs.algsdk.algtasklibrary.app.SliceApp;
+import com.slicejobs.algsdk.algtasklibrary.net.AppConfig;
+import com.slicejobs.algsdk.algtasklibrary.utils.PrefUtil;
 
 import java.io.Serializable;
 
@@ -13,7 +16,7 @@ public class ApiHost implements Serializable {
     public static final String BASE_HTTPS_SERVER_RELEASE = "https://api2.slicejobs.com";
 
 
-    private String serverApiHost = "release".equals(BuildConfig.BUILD_TYPE)
+    private String serverApiHost = PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).getBoolean(AppConfig.IS_RELEASE, false)
             ? BASE_HTTPS_SERVER_RELEASE : BASE_HTTPS_SERVER_DEBUG;
 
 
