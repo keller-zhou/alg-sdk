@@ -12,6 +12,21 @@ import java.util.Map;
  * Created by nlmartian on 7/25/15.
  */
 public class SignUtil {
+
+    public static String md5Params(Map<String, String> paramsMap) {
+        List<Map.Entry<String, String>> entryList = new ArrayList<>();
+        for (Map.Entry<String, String> keyValuePair : paramsMap.entrySet()) {
+            entryList.add(keyValuePair);
+        }
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String, String> entry : entryList) {
+            sb.append(entry.getKey()).append("=").append(entry.getValue());
+            sb.append("&");
+        }
+        sb.delete(sb.length() - 1, sb.length());
+        return md5(sb.toString());
+    }
+
     public static String signParams(Map<String, String> paramsMap) {
         List<Map.Entry<String, String>> entryList = new ArrayList<>();
         for (Map.Entry<String, String> keyValuePair : paramsMap.entrySet()) {
@@ -67,6 +82,10 @@ public class SignUtil {
 
         public String build() {
             return SignUtil.signParams(params);
+        }
+
+        public String md5Params() {
+            return SignUtil.md5Params(params);
         }
     }
 }

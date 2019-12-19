@@ -20,6 +20,12 @@ public class AppConfig {
 
     public static final int VCODE_WAIT_TIME = BuildConfig.DEBUG ? 25 : 60;
 
+    public static final String ZDD_APPID = "zdd_appId";
+    public static final String ZDD_USERID = "zdd_userid";
+    public static final String ZDD_MOBILE = "zdd_mobile";
+    public static final String ZDD_ACTIONTIME = "zdd_actionTime";
+    public static final String ZDD_SIGN = "zdd_sign";
+
     // app preferences
     public static final String PREF_USER = "user";
     public static final String AUTH_KEY = "auth_key";
@@ -99,10 +105,6 @@ public class AppConfig {
 
     //用于保存上次登录的日期
     public static final String LAST_LOGIN_APP_DATE = "last_login_app_date";
-
-    //是否第一次登录社区
-    public static final String IF_FIRST_LOGIN_MOBBBS = "if_first_login_mobbbs";
-
 
     public static final String VIDEO_CAMERA_TYPE = "videoCameraType";//存放视频使用相机类型
 

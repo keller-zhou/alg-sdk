@@ -1,8 +1,9 @@
 package com.slicejobs.algsdk.algtasklibrary.net.presenter;
 
 
+import android.os.Build;
+
 import com.slicejobs.algsdk.algtasklibrary.R;
-import com.slicejobs.algsdk.algtasklibrary.R2;
 import com.slicejobs.algsdk.algtasklibrary.app.AppEvent;
 import com.slicejobs.algsdk.algtasklibrary.app.SliceApp;
 import com.slicejobs.algsdk.algtasklibrary.net.AppConfig;
@@ -10,12 +11,13 @@ import com.slicejobs.algsdk.algtasklibrary.net.RestClient;
 import com.slicejobs.algsdk.algtasklibrary.net.response.LoginRes;
 import com.slicejobs.algsdk.algtasklibrary.net.response.RegisterRes;
 import com.slicejobs.algsdk.algtasklibrary.net.response.Response;
+import com.slicejobs.algsdk.algtasklibrary.net.response.ZddResponse;
 import com.slicejobs.algsdk.algtasklibrary.utils.BusProvider;
 import com.slicejobs.algsdk.algtasklibrary.utils.DateUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.PrefUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.SignUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.StringUtil;
-import com.slicejobs.algsdk.algtasklibrary.view.IRegisterView;
+import com.slicejobs.algsdk.algtasklibrary.view.IBindView;
 import com.umeng.analytics.MobclickAgent;
 
 import retrofit.RetrofitError;
@@ -26,11 +28,11 @@ import rx.functions.Action1;
 /**
  * Created by nlmartian on 7/12/15.
  */
-public class RegisterPresenter extends BasePresenter {
+public class BindPresenter extends BasePresenter {
 
-    private IRegisterView view;
+    private IBindView view;
 
-    public RegisterPresenter(IRegisterView view) {
+    public BindPresenter(IBindView view) {
         this.view = view;
     }
 
@@ -69,54 +71,33 @@ public class RegisterPresenter extends BasePresenter {
                 });
     }
 
-    public void register(String cellphone, String vcode, String referrer, String referrercode) {
+    public void bind(String appId,String userId,String mobile,String actionTime,String sign, String vcode) {
         String timestamp = DateUtil.getCurrentTime();
         view.showProgressDialog();
-        Observable<Response<RegisterRes>> registerOb = null;
-        SignUtil.SignBuilder signBuilder = new SignUtil.SignBuilder();
-        signBuilder.put("cellphone", cellphone).put("vcode", vcode);
-
-        if (StringUtil.isNotBlank(referrer) && StringUtil.isNotBlank(referrercode)) {
-            signBuilder.put("referrer", referrer);
-            signBuilder.put("referrercode", referrercode);
-            signBuilder.put("timestamp", timestamp);
-            registerOb = restClient.provideApi().register(cellphone, vcode, referrer, referrercode, timestamp, signBuilder.build());
-        } else if (StringUtil.isNotBlank(referrer)) {
-            signBuilder.put("referrer", referrer);
-            signBuilder.put("timestamp", timestamp);
-            registerOb = restClient.provideApi().register(cellphone, vcode, referrer, timestamp, signBuilder.build());
-        } else if (StringUtil.isNotBlank(referrercode)) {
-            signBuilder.put("referrercode", referrercode);
-            signBuilder.put("timestamp", timestamp);
-            registerOb = restClient.provideApi().register2(cellphone, vcode, referrercode, timestamp, signBuilder.build());
-        } else {
-            signBuilder.put("timestamp", timestamp);
-            registerOb = restClient.provideApi().register(cellphone, vcode, timestamp, signBuilder.build());
-        }
+        Observable<ZddResponse<LoginRes>> registerOb = restClient.provideOpenApi().bind(appId,userId,mobile,actionTime,sign, vcode);;
 
         registerOb.observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Response<RegisterRes>>() {
+                .subscribe(new Action1<ZddResponse<LoginRes>>() {
                     @Override
-                    public void call(Response<RegisterRes> res) {
+                    public void call(ZddResponse<LoginRes> res) {
                         view.dismissProgressDialog();
-                        if (res.ret == 0) {
-                            LoginRes loginRes = new LoginRes();
-                            loginRes.userid = res.detail.userid;
-                            loginRes.cellphone = res.detail.cellphone;
-                            loginRes.authkey = res.detail.authkey;
-
-                            RestClient.getInstance().setAccessToken(res.detail.authkey);
-                            PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).putObject(AppConfig.PREF_USER, loginRes);
-                            if (StringUtil.isBlank(res.detail.authkey) || res.detail.authkey.length() < 3) {//防止sj没有传递下来
-                                MobclickAgent.reportError(SliceApp.CONTEXT, "用户" + res.detail.userid + "注册时传下token 为空");
+                        if (res.code == 0) {
+                            PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).putObject(AppConfig.PREF_USER, res.data);
+                            String accessToken = res.data.authkey;
+                            if (StringUtil.isBlank(accessToken) || accessToken.length() < 3) {//防止sj没有传递下来
+                                view.toast(SliceApp.CONTEXT.getString(R.string.hint_getsjauth_fail));
+                                MobclickAgent.reportError(SliceApp.CONTEXT, "用户" + res.data.userid + "登陆时传下token 为空");
                             } else {
-                                if (PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).putSaveToken(AppConfig.AUTH_KEY, res.detail.authkey)) {
-                                    BusProvider.getInstance().post(new AppEvent.Register1Event());
+                                boolean isSaveSuccess = PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).putSaveToken(AppConfig.AUTH_KEY, accessToken);
+                                if (!isSaveSuccess) {//没有成功保存token
+                                    MobclickAgent.reportError(SliceApp.CONTEXT, "用户登录时用户ID"+res.data.userid+"手机型号"+ Build.MANUFACTURER + "-" + Build.MODEL + "没有成功保存token");
                                 }
+                                RestClient.getInstance().setAccessToken(accessToken);
+                                view.bindSuccess();
                             }
                         } else {
-                            view.sendVCodeFaild(res.msg);
-                            view.registerFail();
+                            view.sendVCodeFaild(res.message);
+                            view.bindFail();
                         }
                     }
                 }, e -> {
@@ -127,15 +108,15 @@ public class RegisterPresenter extends BasePresenter {
                             view.sendVCodeFaild("网络开小差了");
                         } else {
                             view.sendVCodeFaild(SliceApp.CONTEXT.getString(R.string.server_error));
-                            MobclickAgent.reportError(SliceApp.CONTEXT, "注册提交注册：用户手机号：" + cellphone + "报错具体原因：" + e.getMessage());
+                            MobclickAgent.reportError(SliceApp.CONTEXT, "注册提交注册：用户手机号：" + mobile + "报错具体原因：" + e.getMessage());
                         }
 
                     } catch (IllegalStateException e1) {
                         view.sendVCodeFaild("网络开小差了");
-                        MobclickAgent.reportError(SliceApp.CONTEXT, "注册提交注册2：用户手机号：" + cellphone + "报错具体原因：" + e.getMessage());
+                        MobclickAgent.reportError(SliceApp.CONTEXT, "注册提交注册2：用户手机号：" + mobile + "报错具体原因：" + e.getMessage());
 
                     }
-                    view.registerFail();
+                    view.bindFail();
                 });
     }
 }

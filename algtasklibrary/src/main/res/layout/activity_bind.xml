@@ -4,33 +4,49 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_white">
-
-
-    <EditText
-        android:id="@+id/et_telephone"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:paddingLeft="8dp"
-        android:inputType="number"
-        android:hint="@string/telephone_number"
-        style="@style/LoginEditStyle"
-        android:textColorHint="#CCCCCC"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:background="#EEEEEE"/>
+    android:background="@color/color_white"
+    android:fitsSystemWindows="true">
 
     <FrameLayout
         android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:background="@color/color_white">
+
+        <TextView
+            android:id="@+id/title_homepage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/text_color7"
+            android:textSize="15dp"
+            android:text="@string/bind" />
+
+        <LinearLayout
+            android:id="@+id/action_go_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|center_vertical"
+            android:background="@drawable/ease_common_tab_bg"
+            >
+            <ImageView
+                android:layout_width="13dp"
+                android:layout_height="20dp"
+                android:gravity="center"
+                android:src="@drawable/back_icon"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+    </FrameLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#EEEEEE"/>
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="50dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
 
@@ -63,20 +79,9 @@
         android:layout_marginRight="20dp"
         android:background="#EEEEEE"/>
 
-    <TextView
-        android:id="@+id/tv_contact_service"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/not_receive_check_code"
-        android:textColor="@color/color_base"
-        android:textSize="13sp"
-        android:layout_marginTop="15dp"
-        android:layout_gravity="right"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"/>
 
     <Button
-        android:id="@+id/btn_login"
+        android:id="@+id/btn_bind"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginTop="40dp"
@@ -86,15 +91,6 @@
         android:layout_marginRight="15dp"
         android:textColor="#ffffff"
         android:textSize="16sp"
-        android:text="@string/login"/>
-    <TextView
-        android:id="@+id/register_notice"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="42dp"
-        android:layout_marginRight="42dp"
-        android:textSize="12sp"
-        android:layout_marginTop="20dp"
-        android:text="未注册爱零工的手机号，登录时将自动注册并代表您已经同意《爱零工注册协议》"/>
+        android:text="@string/bind"/>
 
 </LinearLayout>

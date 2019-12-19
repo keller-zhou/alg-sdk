@@ -6,6 +6,6 @@ package com.slicejobs.algsdk.algtasklibrary.view;
 public interface ILoginView extends IBaseView {
 
     public void loginSuccess();
-
+    public void notRegister();
     public void serverExecption(String source);
 }

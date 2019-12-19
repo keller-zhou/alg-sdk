@@ -1,6 +1,7 @@
 package com.slicejobs.algsdk.algtasklibrary.app;
 
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +19,8 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.slicejobs.algsdk.algtasklibrary.model.User;
 import com.slicejobs.algsdk.algtasklibrary.net.AppConfig;
 import com.slicejobs.algsdk.algtasklibrary.net.RestClient;
-import com.slicejobs.algsdk.algtasklibrary.ui.activity.LoginActivity;
+import com.slicejobs.algsdk.algtasklibrary.net.presenter.LoginPresenter;
+import com.slicejobs.algsdk.algtasklibrary.ui.activity.BindActivity;
 import com.slicejobs.algsdk.algtasklibrary.ui.activity.MainActivity;
 import com.slicejobs.algsdk.algtasklibrary.ui.adapter.ImageAdapter;
 import com.slicejobs.algsdk.algtasklibrary.ui.weex.weexcomponent.AudioPlayerComponent;
@@ -31,25 +33,29 @@ import com.slicejobs.algsdk.algtasklibrary.ui.weex.weexmodule.WXBaseEventModule;
 import com.slicejobs.algsdk.algtasklibrary.ui.weex.weexmodule.WXHomeEventModule;
 import com.slicejobs.algsdk.algtasklibrary.ui.weex.weexmodule.WXTaskEventModule;
 import com.slicejobs.algsdk.algtasklibrary.ui.weex.weexmodule.WXUserCanterEventModule;
+import com.slicejobs.algsdk.algtasklibrary.ui.widget.LoadingDialog;
 import com.slicejobs.algsdk.algtasklibrary.utils.FileUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.JsConfigHelper;
 import com.slicejobs.algsdk.algtasklibrary.utils.PrefUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.StringUtil;
+import com.slicejobs.algsdk.algtasklibrary.view.ILoginView;
 import com.taobao.weex.InitConfig;
 import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.common.WXException;
 
 import java.io.File;
-import java.util.List;
 
 /**
  * Created by nlmartian on 7/8/15.
  */
-public class SliceApp{
+public class SliceApp implements ILoginView {
 
     private static SliceApp instance = new SliceApp();
     public static Context CONTEXT;
     private Application mApplication;
+    private LoginPresenter presenter;
+    private Context context;
+    public LoadingDialog progressDialog;
 
     public synchronized static SliceApp getInstance() {
         return instance;
@@ -62,26 +68,16 @@ public class SliceApp{
         mainProcessInit();
     }
 
-    public void openAlg (Context context) {
+    public void openAlg (Context context,String appId,String userId,String mobile,String actionTime,String sign) {
+        PrefUtil.make(CONTEXT, PrefUtil.PREFERENCE_NAME).putString(AppConfig.ZDD_APPID, appId);
+        PrefUtil.make(CONTEXT, PrefUtil.PREFERENCE_NAME).putString(AppConfig.ZDD_USERID, userId);
+        PrefUtil.make(CONTEXT, PrefUtil.PREFERENCE_NAME).putString(AppConfig.ZDD_MOBILE, mobile);
+        PrefUtil.make(CONTEXT, PrefUtil.PREFERENCE_NAME).putString(AppConfig.ZDD_ACTIONTIME, actionTime);
+        PrefUtil.make(CONTEXT, PrefUtil.PREFERENCE_NAME).putString(AppConfig.ZDD_SIGN, sign);
 
-        Intent intent = null;
-        if (isLogin()) {
-            intent = new Intent(context, MainActivity.class);
-        } else {
-            intent = new Intent(context, LoginActivity.class);
-        }
-        context.startActivity(intent);
-    }
-
-    private boolean isLogin() {
-        User user = BizLogic.getCurrentUser();
-        String authKey = PrefUtil.make(CONTEXT, PrefUtil.PREFERENCE_NAME).getString(AppConfig.AUTH_KEY, SliceStaticStr.NATIVE_TOKEN_ISNULL);//当key不存在返回NATIVE_TOKEN_ISNULL
-        if (StringUtil.isBlank(authKey) || authKey.equals(SliceStaticStr.NATIVE_TOKEN_ISNULL) || authKey.equals(SliceStaticStr.INVALID_TOKEN)) {//用户验证为空
-            return false;
-        } else if (user == null || null == user.userid) {//用户为空
-            return false;
-        }
-        return true;
+        this.context = context;
+        presenter = new LoginPresenter(this);
+        presenter.login(appId, userId,mobile,actionTime,sign);
     }
 
     private void mainProcessInit() {
@@ -173,9 +169,52 @@ public class SliceApp{
 
     public static void resetAccount(Context context) {
         PrefUtil.make(CONTEXT, PrefUtil.PREFERENCE_NAME).putSaveToken(AppConfig.AUTH_KEY, SliceStaticStr.INVALID_TOKEN);
-        Intent intent = new Intent(CONTEXT, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        context.startActivity(intent);
+        PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).putString(AppConfig.PREF_USER, "");
+        if (context instanceof Activity) {
+            Activity activity = (Activity) context;
+            activity.finish();
+        }
     }
 
+    @Override
+    public void loginSuccess() {
+        Intent intent = new Intent(this.context, MainActivity.class);
+        this.context.startActivity(intent);
+    }
+
+    @Override
+    public void notRegister() {
+        Intent intent = new Intent(this.context, BindActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);//如果存在就不创建，直接打开
+        this.context.startActivity(intent);
+    }
+
+    @Override
+    public void serverExecption(String source) {
+
+    }
+
+    @Override
+    public void showProgressDialog() {
+        LoadingDialog.Builder loadBuilder=new LoadingDialog.Builder(this.context)
+                .setShowMessage(false)
+                .setCancelable(true)
+                .setCancelOutside(true);
+        if(progressDialog == null) {
+            progressDialog = loadBuilder.create();
+        }
+        progressDialog.show();
+    }
+
+    @Override
+    public void dismissProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void toast(String msg) {
+        ToastUtils.show(msg);
+    }
 }

@@ -6,6 +6,7 @@ import com.slicejobs.algsdk.algtasklibrary.net.response.LoginRes;
 import com.slicejobs.algsdk.algtasklibrary.net.response.RegisterRes;
 import com.slicejobs.algsdk.algtasklibrary.net.response.Response;
 import com.slicejobs.algsdk.algtasklibrary.net.response.TaskListRes;
+import com.slicejobs.algsdk.algtasklibrary.net.response.ZddResponse;
 
 import java.util.List;
 
@@ -23,22 +24,13 @@ import rx.Observable;
 public interface Api {
 
     @FormUrlEncoded
-    @POST("/login")
-    public Observable<Response<LoginRes>> login(
-            @Query("cellphone") String cellphone,
-            @Query("cellphonetype") String cellphonetype,
-            @Field("password") String password,
-            @Query("timestamp") String timestamp,
-            @Field("sig") String sig);
-
-    @FormUrlEncoded
-    @POST("/login")
-    public Observable<Response<LoginRes>> vCodeLogin(
-            @Query("logintype") String logintype,
-            @Query("cellphone") String cellphone,
-            @Field("vcode") String vcode,
-            @Query("timestamp") String timestamp,
-            @Field("sig") String sig);
+    @POST("/app/authorize/login")
+    public Observable<ZddResponse<LoginRes>> login(
+            @Field("appId") String appId,
+            @Field("userId") String userId,
+            @Field("mobile") String mobile,
+            @Field("actionTime") String actionTime,
+            @Field("sign") String sign);
 
     @GET("/vcode")
     public Observable<Response<List>> getVCode(
@@ -46,52 +38,15 @@ public interface Api {
             @Query("timestamp") String timestamp,
             @Query("sig") String sig);
 
-    @POST("/register")
-    public Observable<Response<RegisterRes>> register(//无推荐人，无推荐码
-                                                      @Field("cellphone") String cellphone,
-                                                      @Field("vcode") String vcode,
-                                                      @Query("timestamp") String timestamp,
-                                                      @Field("sig") String sig
-    );
-
     @FormUrlEncoded
-    @POST("/register")
-    public Observable<Response<RegisterRes>> register(//有推荐人，无推荐码
-                                                      @Field("cellphone") String cellphone,
-                                                      @Field("vcode") String vcode,
-                                                      @Field("referrer") String referrer,
-                                                      @Query("timestamp") String timestamp,
-                                                      @Field("sig") String sig
-    );
-
-    @FormUrlEncoded
-    @POST("/register")
-    public Observable<Response<RegisterRes>> register2(//无推荐人，有推荐码
-                                                       @Field("cellphone") String cellphone,
-                                                       @Field("vcode") String vcode,
-                                                       @Field("referrercode") String referrercode,
-                                                       @Query("timestamp") String timestamp,
-                                                       @Field("sig") String sig
-    );
-
-    @FormUrlEncoded
-    @POST("/register")
-    public Observable<Response<RegisterRes>> register(//有推荐人，有推荐码
-                                                      @Field("cellphone") String cellphone,
-                                                      @Field("vcode") String vcode,
-                                                      @Field("referrer") String referrer,
-                                                      @Field("referrercode") String referrercode,
-                                                      @Query("timestamp") String timestamp,
-                                                      @Field("sig") String sig
-    );
-
-    @GET("/fair_action_trigger")
-    public Observable<Response<Object>> fairActionEvent(
-            @Query("userid") String userid,//用户id
-            @Query("fairid") String fairid,//活动id
-            @Query("timestamp") String timestamp,
-            @Query("sig") String sig
-    );
+    @POST("/app/authorize/bind")
+    public Observable<ZddResponse<LoginRes>> bind(
+            @Field("appId") String appId,
+            @Field("userId") String userId,
+            @Field("mobile") String mobile,
+            @Field("actionTime") String actionTime,
+            @Field("sign") String sign,
+            @Field("vcode") String vcode);
 
     @FormUrlEncoded
     @POST("/user_task_manage")
@@ -144,16 +99,6 @@ public interface Api {
                                                      @Field("sig") String sig
     );
 
-    @GET("/user_location_verify")
-    public Observable<Response<Object>> checkUserLocation(
-            @Query("userid") String userid,
-            @Query("taskid") String taskid,
-            @Query("lat") String lat,
-            @Query("lon") String lon,
-            @Query("timestamp") String timestamp,
-            @Query("sig") String sig
-    );
-
     @GET("/upload_ticket")
     public Response<OSSTicket> getOSSTicket(
             @Query("userid") String userid,
@@ -162,15 +107,6 @@ public interface Api {
             @Query("sig") String sig
     );
 
-    @FormUrlEncoded
-    @POST("/add_market_map_comments")
-    public Observable<Response<Object>> commitMapComments(
-            @Query("userid") String userid,
-            @Query("marketid") String marketid,
-            @Query("score") String score,
-            @Query("comment") String comment,
-            @Field("sig") String sig
-    );
 
     @GET("/user_task?pagesize=20")
     public Observable<Response<TaskListRes>> getMyTasks(
@@ -242,4 +178,15 @@ public interface Api {
             @Query("timestamp") String timestamp,
             @Query("sig") String sig
     );
+
+    @FormUrlEncoded
+    @POST("/add_market_map_comments")
+    public Observable<Response<Object>> commitMapComments(
+            @Query("userid") String userid,
+            @Query("marketid") String marketid,
+            @Query("score") String score,
+            @Query("comment") String comment,
+            @Field("sig") String sig
+    );
+
 }

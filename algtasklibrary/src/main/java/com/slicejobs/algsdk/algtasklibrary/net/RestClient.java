@@ -109,9 +109,36 @@ public class RestClient {
     }
 
     public Api provideApi() {
-        if (api == null && restAdapter != null) {
-            api = restAdapter.create(Api.class);
-        }
+        api = null;
+        Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new ISODateAdapter()).create();
+
+        restAdapter = new RestAdapter.Builder()
+                .setEndpoint(AppConfig.apiHost.getServerApiHost())
+                .setRequestInterceptor(requestInterceptor)
+                .setClient(initClient())
+                .setConverter(new GsonConverter(gson))
+                .setLogLevel(LOG_LEVEL)
+                .build();
+
+
+        api = restAdapter.create(Api.class);
+        return api;
+    }
+
+    public Api provideOpenApi() {
+        api = null;
+        Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new ISODateAdapter()).create();
+
+        restAdapter = new RestAdapter.Builder()
+                .setEndpoint(AppConfig.apiHost.getOpenServerApiHost())
+                .setRequestInterceptor(requestInterceptor)
+                .setClient(initClient())
+                .setConverter(new GsonConverter(gson))
+                .setLogLevel(LOG_LEVEL)
+                .build();
+
+
+        api = restAdapter.create(Api.class);
         return api;
     }
 

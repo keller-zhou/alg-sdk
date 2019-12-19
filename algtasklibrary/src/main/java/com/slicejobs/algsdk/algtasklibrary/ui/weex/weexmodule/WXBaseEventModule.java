@@ -293,9 +293,10 @@ public class WXBaseEventModule extends WXModule {
         //删除基本配置
         PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).putSaveToken(AppConfig.AUTH_KEY, SliceStaticStr.INVALID_TOKEN);
         PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).putString(AppConfig.PREF_USER, "");
-        PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).putString(AppConfig.CURRENT_CITY, "");
-        PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).putString(AppConfig.USER_MARKET, "");
-        PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).putBoolean(AppConfig.IF_FIRST_LOGIN_MOBBBS, true);
+        if (mWXSDKInstance.getContext() instanceof Activity) {
+            Activity activity = (Activity) mWXSDKInstance.getContext();
+            activity.finish();
+        }
     }
 
     //打开web detail界面
@@ -355,7 +356,7 @@ public class WXBaseEventModule extends WXModule {
         Map<String,Object> appConfig = new HashMap<>();
         appConfig.put("user",BizLogic.getCurrentUser());
         appConfig.put("device",webConfig);
-
+        appConfig.put("appId", PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).getString(AppConfig.ZDD_APPID));
         Gson mGson = new GsonBuilder().registerTypeAdapter(Date.class, new ISODateAdapter()).create();
         String appConfigJson = mGson.toJson(appConfig);
 

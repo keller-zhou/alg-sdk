@@ -19,6 +19,7 @@
     <string name="password">请输入密码&#160;</string>
     <string name="forget_pwd">忘记密码？</string>
     <string name="login">登录</string>
+    <string name="bind">绑定</string>
     <string name="register">注册</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="register_telephone_number">请输入注册用户手机号</string>

@@ -85,10 +85,6 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.slicejobs.algsdk.algtasklibrary.ui.activity.LoginActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
             android:name="com.slicejobs.algsdk.algtasklibrary.ui.activity.MediaPlayerActivity"
             android:screenOrientation="portrait" >
         </activity>
@@ -157,6 +153,10 @@
         </activity>
         <activity
             android:name="com.slicejobs.algsdk.algtasklibrary.ui.activity.RimTaskMapActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.slicejobs.algsdk.algtasklibrary.ui.activity.BindActivity"
             android:screenOrientation="portrait" >
         </activity>
     </application>

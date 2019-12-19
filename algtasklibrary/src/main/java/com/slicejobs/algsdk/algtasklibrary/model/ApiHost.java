@@ -11,7 +11,7 @@ public class ApiHost implements Serializable {
 
 
     //server api 环境
-    public static final String BASE_HTTPS_SERVER_DEBUG = "https://api2-ci.slicejobs.com";
+    public static final String BASE_HTTPS_SERVER_DEBUG = "http://api2-dev.slicejobs.com";
 
     public static final String BASE_HTTPS_SERVER_RELEASE = "https://api2.slicejobs.com";
 
@@ -29,6 +29,23 @@ public class ApiHost implements Serializable {
         this.serverApiHost = serverApiHost;
     }
 
+    //server api 环境
+    public static final String BASE_HTTPS_OPEN_SERVER_DEBUG = "http://openapi-dev.slicejobs.com";
+
+    public static final String BASE_HTTPS_OPEN_SERVER_RELEASE = "https://openapi.slicejobs.com";
+
+
+    private String openServerApiHost = PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).getBoolean(AppConfig.IS_RELEASE, false)
+            ? BASE_HTTPS_OPEN_SERVER_RELEASE : BASE_HTTPS_OPEN_SERVER_DEBUG;
+
+
+    public String getOpenServerApiHost() {
+        return openServerApiHost;
+    }
+
+    public void setOpenServerApiHost(String openServerApiHost) {
+        this.openServerApiHost = openServerApiHost;
+    }
 
     public ApiHost(){}
 
