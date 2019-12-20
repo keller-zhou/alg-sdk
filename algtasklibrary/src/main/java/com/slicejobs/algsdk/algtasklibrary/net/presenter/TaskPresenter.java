@@ -64,9 +64,11 @@ public class TaskPresenter extends BasePresenter {
         //view.showProgressDialog();
         User user = BizLogic.getCurrentUser();
         String date = DateUtil.getRequestDateString(new Date());
+        String appId = PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).getString(AppConfig.ZDD_APPID);
         SignUtil.SignBuilder sigBuilder = new SignUtil.SignBuilder()
                 .put("userid", user.userid)
                 .put("start", start + "")
+                .put("appId", appId)
                 .put("pagesize", "20");
         if (today) {//获取今日任务
             sigBuilder.put("date", date);
@@ -80,9 +82,9 @@ public class TaskPresenter extends BasePresenter {
         String sig = sigBuilder.build();
         Observable<Response<TaskListRes>> req = null;
         if (today) {
-            req = restClient.provideApi().getMyTodayTasks(user.userid, date, start, timestamp, sig);
+            req = restClient.provideApi().getMyTodayTasks(user.userid, date, start, timestamp, appId,sig);
         }  else {
-            req = restClient.provideApi().getMyTasks(user.userid, start, status, timestamp, sig);
+            req = restClient.provideApi().getMyTasks(user.userid, start, status, timestamp,appId, sig);
         }
         req.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(res -> {
@@ -112,6 +114,7 @@ public class TaskPresenter extends BasePresenter {
         //view.showProgressDialog();
         User user = BizLogic.getCurrentUser();
         String date = DateUtil.getRequestDateString(new Date());
+        String appId = PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).getString(AppConfig.ZDD_APPID);
         SignUtil.SignBuilder sigBuilder = new SignUtil.SignBuilder()
                 .put("userid", user.userid)
                 .put("start", start + "")
@@ -121,11 +124,12 @@ public class TaskPresenter extends BasePresenter {
                 .put("cellphonetype", "10")
                 .put("lat", latitude)
                 .put("lon", longitude)
+                .put("appId", appId)
                 .put("timestamp", timestamp);
 
         String sig = sigBuilder.build();
         Observable<Response<TaskListRes>> req = null;
-        req = restClient.provideApi().getMyNearbyTasks(user.userid, start, orderBy.toString(), disctance, latitude, longitude, timestamp, sig);
+        req = restClient.provideApi().getMyNearbyTasks(user.userid, start, orderBy.toString(), disctance, latitude, longitude, timestamp,appId, sig);
         req.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(res -> {
                     //view.dismissProgressDialog();
@@ -155,6 +159,7 @@ public class TaskPresenter extends BasePresenter {
         //view.showProgressDialog();
         User user = BizLogic.getCurrentUser();
         String date = DateUtil.getRequestDateString(new Date());
+        String appId = PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).getString(AppConfig.ZDD_APPID);
         SignUtil.SignBuilder sigBuilder = new SignUtil.SignBuilder()
                 .put("userid", user.userid)
                 .put("distance", disctance)
@@ -164,11 +169,12 @@ public class TaskPresenter extends BasePresenter {
                 .put("lon", longitude)
                 .put("lon_user", lonUser)
                 .put("lat_user", latUser)
+                .put("appId", appId)
                 .put("timestamp", timestamp);
 
         String sig = sigBuilder.build();
         Observable<Response<TaskListRes>> req = null;
-        req = restClient.provideApi().getMyNearbyTasks(user.userid,disctance,"100","10", latitude, longitude, lonUser,latUser,timestamp, sig);
+        req = restClient.provideApi().getMyNearbyTasks(user.userid,disctance,"100","10", latitude, longitude, lonUser,latUser,timestamp, appId,sig);
         req.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(res -> {
                     //view.dismissProgressDialog();
@@ -198,6 +204,7 @@ public class TaskPresenter extends BasePresenter {
         //view.showProgressDialog();
         User user = BizLogic.getCurrentUser();
         String date = DateUtil.getRequestDateString(new Date());
+        String appId = PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).getString(AppConfig.ZDD_APPID);
         SignUtil.SignBuilder sigBuilder = new SignUtil.SignBuilder()
                 .put("userid", user.userid)
                 .put("distance", disctance)
@@ -208,11 +215,12 @@ public class TaskPresenter extends BasePresenter {
                 .put("lat", latitude)
                 .put("lon", longitude)
                 .put("keyword", keyword)
+                .put("appId", appId)
                 .put("timestamp", timestamp);
 
         String sig = sigBuilder.build();
         Observable<Response<TaskListRes>> req = null;
-        req = restClient.provideApi().getMyNearbyTasksByKeyword(user.userid,disctance,"100","10", "0","distance", latitude, longitude,keyword,timestamp, sig);
+        req = restClient.provideApi().getMyNearbyTasksByKeyword(user.userid,disctance,"100","10", "0","distance", latitude, longitude,keyword,timestamp, appId,sig);
         req.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(res -> {
                     //view.dismissProgressDialog();
@@ -238,6 +246,7 @@ public class TaskPresenter extends BasePresenter {
         //view.showProgressDialog();
         User user = BizLogic.getCurrentUser();
         String date = DateUtil.getRequestDateString(new Date());
+        String appId = PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).getString(AppConfig.ZDD_APPID);
         SignUtil.SignBuilder sigBuilder = new SignUtil.SignBuilder()
                 .put("userid", user.userid)
                 .put("start", start + "")
@@ -247,11 +256,12 @@ public class TaskPresenter extends BasePresenter {
                 .put("cellphonetype", "10")
                 .put("lat", latitude)
                 .put("lon", longitude)
+                .put("appId", appId)
                 .put("timestamp", timestamp);
 
         String sig = sigBuilder.build();
         Observable<Response<TaskListRes>> req = null;
-        req = restClient.provideApi().getMyNearbyTwentyTasks(user.userid, start, orderBy.toString(), disctance, latitude, longitude, timestamp, sig);
+        req = restClient.provideApi().getMyNearbyTwentyTasks(user.userid, start, orderBy.toString(), disctance, latitude, longitude, timestamp, appId,sig);
         req.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(res -> {
                     //view.dismissProgressDialog();

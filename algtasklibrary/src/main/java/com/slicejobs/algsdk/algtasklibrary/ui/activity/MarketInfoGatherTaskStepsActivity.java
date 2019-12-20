@@ -20,6 +20,7 @@ import com.slicejobs.algsdk.algtasklibrary.R;
 import com.slicejobs.algsdk.algtasklibrary.R2;
 import com.slicejobs.algsdk.algtasklibrary.app.AppEvent;
 import com.slicejobs.algsdk.algtasklibrary.app.BizLogic;
+import com.slicejobs.algsdk.algtasklibrary.app.SliceApp;
 import com.slicejobs.algsdk.algtasklibrary.model.MiniTask;
 import com.slicejobs.algsdk.algtasklibrary.model.Task;
 import com.slicejobs.algsdk.algtasklibrary.model.User;
@@ -31,6 +32,7 @@ import com.slicejobs.algsdk.algtasklibrary.net.response.Response;
 import com.slicejobs.algsdk.algtasklibrary.ui.base.PickPhotoActivity;
 import com.slicejobs.algsdk.algtasklibrary.utils.BusProvider;
 import com.slicejobs.algsdk.algtasklibrary.utils.DateUtil;
+import com.slicejobs.algsdk.algtasklibrary.utils.PrefUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.SignUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.StringUtil;
 import com.slicejobs.algsdk.algtasklibrary.view.IJsRenderListener;
@@ -262,6 +264,7 @@ public class MarketInfoGatherTaskStepsActivity extends PickPhotoActivity impleme
     private void newFinishTask( String finishLocation) {
         User user  = BizLogic.getCurrentUser();
         String timestamp = DateUtil.getCurrentTime();
+        String appId = PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).getString(AppConfig.ZDD_APPID);
         SignUtil.SignBuilder signBuilder = new SignUtil.SignBuilder();
         signBuilder.put("userid", user.userid)
                 .put("orderid", task.getOrderid())
@@ -279,15 +282,16 @@ public class MarketInfoGatherTaskStepsActivity extends PickPhotoActivity impleme
         signBuilder.put("interrupted_times", interruptedTimes);
         signBuilder.put("outrange_times", outrangeTimes);
         signBuilder.put("market_gatherinfo", marketGatherinfo);
+        signBuilder.put("appId", appId);
         String sig = signBuilder.build();
         Api api = RestClient.getInstance().provideApi();
         Observable<Response<Task>> taskObservable = null;
         if (checkinlocation == null) {
             taskObservable = api.newFinishOrder(user.userid, "finish", task.getOrderid(),
-                    resultData, finishLocation, "0,0", cacheUploadStatus, timestamp, taskDuration, interruptedTimes, outrangeTimes,marketGatherinfo,sig);
+                    resultData, finishLocation, "0,0", cacheUploadStatus, timestamp, taskDuration, interruptedTimes, outrangeTimes,marketGatherinfo,appId,sig);
         } else {
             taskObservable = api.newFinishOrder(user.userid, "finish", task.getOrderid(),
-                    resultData, finishLocation, checkinlocation, cacheUploadStatus, timestamp, taskDuration, interruptedTimes, outrangeTimes,marketGatherinfo,sig);
+                    resultData, finishLocation, checkinlocation, cacheUploadStatus, timestamp, taskDuration, interruptedTimes, outrangeTimes,marketGatherinfo,appId,sig);
         }
         taskObservable.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(res -> {

@@ -21,9 +21,10 @@ public class STSGetter extends OSSFederationCredentialProvider {
     public OSSFederationToken getFederationToken() {
         String timestamp = DateUtil.getCurrentTime();
         String userId = BizLogic.getCurrentUser().userid;
-        String sig = new SignUtil.SignBuilder().put("userid", userId).put("ossid", "1").put("timestamp", timestamp).build();
+        String appId = PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).getString(AppConfig.ZDD_APPID);
+        String sig = new SignUtil.SignBuilder().put("userid", userId).put("ossid", "1").put("timestamp", timestamp).put("appId", appId).build();
         try {
-            Response<OSSTicket> response = RestClient.getInstance().provideApi().getOSSTicket(userId, "1" ,timestamp, sig);
+            Response<OSSTicket> response = RestClient.getInstance().provideApi().getOSSTicket(userId, "1" ,timestamp,appId, sig);
             if (response != null && response.detail != null) {
                 OSSTicket ossTicket = response.detail;
 

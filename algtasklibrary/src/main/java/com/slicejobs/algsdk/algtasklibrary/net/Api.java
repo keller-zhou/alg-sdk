@@ -36,6 +36,7 @@ public interface Api {
     public Observable<Response<List>> getVCode(
             @Query("cellphone") String cellphone,
             @Query("timestamp") String timestamp,
+            @Query("appId") String appId,
             @Query("sig") String sig);
 
     @FormUrlEncoded
@@ -62,6 +63,7 @@ public interface Api {
                                                                     @Query("sec_consumed") String sec_consumed,
                                                                     @Query("interrupted_times") String interrupted_times,
                                                                     @Query("outrange_times") String outrange_times,
+                                                                    @Query("appId") String appId,
                                                                     @Field("sig") String sig
     );
 
@@ -80,6 +82,7 @@ public interface Api {
                                                      @Query("interrupted_times") String interrupted_times,
                                                      @Query("outrange_times") String outrange_times,
                                                      @Field("market_gatherinfo") String marketGatherinfo,
+                                                     @Query("appId") String appId,
                                                      @Field("sig") String sig
     );
     @FormUrlEncoded
@@ -96,6 +99,7 @@ public interface Api {
                                                      @Query("sec_consumed") String sec_consumed,
                                                      @Query("interrupted_times") String interrupted_times,
                                                      @Query("outrange_times") String outrange_times,
+                                                     @Query("appId") String appId,
                                                      @Field("sig") String sig
     );
 
@@ -104,6 +108,7 @@ public interface Api {
             @Query("userid") String userid,
             @Query("ossid") String ossid,
             @Query("timestamp") String timestamp,
+            @Query("appId") String appId,
             @Query("sig") String sig
     );
 
@@ -114,6 +119,7 @@ public interface Api {
             @Query("start") int start,
             @Query("status") String status,
             @Query("timestamp") String timestamp,
+            @Query("appId") String appId,
             @Query("sig") String sig
     );
 
@@ -123,6 +129,7 @@ public interface Api {
             @Query("date") String date,
             @Query("start") int start,
             @Query("timestamp") String timestamp,
+            @Query("appId") String appId,
             @Query("sig") String sig
     );
 
@@ -135,6 +142,7 @@ public interface Api {
             @Query("lat") String lat,
             @Query("lon") String lon,
             @Query("timestamp") String timestamp,
+            @Query("appId") String appId,
             @Query("sig") String sig
     );
 
@@ -147,6 +155,7 @@ public interface Api {
             @Query("lat") String lat,
             @Query("lon") String lon,
             @Query("timestamp") String timestamp,
+            @Query("appId") String appId,
             @Query("sig") String sig
     );
 
@@ -161,6 +170,7 @@ public interface Api {
             @Query("lon_user") String lon_user,
             @Query("lat_user") String lat_user,
             @Query("timestamp") String timestamp,
+            @Query("appId") String appId,
             @Query("sig") String sig
     );
 
@@ -176,6 +186,7 @@ public interface Api {
             @Query("lon") String lon,
             @Query("keyword") String keyword,
             @Query("timestamp") String timestamp,
+            @Query("appId") String appId,
             @Query("sig") String sig
     );
 
@@ -186,6 +197,7 @@ public interface Api {
             @Query("marketid") String marketid,
             @Query("score") String score,
             @Query("comment") String comment,
+            @Query("appId") String appId,
             @Field("sig") String sig
     );
 

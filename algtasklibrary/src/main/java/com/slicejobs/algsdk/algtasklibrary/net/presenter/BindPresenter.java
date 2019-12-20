@@ -39,13 +39,14 @@ public class BindPresenter extends BasePresenter {
     public void getVCode(String cellphone) {
         view.showProgressDialog();
         String timestamp = DateUtil.getCurrentTime();
-
+        String appId = PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).getString(AppConfig.ZDD_APPID);
         String sig = new SignUtil.SignBuilder()
                 .put("cellphone", cellphone)
                 .put("timestamp", timestamp)
+                .put("appId", appId)
                 .build();
 
-        restClient.provideApi().getVCode(cellphone, timestamp, sig)
+        restClient.provideApi().getVCode(cellphone, timestamp,appId ,sig)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(res -> {
                     view.dismissProgressDialog();

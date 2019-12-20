@@ -35,6 +35,7 @@ import com.slicejobs.algsdk.algtasklibrary.model.SerializableBaseMap;
 import com.slicejobs.algsdk.algtasklibrary.model.Task;
 import com.slicejobs.algsdk.algtasklibrary.model.User;
 import com.slicejobs.algsdk.algtasklibrary.net.Api;
+import com.slicejobs.algsdk.algtasklibrary.net.AppConfig;
 import com.slicejobs.algsdk.algtasklibrary.net.RestClient;
 import com.slicejobs.algsdk.algtasklibrary.net.response.Response;
 import com.slicejobs.algsdk.algtasklibrary.ui.activity.TaskWebDetailActivity;
@@ -816,16 +817,18 @@ public class MapTaskListFragment extends BaseFragment {
     private void commitNaviReview(int score,String comment){
         showProgressDialog();
         String timestamp = DateUtil.getCurrentTime();
+        String appId = PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).getString(AppConfig.ZDD_APPID);
         SignUtil.SignBuilder signBuilder = new SignUtil.SignBuilder();
         User user = BizLogic.getCurrentUser();
         signBuilder.put("userid", user.userid)
                 .put("marketid", naviMarketId)
                 .put("score", score+"")
-                .put("comment", comment);
+                .put("comment", comment)
+                .put("appId", appId);
         String sig = signBuilder.build();
         Api api = RestClient.getInstance().provideApi();
         Observable<Response<Object>> naviReviewObservable = null;
-        naviReviewObservable = api.commitMapComments(user.userid, naviMarketId, score+"",comment, sig);
+        naviReviewObservable = api.commitMapComments(user.userid, naviMarketId, score+"",comment, appId,sig);
         naviReviewObservable.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(res -> {
                     dismissProgressDialog();

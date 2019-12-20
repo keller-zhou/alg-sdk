@@ -998,6 +998,7 @@ public class UploadCacheActivity extends BaseActivity {
 
     private void olaFinishTask(String finishLocation) {
         String timestamp = DateUtil.getCurrentTime();
+        String appId = PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).getString(AppConfig.ZDD_APPID);
         SignUtil.SignBuilder signBuilder = new SignUtil.SignBuilder();
         signBuilder.put("userid", user.userid)
                 .put("taskid", task.getTaskid())
@@ -1014,6 +1015,7 @@ public class UploadCacheActivity extends BaseActivity {
         signBuilder.put("sec_consumed", taskDuration);
         signBuilder.put("interrupted_times", interruptedTimes);
         signBuilder.put("outrange_times", outrangeTimes);
+        signBuilder.put("appId", appId);
 
 
 
@@ -1022,10 +1024,10 @@ public class UploadCacheActivity extends BaseActivity {
         Observable<Response<Task>> taskObservable = null;
         if (location == null) {
             taskObservable = api.updateCacheTemplateTaskStatus(user.userid, "finish", task.getTaskid(),
-                    resultJson, finishLocation, "0,0", cacheUploadStatus, timestamp, taskDuration,interruptedTimes, outrangeTimes,sig);
+                    resultJson, finishLocation, "0,0", cacheUploadStatus, timestamp, taskDuration,interruptedTimes, outrangeTimes,appId,sig);
         } else {
             taskObservable = api.updateCacheTemplateTaskStatus(user.userid, "finish", task.getTaskid(),
-                    resultJson, finishLocation, location, cacheUploadStatus, timestamp, taskDuration,interruptedTimes, outrangeTimes, sig);
+                    resultJson, finishLocation, location, cacheUploadStatus, timestamp, taskDuration,interruptedTimes, outrangeTimes,appId, sig);
         }
         taskObservable.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Response<Task>>() {
@@ -1056,6 +1058,7 @@ public class UploadCacheActivity extends BaseActivity {
 
     private void newFinishTask( String finishLocation) {
         String timestamp = DateUtil.getCurrentTime();
+        String appId = PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).getString(AppConfig.ZDD_APPID);
         SignUtil.SignBuilder signBuilder = new SignUtil.SignBuilder();
         signBuilder.put("userid", user.userid)
                 .put("orderid", task.getOrderid())
@@ -1072,6 +1075,7 @@ public class UploadCacheActivity extends BaseActivity {
         signBuilder.put("sec_consumed", taskDuration);
         signBuilder.put("interrupted_times", interruptedTimes);
         signBuilder.put("outrange_times", outrangeTimes);
+        signBuilder.put("appId", appId);
         if(StringUtil.isNotBlank(marketGatherinfo)) {
             signBuilder.put("market_gatherinfo", marketGatherinfo);
         }
@@ -1084,7 +1088,7 @@ public class UploadCacheActivity extends BaseActivity {
                         resultJson, finishLocation, "0,0", cacheUploadStatus, timestamp, taskDuration, interruptedTimes, outrangeTimes, marketGatherinfo, sig);
             }else {
                 taskObservable = api.newFinishOrder(user.userid, "finish", task.getOrderid(),
-                        resultJson, finishLocation, "0,0", cacheUploadStatus, timestamp, taskDuration, interruptedTimes, outrangeTimes, sig);
+                        resultJson, finishLocation, "0,0", cacheUploadStatus, timestamp, taskDuration, interruptedTimes, outrangeTimes,appId, sig);
             }
         } else {
             if(StringUtil.isNotBlank(marketGatherinfo)) {
@@ -1092,7 +1096,7 @@ public class UploadCacheActivity extends BaseActivity {
                         resultJson, finishLocation, location, cacheUploadStatus, timestamp, taskDuration, interruptedTimes, outrangeTimes, marketGatherinfo, sig);
             }else {
                 taskObservable = api.newFinishOrder(user.userid, "finish", task.getOrderid(),
-                        resultJson, finishLocation, location, cacheUploadStatus, timestamp, taskDuration, interruptedTimes, outrangeTimes, sig);
+                        resultJson, finishLocation, location, cacheUploadStatus, timestamp, taskDuration, interruptedTimes, outrangeTimes,appId, sig);
             }
         }
         taskObservable.observeOn(AndroidSchedulers.mainThread())
