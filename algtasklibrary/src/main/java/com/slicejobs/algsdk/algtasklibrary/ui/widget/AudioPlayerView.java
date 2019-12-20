@@ -72,7 +72,7 @@ public class AudioPlayerView extends FrameLayout {
                         public void defineClick() {
 
                         }
-                    }, "", "爱零工暂不允许录制音频与播放音频同时进行。", "我知道了", true);
+                    }, "", "暂不允许录制音频与播放音频同时进行。", "我知道了", true);
                 }
             }
         });

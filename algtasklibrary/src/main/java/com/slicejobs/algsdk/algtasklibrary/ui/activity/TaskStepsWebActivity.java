@@ -1273,7 +1273,7 @@ public class TaskStepsWebActivity extends PickPhotoActivity implements IJsRender
                 Intent intent = new Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS);
                 startActivity(intent);
             }
-        }, "录音被禁用", "请在手机“设置-应用程序权限管理-选择爱零工”允许启动麦克风或录音", "以后再说", "打开", false);
+        }, "录音被禁用", "请在手机“设置-应用程序权限管理-选择本App”允许启动麦克风或录音", "以后再说", "打开", false);
     }
 
 

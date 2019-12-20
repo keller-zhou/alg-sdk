@@ -327,7 +327,7 @@ public class BaseFragment extends Fragment implements IWXRenderListener {
                 Intent intent = new Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS);
                 startActivityForResult(intent,222);
             }
-        }, "读取手机文件被禁止", "请在手机“设置-应用程序权限管理-选择爱零工”允许存储", "以后再说", "打开", false);
+        }, "读取手机文件被禁止", "请在手机“设置-应用程序权限管理-选择本App”允许存储", "以后再说", "打开", false);
     }
 
     private void loadJsFromServer(WXSDKInstance mWXSDKInstance, String jsFileName, String jsonInitData){

@@ -132,7 +132,7 @@
         android:textColor="@color/color_white"
         android:layout_gravity="bottom"
         android:layout_marginBottom="106dp"
-        android:text="提示：爱零工相机可连续拍照,拍完多张，点击返回"
+        android:text="提示：可连续拍照,拍完多张，点击返回"
         android:visibility="gone"
         />
 

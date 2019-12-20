@@ -318,7 +318,7 @@ public class PickPhotoActivity extends BaseActivity {
                 Intent intent = new Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS);
                 startActivity(intent);
             }
-        }, "相机被禁用", "请在手机“设置-应用程序权限管理-选择爱零工”允许启动摄像头或相机", "以后再说", "打开", false);
+        }, "相机被禁用", "请在手机“设置-应用程序权限管理-选择本App”允许启动摄像头或相机", "以后再说", "打开", false);
     }
 
     //用户点击拒绝权限时调用
@@ -341,7 +341,7 @@ public class PickPhotoActivity extends BaseActivity {
                 Intent intent = new Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS);
                 startActivity(intent);
             }
-        }, "相机被禁用", "请在手机“设置-应用程序权限管理-选择爱零工”允许启动摄像头或相机", "以后再说", "打开", false);
+        }, "相机被禁用", "请在手机“设置-应用程序权限管理-选择本App”允许启动摄像头或相机", "以后再说", "打开", false);
     }
 
 
@@ -379,7 +379,7 @@ public class PickPhotoActivity extends BaseActivity {
                         Intent intent = new Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS);
                         startActivity(intent);
                     }
-                }, "相机被禁用", "相机被禁用,请在手机“设置-应用程序权限管理-选择爱零工”允许启动摄像头或相机", "取消", "设置","使用系统相机", false);
+                }, "相机被禁用", "相机被禁用,请在手机“设置-应用程序权限管理-选择本App”允许启动摄像头或相机", "取消", "设置","使用系统相机", false);
             }
         }else {
             PickPhotoActivityPermissionsDispatcher.openSlicejobsCameraWithCheck(this, dir, evidenceRequest,takePhotoAuxiliaryLine);
@@ -440,7 +440,7 @@ public class PickPhotoActivity extends BaseActivity {
                 Intent intent = new Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS);
                 startActivity(intent);
             }
-        }, "摄像头或麦克风被禁用", "请在手机“设置-应用程序权限管理-选择爱零工”允许启动（麦克风和摄像头）或（录音和拍照）", "以后再说", "打开", false);
+        }, "摄像头或麦克风被禁用", "请在手机“设置-应用程序权限管理-选择本App”允许启动（麦克风和摄像头）或（录音和拍照）", "以后再说", "打开", false);
     }
 
 
@@ -519,7 +519,7 @@ public class PickPhotoActivity extends BaseActivity {
                 Intent intent = new Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS);
                 startActivity(intent);
             }
-        }, "读取手机相册被禁止", "请在手机“设置-应用程序权限管理-选择爱零工”允许存储", "以后再说", "打开", false);
+        }, "读取手机相册被禁止", "请在手机“设置-应用程序权限管理-选择本App”允许存储", "以后再说", "打开", false);
     }
 
     //线上bug,无读取sd卡权限6.0手机crash

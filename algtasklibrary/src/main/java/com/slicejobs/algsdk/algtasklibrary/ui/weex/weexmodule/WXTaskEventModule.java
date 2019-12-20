@@ -129,7 +129,7 @@ public class WXTaskEventModule extends WXModule {
 //                    double bdLat = Double.parseDouble(market.getLatitude());
 //                    double bdLon = Double.parseDouble(market.getLongitude());
 //                    double[] gaodeGps = OpenLocalMapUtil.bdToGaoDe(bdLat, bdLon);
-                    String uri = OpenLocalMapUtil.getGdMapUri("爱零工", market.getAddress());
+                    String uri = OpenLocalMapUtil.getGdMapUri("", market.getAddress());
                     Intent intent = Intent.parseUri(uri, 0);
                     mWXSDKInstance.getContext().startActivity(intent); //启动调用
                 } catch (Exception e) {

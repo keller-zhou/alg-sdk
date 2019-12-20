@@ -568,7 +568,7 @@ public class MapTaskListFragment extends BaseFragment {
         if (OpenLocalMapUtil.isGdMapInstalled()) {
             try {
                 //double[] gaodeGps = OpenLocalMapUtil.bdToGaoDe(dlat, dlon);
-                String uri = OpenLocalMapUtil.getGdMapUri("爱零工", dname);
+                String uri = OpenLocalMapUtil.getGdMapUri("", dname);
                 Intent intent = Intent.parseUri(uri, 0);
                 startActivityForResult(intent,REQUEST_CODE_MAP_NAVI); //启动调用
             } catch (Exception e) {
