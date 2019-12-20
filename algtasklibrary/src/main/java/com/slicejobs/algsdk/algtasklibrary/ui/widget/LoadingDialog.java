@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.slicejobs.algsdk.algtasklibrary.R;
-import com.slicejobs.algsdk.algtasklibrary.R2;
 
 
 public class LoadingDialog extends Dialog {
@@ -79,9 +78,9 @@ public class LoadingDialog extends Dialog {
         public LoadingDialog create(){
 
             LayoutInflater inflater = LayoutInflater.from(context);
-            View view=inflater.inflate(R.layout.dialog_loading,null);
+            View view=inflater.inflate(R.layout.alg_dialog_loading,null);
             LoadingDialog loadingDailog=new LoadingDialog(context, R.style.MyDialogStyle);
-            TextView msgText= (TextView) view.findViewById(R2.id.tipTextView);
+            TextView msgText= (TextView) view.findViewById(R.id.tipTextView);
             if(isShowMessage){
                 msgText.setText(message);
             }else{
