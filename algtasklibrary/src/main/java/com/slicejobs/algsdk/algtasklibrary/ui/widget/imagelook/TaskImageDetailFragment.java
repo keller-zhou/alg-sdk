@@ -77,6 +77,11 @@ public class TaskImageDetailFragment extends Fragment {
 					photoClickListener.onPhotoClick();
 				}
 			}
+
+			@Override
+			public void onOutsidePhotoTap() {
+
+			}
 		});
 		
 		progressBar = (ProgressBar) v.findViewById(R.id.loading);

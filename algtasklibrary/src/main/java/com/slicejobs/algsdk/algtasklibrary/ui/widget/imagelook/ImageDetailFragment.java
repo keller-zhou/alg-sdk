@@ -70,6 +70,11 @@ public class ImageDetailFragment extends Fragment {
 			public void onPhotoTap(View arg0, float arg1, float arg2) {
 				getActivity().finish();
 			}
+
+			@Override
+			public void onOutsidePhotoTap() {
+
+			}
 		});
 		
 		progressBar = (ProgressBar) v.findViewById(R.id.loading);
