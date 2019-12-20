@@ -25,7 +25,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  * Created by nlmartian on 8/22/15.
@@ -48,8 +47,6 @@ public class RequirementPhotosAdapter extends RecyclerView.Adapter {
 
     private ArrayList<String> urls = new ArrayList<>();
     private ItemClickListener itemClickListener;
-
-    private PhotoViewAttacher photoViewAttacher;//处理图片放大
 
     private RecyclerView recyclerView;
 
@@ -183,10 +180,6 @@ public class RequirementPhotosAdapter extends RecyclerView.Adapter {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setTag(this);
-            if (currFromLocal != null && currFromLocal.equals(FROM_LACAL_EXAMINE)) {
-                photoViewAttacher = new PhotoViewAttacher(imageView);
-                photoViewAttacher.setZoomable(false);
-            }
         }
      }
 

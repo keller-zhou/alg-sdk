@@ -19,8 +19,6 @@ import com.slicejobs.algsdk.algtasklibrary.R;
 import com.slicejobs.algsdk.algtasklibrary.R2;
 import com.slicejobs.algsdk.algtasklibrary.app.SliceApp;
 
-import uk.co.senab.photoview.PhotoViewAttacher;
-import uk.co.senab.photoview.PhotoViewAttacher.OnPhotoTapListener;
 
 
 /**
@@ -28,9 +26,8 @@ import uk.co.senab.photoview.PhotoViewAttacher.OnPhotoTapListener;
  */
 public class TaskImageDetailFragment extends Fragment {
 	private String mImageUrl;
-	private ImageView mImageView;
+	private ZoomImageView mImageView;
 	private ProgressBar progressBar;
-	private PhotoViewAttacher mAttacher;
 	private PhotoClickListener photoClickListener;
 
 	public void setPhotoClickListener(PhotoClickListener photoClickListener) {
@@ -66,21 +63,13 @@ public class TaskImageDetailFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		final View v = inflater.inflate(R.layout.fragment_image_detail, container, false);
-		mImageView = (ImageView) v.findViewById(R.id.image);
-		mAttacher = new PhotoViewAttacher(mImageView);
-		
-		mAttacher.setOnPhotoTapListener(new OnPhotoTapListener() {
-			
+		mImageView = (ZoomImageView) v.findViewById(R.id.image);
+		mImageView.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onPhotoTap(View arg0, float arg1, float arg2) {
+			public void onClick(View v) {
 				if (photoClickListener != null) {
 					photoClickListener.onPhotoClick();
 				}
-			}
-
-			@Override
-			public void onOutsidePhotoTap() {
-
 			}
 		});
 		
@@ -126,7 +115,6 @@ public class TaskImageDetailFragment extends Fragment {
 			@Override
 			public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
 				progressBar.setVisibility(View.GONE);
-				mAttacher.update();
 			}
 		});
 
