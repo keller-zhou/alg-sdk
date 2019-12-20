@@ -49,7 +49,6 @@ import com.slicejobs.algsdk.algtasklibrary.utils.ImageUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.PickImageIntentWrapper;
 import com.slicejobs.algsdk.algtasklibrary.utils.PrefUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.StringUtil;
-import com.umeng.analytics.MobclickAgent;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
@@ -179,16 +178,13 @@ public class PickPhotoActivity extends BaseActivity {
         String status = Environment.getExternalStorageState();
         if (status.equals(Environment.MEDIA_MOUNTED)) {
             if(StringUtil.isNotBlank(evidenceRequest.getQuality()) && evidenceRequest.getQuality().equals(EvidenceRequest.PHOTO_QUALITY_HIGHEST)){
-                MobclickAgent.onEvent(SliceApp.CONTEXT, "um_function_use_stytem_camera");
                 doTakePhoto(dir);//系统相机
             }else {
                 int currCamera = PrefUtil.make(this, PrefUtil.PREFERENCE_NAME).getInt(AppConfig.CAMERA_TYPE, AppConfig.SERVICE_PHOTO_CAMERA_SELECT_ALG);
                 if (currCamera == AppConfig.SERVICE_PHOTO_CAMERA_SELECT_ALG
                         || currCamera == AppConfig.LOCAL_PHOTO_CAMERA_SELECT_ALG) {
-                    MobclickAgent.onEvent(SliceApp.CONTEXT, "um_function_use_slicejobs_camera");
                     doMyTaskPhoto(dir, evidenceRequest, takePhotoAuxiliaryLine);//爱零工相机
                 } else {
-                    MobclickAgent.onEvent(SliceApp.CONTEXT, "um_function_use_stytem_camera");
                     doTakePhoto(dir);//系统相机
                 }
             }
@@ -590,7 +586,6 @@ public class PickPhotoActivity extends BaseActivity {
                     }, e -> {
                         dismissProgressDialog();
                         toast(SliceApp.CONTEXT.getString(R.string.text_image_fail));
-                        MobclickAgent.reportError(SliceApp.CONTEXT, "图片压缩失败：用户id：" + BizLogic.getCurrentUser().userid + "失败原因:" + e.getMessage() + e.getCause());
                     });
 
         } catch (IOException e) {
@@ -632,7 +627,6 @@ public class PickPhotoActivity extends BaseActivity {
                         }
                     }, e -> {
                         dismissProgressDialog();
-                        MobclickAgent.reportError(SliceApp.CONTEXT, "图片压缩失败：用户id：" + BizLogic.getCurrentUser().userid + "失败原因:" + e.getMessage() + e.getCause());
 
                         if (e instanceof NullPointerException) {
 

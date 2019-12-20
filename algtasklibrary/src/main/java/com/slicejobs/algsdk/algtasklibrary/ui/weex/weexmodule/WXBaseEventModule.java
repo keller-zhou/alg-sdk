@@ -60,7 +60,6 @@ import com.taobao.weex.bridge.JSCallback;
 import com.taobao.weex.bridge.WXBridgeManager;
 import com.taobao.weex.common.WXModule;
 import com.taobao.weex.common.WXModuleAnno;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -129,7 +128,6 @@ public class WXBaseEventModule extends WXModule {
 
     @WXModuleAnno
     public void umengCustomErrorLog(String msg) {
-        MobclickAgent.reportError(SliceApp.CONTEXT, msg);
     }
 
     @WXModuleAnno
@@ -144,7 +142,6 @@ public class WXBaseEventModule extends WXModule {
     @WXModuleAnno
     public void umengCount(String eventId) {
         if (StringUtil.isNotBlank(eventId)) {
-            MobclickAgent.onEvent(mWXSDKInstance.getContext(), eventId);
         }
     }
 

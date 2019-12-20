@@ -16,7 +16,6 @@ import com.slicejobs.algsdk.algtasklibrary.utils.PrefUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.SignUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.StringUtil;
 import com.slicejobs.algsdk.algtasklibrary.view.ILoginView;
-import com.umeng.analytics.MobclickAgent;
 
 import retrofit.RetrofitError;
 import rx.android.schedulers.AndroidSchedulers;
@@ -47,11 +46,9 @@ public class LoginPresenter extends BasePresenter {
                             String accessToken = res.data.authkey;
                             if (StringUtil.isBlank(accessToken) || accessToken.length() < 3) {//防止sj没有传递下来
                                 loginView.toast(SliceApp.CONTEXT.getString(R.string.hint_getsjauth_fail));
-                                MobclickAgent.reportError(SliceApp.CONTEXT, "用户" + res.data.userid + "登陆时传下token 为空");
                             } else {
                                 boolean isSaveSuccess = PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).putSaveToken(AppConfig.AUTH_KEY, accessToken);
                                 if (!isSaveSuccess) {//没有成功保存token
-                                    MobclickAgent.reportError(SliceApp.CONTEXT, "用户登录时用户ID"+res.data.userid+"手机型号"+ Build.MANUFACTURER + "-" + Build.MODEL + "没有成功保存token");
                                 }
                                 RestClient.getInstance().setAccessToken(accessToken);
                                 loginView.loginSuccess();
@@ -72,18 +69,14 @@ public class LoginPresenter extends BasePresenter {
                         try {
                             RetrofitError retrofitError = (RetrofitError) e;
                             if (StringUtil.isNotBlank(retrofitError.getKind().toString()) && retrofitError.getKind().toString().equals(RetrofitError.Kind.NETWORK.toString())) {
-                                MobclickAgent.reportError(SliceApp.CONTEXT, "登录不上：用户手机号：" + mobile +"报错:"+retrofitError.getKind().toString()+ "具体原因：" + retrofitError.getMessage());
                                 loginView.toast("网络开小差了");
                             } else if (StringUtil.isNotBlank(retrofitError.getKind().toString()) && retrofitError.getKind().toString().equals(RetrofitError.Kind.CONVERSION.toString())) {
-                                MobclickAgent.reportError(SliceApp.CONTEXT, "登录不上：用户手机号：" + mobile +"报错:"+retrofitError.getKind().toString()+ "具体原因：" + retrofitError.getMessage());
                                 loginView.toast("帐号或密码输入错误");
                             } else {
-                                MobclickAgent.reportError(SliceApp.CONTEXT, "登录不上：用户手机号：" + mobile +"报错:"+retrofitError.getKind().toString()+ "具体原因：" + retrofitError.getMessage());
                                 loginView.toast("服务器网络开小差");
                             }
                         } catch (IllegalStateException e1) {
                             loginView.toast("网络开小差了哦");
-                            MobclickAgent.reportError(SliceApp.CONTEXT, "登录不上：用户手机号：" + mobile + "报错:" +e.toString());
                         }
                     }
                 });

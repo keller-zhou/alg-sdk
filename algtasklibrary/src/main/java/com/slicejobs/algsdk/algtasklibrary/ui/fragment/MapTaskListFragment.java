@@ -50,7 +50,6 @@ import com.slicejobs.algsdk.algtasklibrary.utils.PrefUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.SignUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.StringUtil;
 import com.squareup.otto.Subscribe;
-import com.umeng.analytics.MobclickAgent;
 import com.willy.ratingbar.BaseRatingBar;
 import com.willy.ratingbar.ScaleRatingBar;
 
@@ -325,7 +324,6 @@ public class MapTaskListFragment extends BaseFragment {
             }
         } else if (view.getId() == R.id.useGuide) {
             if(latLng != null && StringUtil.isNotBlank(naviAddress)){
-                MobclickAgent.onEvent(getActivity(), "um_function_map_task_navigation_start");
                 openLocalMap(latLng.latitude,latLng.longitude,naviAddress);
             }
         } else if (view.getId() == R.id.layout_tasks_not_pick) {
@@ -358,7 +356,6 @@ public class MapTaskListFragment extends BaseFragment {
                     marketRoutePlanListener.onMarketRoutePlan(latLng);
                 }
             }
-            MobclickAgent.onEvent(getActivity(), "um_function_map_task_turn_by_turn");
         }
     }
 
@@ -523,7 +520,6 @@ public class MapTaskListFragment extends BaseFragment {
                         new ActionSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
-                                MobclickAgent.onEvent(SliceApp.CONTEXT, "um_function_map_task_navigation_start_baidu");
                                 openBaiduMap(dlat,dlon,address);
                             }
                         })
@@ -531,7 +527,6 @@ public class MapTaskListFragment extends BaseFragment {
                         new ActionSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
-                                MobclickAgent.onEvent(SliceApp.CONTEXT, "um_function_map_task_navigation_start_gaode");
                                 openGaodeNavigation(dlat,dlon,address);
                             }
                         })
@@ -539,7 +534,6 @@ public class MapTaskListFragment extends BaseFragment {
                         new ActionSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
-                                MobclickAgent.onEvent(getActivity(), "um_function_map_task_navigation_evaluate");
                                 showNaviReviewDialog();
                             }
                         }).show();

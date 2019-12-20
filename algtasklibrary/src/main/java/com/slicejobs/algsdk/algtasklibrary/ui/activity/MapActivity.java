@@ -96,7 +96,6 @@ import com.slicejobs.algsdk.algtasklibrary.utils.overlayutil.DrivingRouteOverlay
 import com.slicejobs.algsdk.algtasklibrary.utils.overlayutil.TransitRouteOverlay;
 import com.slicejobs.algsdk.algtasklibrary.utils.overlayutil.WalkingRouteOverlay;
 import com.slicejobs.algsdk.algtasklibrary.view.ITaskView;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -696,14 +695,12 @@ public class MapActivity extends BaseActivity implements MapTaskListFragment.Map
     protected void onResume() {
         super.onResume();
         mMapView.onResume();
-        MobclickAgent.onPageStart("MapActivity");
     }
 
     @Override
     public void onPause() {
         mMapView.onPause();
         super.onPause();
-        MobclickAgent.onPageEnd("MapActivity");
     }
 
 

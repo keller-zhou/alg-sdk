@@ -27,7 +27,6 @@ import com.slicejobs.algsdk.algtasklibrary.app.SliceApp;
 import com.slicejobs.algsdk.algtasklibrary.model.EvidenceRequest;
 import com.slicejobs.algsdk.algtasklibrary.model.Photo;
 import com.slicejobs.algsdk.algtasklibrary.net.AppConfig;
-import com.umeng.analytics.MobclickAgent;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -331,7 +330,6 @@ public class ImageUtil {
         try {
             return BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
         }catch (Exception e){
-            MobclickAgent.reportError(SliceApp.CONTEXT, "图片Byte解析失败：用户id：" + BizLogic.getCurrentUser().userid + "失败原因:" + e.getMessage() + e.getCause());
             return null;
         }
     }
@@ -359,7 +357,6 @@ public class ImageUtil {
         try {
             return BitmapFactory.decodeFile(uri.getPath(), options);
         }catch (Exception e){
-            MobclickAgent.reportError(SliceApp.CONTEXT, "图片Uri解析失败：用户id：" + BizLogic.getCurrentUser().userid + "失败原因:" + e.getMessage() + e.getCause());
             return null;
         }
     }

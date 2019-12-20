@@ -71,7 +71,6 @@ import com.slicejobs.algsdk.algtasklibrary.utils.StringUtil;
 import com.slicejobs.algsdk.algtasklibrary.view.IJsRenderListener;
 import com.squareup.otto.Subscribe;
 import com.taobao.weex.WXSDKInstance;
-import com.umeng.analytics.MobclickAgent;
 import com.zhihu.matisse.Matisse;
 
 import java.io.File;
@@ -349,16 +348,13 @@ public class TaskStepsWebActivity extends PickPhotoActivity implements IJsRender
         String status = Environment.getExternalStorageState();
         if (status.equals(Environment.MEDIA_MOUNTED)) {
             if(StringUtil.isNotBlank(evidenceRequest.getQuality()) && evidenceRequest.getQuality().equals(EvidenceRequest.PHOTO_QUALITY_HIGHEST)){
-                MobclickAgent.onEvent(this, "um_function_use_stytem_camera");
                 doTakePhoto(cacheDir);//系统相机
             }else {
                 int currCamera = PrefUtil.make(this, PrefUtil.PREFERENCE_NAME).getInt(AppConfig.CAMERA_TYPE, AppConfig.SERVICE_PHOTO_CAMERA_SELECT_ALG);
                 if (currCamera == AppConfig.SERVICE_PHOTO_CAMERA_SELECT_ALG
                         || currCamera == AppConfig.LOCAL_PHOTO_CAMERA_SELECT_ALG) {
-                    MobclickAgent.onEvent(this, "um_function_use_slicejobs_camera");
                     doMyTaskPhoto(cacheDir, evidenceRequest, takePhotoAuxiliaryLine);//爱零工相机
                 } else {
-                    MobclickAgent.onEvent(this, "um_function_use_stytem_camera");
                     doTakePhoto(cacheDir);//系统相机
                 }
             }
@@ -475,7 +471,6 @@ public class TaskStepsWebActivity extends PickPhotoActivity implements IJsRender
                                 }, SliceApp.CONTEXT.getString(R.string.text_slicejobs_hint), "此视频不符合要求拍摄时长，请重试", "我知道了", false);
                             }
                         } catch (IOException e) {
-                            MobclickAgent.reportError(SliceApp.CONTEXT, "打开MediaPlayer失败：用户手机：" + BizLogic.getCurrentUser().userid + "失败原因:onRecordEnd>>" + e.getMessage());
                         }
                     }
                 }
@@ -555,7 +550,6 @@ public class TaskStepsWebActivity extends PickPhotoActivity implements IJsRender
                             }, this.getString(R.string.text_slicejobs_hint), "此音频不符合要求录制时长，请重试", "我知道了", false);
                         }
                     } catch (IOException e) {
-                        MobclickAgent.reportError(this, "打开MediaPlayer失败：用户手机：" + BizLogic.getCurrentUser().userid + "失败原因:onRecordEnd>>"+e.getMessage());
                     }
                 }
             }
@@ -1349,7 +1343,6 @@ public class TaskStepsWebActivity extends PickPhotoActivity implements IJsRender
                         }, this.getString(R.string.text_slicejobs_hint), "此音频不符合要求录制时长，请重试", "我知道了", false);
                     }
                 } catch (IOException e) {
-                    MobclickAgent.reportError(this, "打开MediaPlayer失败：用户手机：" + BizLogic.getCurrentUser().userid + "失败原因:onRecordEnd>>"+e.getMessage());
                 }
             }
         } else {

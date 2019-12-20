@@ -21,7 +21,6 @@ import com.slicejobs.algsdk.algtasklibrary.utils.PrefUtil;
 import com.taobao.weex.bridge.WXBridgeManager;
 import com.taobao.weex.common.WXModule;
 import com.taobao.weex.common.WXModuleAnno;
-import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
 import java.util.HashMap;
@@ -84,7 +83,6 @@ public class WXHomeEventModule extends WXModule {
                         new ActionSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
-                                MobclickAgent.onEvent(SliceApp.CONTEXT, "um_function_map_task_navigation_start_baidu");
                                 openBaiduNavigation(market);
                             }
                         })
@@ -92,7 +90,6 @@ public class WXHomeEventModule extends WXModule {
                         new ActionSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
-                                MobclickAgent.onEvent(SliceApp.CONTEXT, "um_function_map_task_navigation_start_gaode");
                                 openGaodeNavigation(market);
                             }
                         }).show();

@@ -77,8 +77,6 @@ dependencies {
     implementation 'io.reactivex:rxandroid:0.25.0'
     implementation 'com.hjq:toast:8.0'
     implementation files('libs/BaiduLBS_Android.jar')
-    implementation  'com.umeng.umsdk:analytics:8.0.0'
-    implementation  'com.umeng.umsdk:common:2.0.0'
     implementation 'cn.jzvd:jiaozivideoplayer:6.2.9'
     implementation 'com.jakewharton:butterknife:5.1.2'
     implementation files('libs/zxing.jar')

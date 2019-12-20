@@ -38,7 +38,6 @@ import com.slicejobs.algsdk.algtasklibrary.utils.StringUtil;
 import com.slicejobs.algsdk.algtasklibrary.view.IJsRenderListener;
 import com.squareup.otto.Subscribe;
 import com.taobao.weex.WXSDKInstance;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.Date;
 import java.util.HashMap;

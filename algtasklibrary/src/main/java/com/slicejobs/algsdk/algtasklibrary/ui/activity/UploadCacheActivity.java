@@ -57,7 +57,6 @@ import com.slicejobs.algsdk.algtasklibrary.utils.NetWorkUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.PrefUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.SignUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.StringUtil;
-import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -590,9 +589,7 @@ public class UploadCacheActivity extends BaseActivity {
             uploadTaskThread = new UploadTaskThread();
             uploadTaskThread.start();
             if(NetWorkUtil.isWifiActive()){
-                MobclickAgent.onEvent(SliceApp.CONTEXT, "um_function_use_wifi");
             }else {
-                MobclickAgent.onEvent(SliceApp.CONTEXT, "um_function_not_use_wifi");
             }
         } else if (view.getId() == R.id.action_go_back) {
             backDown();
@@ -627,7 +624,6 @@ public class UploadCacheActivity extends BaseActivity {
             public void onUploadFail(String msg) {
                 if (!uploadErrMsg.equals(msg)) {
                     uploadErrMsg = msg;
-                    MobclickAgent.reportError(SliceApp.CONTEXT, "上传失败：用户id：" + user.userid + "失败原因" + uploadErrMsg);
                     if (uploadErrMsg.contains("Unable to resolve host")) {//网络问题
                         uploadNotice.setTextColor(Color.RED);
                         uploadNotice.setText("当前网络信号不稳定，请稍后重试");
@@ -688,7 +684,6 @@ public class UploadCacheActivity extends BaseActivity {
             public void onUploadFail(String msg) {
                 if (!uploadErrMsg.equals(msg)) {
                     uploadErrMsg = msg;
-                    MobclickAgent.reportError(SliceApp.CONTEXT, "上传失败：用户id：" + user.userid + "失败原因" + uploadErrMsg);
                     if (uploadErrMsg.contains("Unable to resolve host")) {//网络问题
                         uploadNotice.setTextColor(Color.RED);
                         uploadNotice.setText("当前网络信号不稳定，请稍后重试");
@@ -748,7 +743,6 @@ public class UploadCacheActivity extends BaseActivity {
             public void onUploadFail(String msg) {
                 if (!uploadErrMsg.equals(msg)) {
                     uploadErrMsg = msg;
-                    MobclickAgent.reportError(SliceApp.CONTEXT, "上传失败：用户id：" + user.userid + "失败原因" + uploadErrMsg);
                     if (uploadErrMsg.contains("Unable to resolve host")) {//网络问题
                         uploadNotice.setTextColor(Color.RED);
                         uploadNotice.setText("当前网络信号不稳定，请稍后重试");
@@ -949,7 +943,6 @@ public class UploadCacheActivity extends BaseActivity {
         int isHaveEvidenceIndex = checkHaveEvidence();
         if (isHaveEvidenceIndex != -1) {
             toast("您第"+(isHaveEvidenceIndex+1)+"步骤，有照片找不到了，可能被删除了，请点击左上角返回，检查证据是否丢失。");
-            MobclickAgent.reportError(SliceApp.CONTEXT, "照片丢失：用户id：" + user.userid + "json:" + resultJson);
             return;
         }
 

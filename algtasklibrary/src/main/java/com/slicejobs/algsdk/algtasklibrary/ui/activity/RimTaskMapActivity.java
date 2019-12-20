@@ -24,7 +24,6 @@ import com.slicejobs.algsdk.algtasklibrary.utils.BusProvider;
 import com.slicejobs.algsdk.algtasklibrary.utils.StringUtil;
 import com.slicejobs.algsdk.algtasklibrary.view.IJsRenderListener;
 import com.squareup.otto.Subscribe;
-import com.umeng.analytics.MobclickAgent;
 import com.taobao.weex.WXSDKInstance;
 import java.util.HashMap;
 import java.util.Map;
@@ -129,7 +128,6 @@ public class RimTaskMapActivity extends BaseActivity implements IJsRenderListene
         if (view.getId() == R.id.action_return) {
             this.finish();
         } else if (view.getId() == R.id.action_store_task) {
-            MobclickAgent.onEvent(this, "um_function_market_task");
             Intent intent = new Intent(this, HallTaskActivity.class);
             startActivity(intent);
         } else if (view.getId() == R.id.action_search_task) {

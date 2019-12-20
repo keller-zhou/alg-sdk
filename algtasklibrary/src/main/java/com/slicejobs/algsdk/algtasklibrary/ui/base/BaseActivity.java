@@ -49,7 +49,6 @@ import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.common.WXRenderStrategy;
 import com.taobao.weex.utils.WXFileUtils;
 import com.taobao.weex.utils.WXViewUtils;
-import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -148,7 +147,7 @@ public class BaseActivity extends SwipeBackActivity implements IWXRenderListener
     }
 
     public void umengCustomErrorLog(String msg) { //友盟收集自定义报错
-        MobclickAgent.reportError(SliceApp.CONTEXT, msg);
+
     }
 
     /**

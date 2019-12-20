@@ -18,7 +18,6 @@ import com.slicejobs.algsdk.algtasklibrary.utils.PrefUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.SignUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.StringUtil;
 import com.slicejobs.algsdk.algtasklibrary.view.IBindView;
-import com.umeng.analytics.MobclickAgent;
 
 import retrofit.RetrofitError;
 import rx.Observable;
@@ -62,12 +61,10 @@ public class BindPresenter extends BasePresenter {
                         if (StringUtil.isNotBlank(retrofitError.getKind().toString()) && retrofitError.getKind().toString().equals(RetrofitError.Kind.NETWORK.toString())) {
                             view.sendVCodeFaild("网络开小差了");
                         } else {
-                            MobclickAgent.reportError(SliceApp.CONTEXT, "注册获取验证码：用户手机号：" + cellphone + "报错具体原因：" + e.getMessage());
                             view.sendVCodeFaild(SliceApp.CONTEXT.getString(R.string.server_error));
                         }
                     } catch (IllegalStateException e1) {
                         view.sendVCodeFaild("网络开小差了哦");
-                        MobclickAgent.reportError(SliceApp.CONTEXT, "注册获取验证码2：用户手机号" + cellphone + "报错:" +e.toString());
                     }
                 });
     }
@@ -87,11 +84,9 @@ public class BindPresenter extends BasePresenter {
                             String accessToken = res.data.authkey;
                             if (StringUtil.isBlank(accessToken) || accessToken.length() < 3) {//防止sj没有传递下来
                                 view.toast(SliceApp.CONTEXT.getString(R.string.hint_getsjauth_fail));
-                                MobclickAgent.reportError(SliceApp.CONTEXT, "用户" + res.data.userid + "登陆时传下token 为空");
                             } else {
                                 boolean isSaveSuccess = PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).putSaveToken(AppConfig.AUTH_KEY, accessToken);
                                 if (!isSaveSuccess) {//没有成功保存token
-                                    MobclickAgent.reportError(SliceApp.CONTEXT, "用户登录时用户ID"+res.data.userid+"手机型号"+ Build.MANUFACTURER + "-" + Build.MODEL + "没有成功保存token");
                                 }
                                 RestClient.getInstance().setAccessToken(accessToken);
                                 view.bindSuccess();
@@ -109,12 +104,10 @@ public class BindPresenter extends BasePresenter {
                             view.sendVCodeFaild("网络开小差了");
                         } else {
                             view.sendVCodeFaild(SliceApp.CONTEXT.getString(R.string.server_error));
-                            MobclickAgent.reportError(SliceApp.CONTEXT, "注册提交注册：用户手机号：" + mobile + "报错具体原因：" + e.getMessage());
                         }
 
                     } catch (IllegalStateException e1) {
                         view.sendVCodeFaild("网络开小差了");
-                        MobclickAgent.reportError(SliceApp.CONTEXT, "注册提交注册2：用户手机号：" + mobile + "报错具体原因：" + e.getMessage());
 
                     }
                     view.bindFail();

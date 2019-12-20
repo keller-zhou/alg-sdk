@@ -15,7 +15,6 @@ import com.slicejobs.algsdk.algtasklibrary.app.SliceApp;
 import com.slicejobs.algsdk.algtasklibrary.model.EvidenceRequest;
 import com.slicejobs.algsdk.algtasklibrary.net.AppConfig;
 import com.slicejobs.algsdk.algtasklibrary.ui.activity.CameraKitActivity;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -89,7 +88,6 @@ public class PickImageIntentWrapper {
         intent.putExtra("type", CameraKitActivity.VIDEO_TYPE);
         intent.putExtra(CameraKitActivity.EVIDENCE_REQUEST, evidenceRequest);
         intent.putExtra("dir", saveDir);
-        MobclickAgent.onEvent(SliceApp.CONTEXT, "um_function_use_new_video");
 
         return intent;
     }

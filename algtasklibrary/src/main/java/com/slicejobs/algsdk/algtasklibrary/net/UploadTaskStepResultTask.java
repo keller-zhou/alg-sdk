@@ -27,7 +27,6 @@ import com.slicejobs.algsdk.algtasklibrary.service.TaskResultUploadService;
 import com.slicejobs.algsdk.algtasklibrary.utils.FileUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.PrefUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.StringUtil;
-import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
 import java.io.IOException;
@@ -378,7 +377,6 @@ public class UploadTaskStepResultTask extends AsyncTask {
 
             @Override
             public void onUploadFail(String msg) {
-                MobclickAgent.reportError(SliceApp.CONTEXT, "上传失败：用户id：" + user.userid + "失败原因" + msg);
                 if (msg.contains("403")) {
                     PrefUtil.make(context, PrefUtil.PREFERENCE_NAME).putString(AppConfig.OSS_TOKEN_KEY, "");//删除oss token
                 }
@@ -408,7 +406,6 @@ public class UploadTaskStepResultTask extends AsyncTask {
 
             @Override
             public void onUploadFail(String msg) {
-                MobclickAgent.reportError(SliceApp.CONTEXT, "上传失败：用户id：" + user.userid + "失败原因" + msg);
                 if (msg.contains("403")) {
                     PrefUtil.make(context, PrefUtil.PREFERENCE_NAME).putString(AppConfig.OSS_TOKEN_KEY, "");//删除oss token
                 }
@@ -436,7 +433,6 @@ public class UploadTaskStepResultTask extends AsyncTask {
 
             @Override
             public void onUploadFail(String msg) {
-                MobclickAgent.reportError(SliceApp.CONTEXT, "上传失败：用户id：" + user.userid + "失败原因" + msg);
                 if (msg.contains("403")) {
                     PrefUtil.make(context, PrefUtil.PREFERENCE_NAME).putString(AppConfig.OSS_TOKEN_KEY, "");//删除oss token
                 }
@@ -463,7 +459,6 @@ public class UploadTaskStepResultTask extends AsyncTask {
 
             @Override
             public void onUploadFail(String msg) {
-                MobclickAgent.reportError(SliceApp.CONTEXT, "上传失败：用户id：" + user.userid + "失败原因" + msg);
                 if (msg.contains("403")) {
                     PrefUtil.make(context, PrefUtil.PREFERENCE_NAME).putString(AppConfig.OSS_TOKEN_KEY, "");//删除oss token
                 }
