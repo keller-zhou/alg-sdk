@@ -64,7 +64,7 @@ public class GifComponent extends WXComponent<GifImageView> {
                 }
             }
         }else {
-            Glide.with(WXEnvironment.getApplication()).load(url).asGif().into(gifImageView);
+            Glide.with(WXEnvironment.getApplication()).load(url).into(gifImageView);
         }
     }
 
