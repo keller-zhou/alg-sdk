@@ -38,6 +38,7 @@ import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
@@ -269,6 +270,7 @@ public class MapActivity extends BaseActivity implements MapTaskListFragment.Map
         if (savedInstanceState != null) {
             savedInstanceState.putParcelable("android:support:fragments", null);
         }
+        SDKInitializer.initialize(this);
         setContentView(R.layout.activity_map);
         ButterKnife.bind(this);
         //获取地图控件引用
