@@ -122,7 +122,6 @@ public class MapActivity extends BaseActivity implements MapTaskListFragment.Map
     public static final String CLICKMARKETID = "clickMarketId";
     public static final String CLICKMARKETLON = "clickMarketLon";
     public static final String CLICKMARKETLAT = "clickMarketLat";
-    private MapView mMapView = null;
     private BaiduMap mBaiduMap = null;
     private MapTaskListFragment mapTaskListFragment = null;
 
@@ -187,6 +186,8 @@ public class MapActivity extends BaseActivity implements MapTaskListFragment.Map
     FrameLayout routeDiatanceLayout;
     @BindView(R2.id.text_route_distance)
     TextView routeDiatanceText;
+    @BindView(R2.id.bmapView)
+    MapView mMapView;
     private List<Task> taskListSum = new ArrayList<>();//当前总列表
     private double lon;
     private double lat;
@@ -271,7 +272,6 @@ public class MapActivity extends BaseActivity implements MapTaskListFragment.Map
         setContentView(R.layout.activity_map);
         ButterKnife.bind(this);
         //获取地图控件引用
-        mMapView = (MapView) findViewById(R.id.bmapView);
         mBaiduMap = mMapView.getMap();
         // 隐藏logo
         View child = mMapView.getChildAt(1);
