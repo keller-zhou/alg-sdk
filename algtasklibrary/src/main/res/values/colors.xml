@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_base">#C80000</color>
+    <color name="color_base">#FE9901</color>
     <!--<color name="color_base">#fd9a01</color>-->
     <color name="color_base_dark">#8B0000</color>
     <color name="color_bg">#F7F7F7</color>
@@ -36,7 +36,6 @@
     <color name="color_base_green">#99cc33</color>
     <color name="color_base_yellow">#ffcc00</color>
     <color name="color_base_green2">#B6DA53</color>
-
     <color name="viewfinder_mask">#60000000</color>
     <color name="result_view">#b0000000</color>
     <color name="possible_result_points">#c0ffff00</color>

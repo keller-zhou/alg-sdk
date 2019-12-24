@@ -176,7 +176,7 @@ public class MapActivity extends BaseActivity implements MapTaskListFragment.Map
     @BindView(R2.id.cacel_layout)
     FrameLayout cacelLayout;
     @BindView(R2.id.map_task_list)//用于显示搜索出来的任务
-            RecyclerView rvNearTaskList;
+    RecyclerView rvNearTaskList;
     @BindView(R2.id.search_no_data)
     FrameLayout frameNoData;
     @BindView(R2.id.route_plan_quit)

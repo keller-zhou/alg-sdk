@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String appId = "5df87dea9ba77";
                 String userId = "1234";
-                String mobile = "13122687021";
+                String mobile = "17612162770";
                 String actionTime = System.currentTimeMillis() / 1000 + "";
                 String sign = SignUtil.md5("appId=" + appId + "&appKey=Bz68utOQ2R1nIWwZqNw8CFsVJloshWTe0qEMJnALs14HXWsVLsXFWWWrHKxgFVGRSLi5wVu0t7J22ff9o1P2RDy3OVqzJyAsueocRS0fFh3TgWRVuEiojeWF0mTzacmX"
                         +"&userId=" + userId + "&mobile=" + mobile + "&actionTime=" + actionTime);
