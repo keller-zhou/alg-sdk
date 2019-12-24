@@ -10,7 +10,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="43dp"
-        android:background="@color/color_white">
+        android:background="@color/color_base">
 
         <TextView
             android:id="@+id/title_homepage"
@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="相册"
-            android:textColor="@color/text_color7"
+            android:textColor="@color/color_white"
             android:textSize="15dp" />
 
         <LinearLayout

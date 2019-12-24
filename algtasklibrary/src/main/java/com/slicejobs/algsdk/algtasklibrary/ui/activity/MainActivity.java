@@ -18,10 +18,13 @@ import com.slicejobs.algsdk.algtasklibrary.view.IJsRenderListener;
 import com.taobao.weex.WXSDKInstance;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity implements IJsRenderListener {
 
@@ -56,6 +59,13 @@ public class MainActivity extends BaseActivity implements IJsRenderListener {
     public void onViewCreated(WXSDKInstance instance, View view) {
         this.mWXSDKInstance = instance;
         homeView.addView(view);
+    }
+
+    @OnClick({R2.id.action_return})
+    public void onClick(View view) {
+        if (view.getId() == R.id.action_return) {
+            finish();
+        }
     }
 
     private void applyForPermission(){

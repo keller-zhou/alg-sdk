@@ -61,7 +61,7 @@
         android:id="@+id/layout_top"
         android:layout_width="match_parent"
         android:layout_height="43dp"
-        android:background="@color/color_white"
+        android:background="@color/color_base"
         >
         <LinearLayout
             android:id="@+id/action_return"
