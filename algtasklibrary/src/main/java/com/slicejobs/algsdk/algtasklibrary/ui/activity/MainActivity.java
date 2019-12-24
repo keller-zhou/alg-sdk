@@ -39,11 +39,11 @@ public class MainActivity extends BaseActivity implements IJsRenderListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_index);
+        applyForPermission();
         WXBaseEventModule.writeStorage();
         ButterKnife.bind(this);
         BusProvider.getInstance().register(this);
         renderJs(AppConfig.HOME_VIEW_FILE,null,"首页",this);
-        applyForPermission();
     }
 
     @Override
