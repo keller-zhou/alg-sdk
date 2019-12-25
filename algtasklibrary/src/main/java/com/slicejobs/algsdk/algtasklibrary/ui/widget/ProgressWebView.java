@@ -1,11 +1,15 @@
 package com.slicejobs.algsdk.algtasklibrary.ui.widget;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
 import android.view.View;
+import android.webkit.ValueCallback;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 
@@ -16,12 +20,11 @@ import com.slicejobs.algsdk.algtasklibrary.R2;
 /**
  * Created by keller.zhou on 17/4/20.
  */
-
 @SuppressWarnings("deprecation")
 public class ProgressWebView extends WebView {
-
     private ProgressBar progressbar;
     private int curProgress;
+
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -44,33 +47,20 @@ public class ProgressWebView extends WebView {
             }
         }
     };
-
     public ProgressWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
         progressbar = new ProgressBar(context, null,
                 android.R.attr.progressBarStyleHorizontal);
         progressbar.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
                 10, 0, 0));
-
         Drawable drawable = context.getResources().getDrawable(R.drawable.progress_bar_states);
         progressbar.setProgressDrawable(drawable);
         addView(progressbar);
         // setWebViewClient(new WebViewClient(){});
-        setWebChromeClient(new WebChromeClient());
         //是否可以缩放
         getSettings().setSupportZoom(true);
         getSettings().setBuiltInZoomControls(true);
         handler.sendEmptyMessage(0);
-    }
-
-    public class WebChromeClient extends android.webkit.WebChromeClient {
-        @Override
-        public void onProgressChanged(WebView view, int newProgress) {
-            if (newProgress == 100) {
-                handler.sendEmptyMessageDelayed(1, 1);
-            }
-        }
-
     }
 
     @Override
@@ -81,10 +71,15 @@ public class ProgressWebView extends WebView {
         progressbar.setLayoutParams(lp);
         super.onScrollChanged(l, t, oldl, oldt);
     }
-
     public void resetWebviewUI(){
         curProgress = 0;
         progressbar.setVisibility(View.VISIBLE);
         handler.sendEmptyMessage(0);
     }
+
+
+    public void finishProgress() {
+        handler.sendEmptyMessageDelayed(1, 1);
+    }
+
 }

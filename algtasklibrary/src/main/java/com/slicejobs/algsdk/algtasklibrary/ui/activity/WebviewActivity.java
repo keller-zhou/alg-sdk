@@ -1,5 +1,6 @@
 package com.slicejobs.algsdk.algtasklibrary.ui.activity;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -19,6 +20,9 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.webkit.CookieManager;
 import android.webkit.JavascriptInterface;
+import android.webkit.PermissionRequest;
+import android.webkit.ValueCallback;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -42,6 +46,7 @@ import com.slicejobs.algsdk.algtasklibrary.utils.StringUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.imagedecode.ImageDecodeUtil;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -69,6 +74,12 @@ public class WebviewActivity extends BaseActivity {
     public String url = null;
     private String titleStr;
     private String pageTag;
+
+    public ValueCallback<Uri> mUploadMessage;
+    public ValueCallback<Uri[]> mUploadMessageForAndroid5;
+    public final static int FILECHOOSER_RESULTCODE = 1;
+    public final static int FILECHOOSER_RESULTCODE_FOR_ANDORID_5 = 2;
+
 
 
     private Handler handler = new Handler(){
@@ -282,11 +293,129 @@ public class WebviewActivity extends BaseActivity {
 
         });
 
+
+
+        webView.setWebChromeClient(new android.webkit.WebChromeClient() {
+
+            @Override
+            public void onPermissionRequest(final PermissionRequest request) {
+                WebviewActivity.this.runOnUiThread(new Runnable(){
+                    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                    @Override
+                    public void run() {
+                        request.grant(request.getResources());
+                    }
+                });
+
+            }
+
+            @Override
+            public void onReceivedTitle(WebView view, String title) {
+                super.onReceivedTitle(view, title);
+
+            }
+
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                if (newProgress == 100) {
+                    webView.finishProgress();
+                }
+
+            }
+
+
+            //扩展浏览器上传文件
+            //3.0++版本
+            public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType) {
+                openFileChooserImpl(uploadMsg);
+            }
+
+            //3.0--版本
+            public void openFileChooser(ValueCallback<Uri> uploadMsg) {
+                openFileChooserImpl(uploadMsg);
+            }
+
+            public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture) {
+                openFileChooserImpl(uploadMsg);
+            }
+
+            // For Android > 5.0
+            public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> uploadMsg, WebChromeClient.FileChooserParams fileChooserParams) {
+                openFileChooserImplForAndroid5(uploadMsg);
+                return true;
+            }
+
+        });
+
+
+
+
         webView.addJavascriptInterface(new JSIntface(), "JSIntface");
         webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
         webView.clearCache(true);
         webView.loadUrl(url);
     }
+
+
+
+    private void openFileChooserImpl(ValueCallback<Uri> uploadMsg) {
+        mUploadMessage = uploadMsg;
+        Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+        i.addCategory(Intent.CATEGORY_OPENABLE);
+        i.setType("image/*");
+        startActivityForResult(Intent.createChooser(i, "File Chooser"), FILECHOOSER_RESULTCODE);
+    }
+
+    private void openFileChooserImplForAndroid5(ValueCallback<Uri[]> uploadMsg) {
+        mUploadMessageForAndroid5 = uploadMsg;
+        Intent contentSelectionIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        contentSelectionIntent.addCategory(Intent.CATEGORY_OPENABLE);
+        contentSelectionIntent.setType("image/*");
+
+        Intent chooserIntent = new Intent(Intent.ACTION_CHOOSER);
+        chooserIntent.putExtra(Intent.EXTRA_INTENT, contentSelectionIntent);
+        chooserIntent.putExtra(Intent.EXTRA_TITLE, "Image Chooser");
+
+        startActivityForResult(chooserIntent, FILECHOOSER_RESULTCODE_FOR_ANDORID_5);
+
+//        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);// 启动系统相机
+//        Uri photoUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory().getPath()+ "/" + "temp.png")); // 传递路径
+//        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);// 更改系统默认存储路径
+//        startActivityForResult(intent, FILECHOOSER_RESULTCODE_FOR_ANDORID_5);
+
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (requestCode == FILECHOOSER_RESULTCODE) {
+            if (null == mUploadMessage)
+                return;
+            Uri result = intent == null || resultCode != RESULT_OK ? null : intent.getData();
+            mUploadMessage.onReceiveValue(result);
+            mUploadMessage = null;
+        } else if (requestCode == FILECHOOSER_RESULTCODE_FOR_ANDORID_5) {
+            FileInputStream fis = null;
+            String path = Environment.getExternalStorageDirectory().getPath()+ "/" + "temp.png";
+//
+            if (null == mUploadMessageForAndroid5)
+                return;
+//            try {
+//                fis = new FileInputStream(Environment.getExternalStorageDirectory().getPath()+ "/" + "temp.png");
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            }
+            Uri result = (intent == null || resultCode != RESULT_OK) ? null : intent.getData();
+            if (result != null) {
+                mUploadMessageForAndroid5.onReceiveValue(new Uri[]{result});
+            } else {
+                mUploadMessageForAndroid5.onReceiveValue(new Uri[]{});
+            }
+            mUploadMessageForAndroid5 = null;
+        }
+    }
+
+
 
 
 
