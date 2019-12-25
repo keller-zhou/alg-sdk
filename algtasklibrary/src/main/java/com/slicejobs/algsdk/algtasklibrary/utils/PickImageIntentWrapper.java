@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 
+import com.google.gson.Gson;
 import com.slicejobs.algsdk.algtasklibrary.app.SliceApp;
 import com.slicejobs.algsdk.algtasklibrary.model.EvidenceRequest;
 import com.slicejobs.algsdk.algtasklibrary.net.AppConfig;
@@ -68,7 +69,9 @@ public class PickImageIntentWrapper {
     public static Intent getMyCameraIntent(String dir, EvidenceRequest evidenceRequest, int takePhotoAuxiliaryLine) {//使用爱零工相机可以实现连拍
         Intent intent = new Intent();
         intent.setAction("com.slicejobs.algsdk.algtasklibrary.MY_CAMERA_KIT");
-        intent.putExtra(CameraKitActivity.EVIDENCE_REQUEST, evidenceRequest);
+        Gson gson = new Gson();
+        String evidenceRequestJson = gson.toJson(evidenceRequest);
+        intent.putExtra(CameraKitActivity.EVIDENCE_REQUEST, evidenceRequestJson);
         intent.putExtra("type", CameraKitActivity.PHOTO_TYPE);
         intent.putExtra(CameraKitActivity.PHOTO_DIR, dir);
         intent.putExtra(CameraKitActivity.PHOTO_HELP_LINE, takePhotoAuxiliaryLine);
@@ -86,7 +89,9 @@ public class PickImageIntentWrapper {
         //爱零工相机 camerakit视频相机
         intent.setAction("com.slicejobs.algsdk.algtasklibrary.MY_CAMERA_KIT");
         intent.putExtra("type", CameraKitActivity.VIDEO_TYPE);
-        intent.putExtra(CameraKitActivity.EVIDENCE_REQUEST, evidenceRequest);
+        Gson gson = new Gson();
+        String evidenceRequestJson = gson.toJson(evidenceRequest);
+        intent.putExtra(CameraKitActivity.EVIDENCE_REQUEST, evidenceRequestJson);
         intent.putExtra("dir", saveDir);
 
         return intent;

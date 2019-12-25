@@ -172,7 +172,12 @@ public class SliceApp implements ILoginView {
         PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).putString(AppConfig.PREF_USER, "");
         if (context instanceof Activity) {
             Activity activity = (Activity) context;
-            activity.finish();
+            if (activity instanceof MainActivity) {
+                activity.finish();
+            } else {
+                activity.startActivity(new Intent(activity,MainActivity.class));
+                activity.finish();
+            }
         }
     }
 

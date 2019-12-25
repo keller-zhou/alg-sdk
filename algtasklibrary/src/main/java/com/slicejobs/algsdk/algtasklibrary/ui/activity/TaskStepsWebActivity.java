@@ -1542,7 +1542,7 @@ public class TaskStepsWebActivity extends PickPhotoActivity implements IJsRender
                                                            isShowToCacheViewDialog = false;
                                                        }
                                                    }
-                                               }, TaskStepsWebActivity.this.getString(R.string.text_slicejobs_hint), TaskStepsWebActivity.this.getString(R.string.text_cache_finlish_if_commit),
+                                               }, "", TaskStepsWebActivity.this.getString(R.string.text_cache_finlish_if_commit),
                                         TaskStepsWebActivity.this.getString(R.string.cancel), TaskStepsWebActivity.this.getString(R.string.confirm), false);
                                 isShowToCacheViewDialog = true;
                             }

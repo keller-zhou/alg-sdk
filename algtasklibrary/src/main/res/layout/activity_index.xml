@@ -7,10 +7,42 @@
     android:background="@color/color_bg"
     android:fitsSystemWindows="true">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:background="@color/color_base">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/color_white"
+            android:textSize="15dp"
+            android:text="赚钱任务"/>
+
+        <LinearLayout
+            android:id="@+id/action_return"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|center_vertical"
+            android:background="@drawable/ease_common_tab_bg"
+            >
+            <ImageView
+                android:layout_width="13dp"
+                android:layout_height="20dp"
+                android:gravity="center"
+                android:src="@drawable/back_icon"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+    </FrameLayout>
     <RelativeLayout
         android:id="@+id/home_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="43dp">
 
     </RelativeLayout>
 

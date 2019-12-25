@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_base">#FE9901</color>
-    <!--<color name="color_base">#fd9a01</color>-->
-    <color name="color_base_dark">#8B0000</color>
+    <color name="color_base">#6491FE</color>
+    <color name="color_base_dark">#3F51B5</color>
     <color name="color_bg">#F7F7F7</color>
     <color name="color_gray_bg">#F5F5F5</color>
     <color name="text_color1">#B4B4B8</color>
