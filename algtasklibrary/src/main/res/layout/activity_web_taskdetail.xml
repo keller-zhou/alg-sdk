@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:background="@color/color_bg"
-    android:fitsSystemWindows="true">
+    android:background="@color/color_base"
+    android:paddingTop="30dp">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -62,7 +62,8 @@
         android:id="@+id/web_task_detail_layout"
         android:layout_marginTop="43dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/color_white">
 
     </RelativeLayout>
 

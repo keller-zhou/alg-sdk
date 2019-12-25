@@ -26,6 +26,7 @@ import com.slicejobs.algsdk.algtasklibrary.app.SliceApp;
 import com.slicejobs.algsdk.algtasklibrary.model.JsConfig;
 import com.slicejobs.algsdk.algtasklibrary.model.JsFileConfig;
 import com.slicejobs.algsdk.algtasklibrary.net.AppConfig;
+import com.slicejobs.algsdk.algtasklibrary.ui.adapter.ImageAdapter;
 import com.slicejobs.algsdk.algtasklibrary.ui.widget.LoadingDialog;
 import com.slicejobs.algsdk.algtasklibrary.ui.widget.loading.LoadingAndRetryManager;
 import com.slicejobs.algsdk.algtasklibrary.ui.widget.loading.OnLoadingAndRetryListener;
@@ -37,6 +38,8 @@ import com.slicejobs.algsdk.algtasklibrary.utils.SignUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.StringUtil;
 import com.slicejobs.algsdk.algtasklibrary.view.IJsRenderListener;
 import com.taobao.weex.IWXRenderListener;
+import com.taobao.weex.InitConfig;
+import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.common.WXRenderStrategy;
 import com.taobao.weex.utils.WXFileUtils;
@@ -256,6 +259,13 @@ public class BaseFragment extends Fragment implements IWXRenderListener {
     }
 
     public void renderJs(View view, String jsFileName, String jsonInitData, String viewName, IJsRenderListener iJsRenderListener){
+        //初始化h5模块
+        InitConfig config = new InitConfig.Builder().setImgAdapter(new ImageAdapter()).build();
+        try {
+            WXSDKEngine.initialize(SliceApp.APPLICATION, config);
+        } catch (Exception e) {
+
+        }
         this.jsFileName = jsFileName;
         this.viewName = viewName;
         this.jsonInitData = jsonInitData;

@@ -52,7 +52,7 @@ public class SliceApp implements ILoginView {
 
     private static SliceApp instance = new SliceApp();
     public static Context CONTEXT;
-    private Application mApplication;
+    public static Application APPLICATION;
     private LoginPresenter presenter;
     private Context context;
     public LoadingDialog progressDialog;
@@ -62,7 +62,7 @@ public class SliceApp implements ILoginView {
     }
 
     public void init (Application application,boolean isRelease) {
-        this.mApplication = application;
+        APPLICATION = application;
         CONTEXT = application.getApplicationContext();
         PrefUtil.make(CONTEXT, PrefUtil.PREFERENCE_NAME).putBoolean(AppConfig.IS_RELEASE, isRelease);
         mainProcessInit();
@@ -101,7 +101,7 @@ public class SliceApp implements ILoginView {
         //初始化h5模块
         InitConfig config = new InitConfig.Builder().setImgAdapter(new ImageAdapter()).build();
         try {
-            WXSDKEngine.initialize(mApplication, config);
+            WXSDKEngine.initialize(APPLICATION, config);
         } catch (Exception e) {
 
         }
@@ -126,7 +126,7 @@ public class SliceApp implements ILoginView {
         StrictMode.setVmPolicy(builder.build());
         builder.detectFileUriExposure();
 
-        ToastUtils.init(mApplication, new ToastAliPayStyle(CONTEXT));
+        ToastUtils.init(APPLICATION, new ToastAliPayStyle(CONTEXT));
         JsConfigHelper.downLoadJsConfigJson(CONTEXT);
     }
 

@@ -33,6 +33,7 @@ import com.slicejobs.algsdk.algtasklibrary.app.SliceApp;
 import com.slicejobs.algsdk.algtasklibrary.model.JsConfig;
 import com.slicejobs.algsdk.algtasklibrary.model.JsFileConfig;
 import com.slicejobs.algsdk.algtasklibrary.net.AppConfig;
+import com.slicejobs.algsdk.algtasklibrary.ui.adapter.ImageAdapter;
 import com.slicejobs.algsdk.algtasklibrary.ui.widget.LoadingDialog;
 import com.slicejobs.algsdk.algtasklibrary.ui.widget.loading.LoadingAndRetryManager;
 import com.slicejobs.algsdk.algtasklibrary.ui.widget.loading.OnLoadingAndRetryListener;
@@ -45,6 +46,8 @@ import com.slicejobs.algsdk.algtasklibrary.utils.StatusBarUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.StringUtil;
 import com.slicejobs.algsdk.algtasklibrary.view.IJsRenderListener;
 import com.taobao.weex.IWXRenderListener;
+import com.taobao.weex.InitConfig;
+import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.common.WXRenderStrategy;
 import com.taobao.weex.utils.WXFileUtils;
@@ -79,10 +82,19 @@ public class BaseActivity extends SwipeBackActivity implements IWXRenderListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            StatusBarUtil.transparencyBar(this); //设置状态栏全透明
-            StatusBarUtil.StatusBarLightMode(this); //设置白底黑字
-        }
+        //沉浸式代码配置
+        //当FitsSystemWindows设置 false 时，会在屏幕最上方预留出状态栏高度的 padding
+        //当FitsSystemWindows设置 true 时 ，状态栏沉浸
+        StatusBarUtil.setRootViewFitsSystemWindows(this, true);
+        //设置状态栏透明
+        StatusBarUtil.setTranslucentStatus(this);
+        //一般的手机的状态栏文字和图标都是白色的, 可如果你的应用也是纯白色的, 或导致状态栏文字看不清
+        //所以如果你是这种情况,请使用以下代码, 设置状态使用深色文字图标风格, 否则你可以选择性注释掉这个if内容
+        /*if (!StatusBarUtil.setStatusBarDarkTheme(this, true)) {
+            //如果不支持设置深色风格 为了兼容总不能让状态栏白白的看不清, 于是设置一个状态栏颜色为半透明,
+            //这样半透明+白=灰, 状态栏的文字能看得清
+            StatusBarUtil.setStatusBarColor(this, 0x55000000);
+        }*/
         SwipeBackLayout swipeBackLayout = getSwipeBackLayout();
         //设置滑动方向，可设置EDGE_LEFT, EDGE_RIGHT, EDGE_ALL, EDGE_BOTTOM
         swipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT);
@@ -395,6 +407,13 @@ public class BaseActivity extends SwipeBackActivity implements IWXRenderListener
     }
 
     public void renderJs(String jsFileName, String jsonInitData, String viewName, IJsRenderListener iJsRenderListener){
+        //初始化h5模块
+        InitConfig config = new InitConfig.Builder().setImgAdapter(new ImageAdapter()).build();
+        try {
+            WXSDKEngine.initialize(SliceApp.APPLICATION, config);
+        } catch (Exception e) {
+
+        }
         this.jsFileName = jsFileName;
         this.jsonInitData = jsonInitData;
         this.viewName = viewName;

@@ -237,11 +237,11 @@ public class ALGRecordFragment extends BaseFragment {
         } else if (view.getId() == R.id.bt_hide_screen) {
             isHiddenCamera = true;
             mOvrtlay.setVisibility(View.VISIBLE);
-            StatusBarUtil.setWindowStatusBarColor(getActivity(),R.color.color_black);
+            StatusBarUtil.setStatusBarColor(getActivity(),R.color.color_black);
         } else if (view.getId() == R.id.frame_overlay_arct_exit) {
             mOvrtlay.setVisibility(View.GONE);
             isHiddenCamera = false;
-            StatusBarUtil.setWindowStatusBarColor(getActivity(),R.color.color_white);
+            StatusBarUtil.setStatusBarColor(getActivity(),R.color.color_white);
         } else if (view.getId() == R.id.recore_again) {
             showHintDialog(new DialogClickLinear() {
                                @Override
