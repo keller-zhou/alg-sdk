@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import com.google.gson.Gson;
 import com.slicejobs.algsdk.algtasklibrary.R;
 import com.slicejobs.algsdk.algtasklibrary.R2;
 import com.slicejobs.algsdk.algtasklibrary.model.EvidenceRequest;
@@ -64,7 +65,9 @@ public class CameraKitActivity extends PickPhotoActivity implements CameraFragme
         setContentView(R.layout.activity_camerakit);
         ButterKnife.bind(this);
         cameraFragment = new CameraFragment();
-        evidenceRequest = (EvidenceRequest) getIntent().getSerializableExtra(EVIDENCE_REQUEST);
+        String evidenceRequestJson = getIntent().getStringExtra(EVIDENCE_REQUEST);
+        Gson gson = new Gson();
+        evidenceRequest = gson.fromJson(evidenceRequestJson, EvidenceRequest.class);
         resultDir = getIntent().getStringExtra("dir");
         cameraType = getIntent().getStringExtra("type");
         takePhotoAuxiliaryLine = getIntent().getIntExtra(PHOTO_HELP_LINE, 0);

@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.slicejobs.algsdk.algtasklibrary.R;
 import com.slicejobs.algsdk.algtasklibrary.R2;
@@ -68,10 +68,7 @@ public class ImageAdapter implements IWXImgLoaderAdapter {
                                 try {
                                     field = R.drawable.class.getField(gifNameStr);
                                     int DrawableId = field.getInt(field.getName());
-
-                                    RequestOptions options = new RequestOptions()
-                                            .diskCacheStrategy(DiskCacheStrategy.RESOURCE);	//只缓存最终的图片
-                                    Glide.with(WXEnvironment.getApplication()).load(DrawableId).apply(options).into(view);
+                                    Glide.with(WXEnvironment.getApplication()).load(DrawableId).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(view);
                                 } catch (NoSuchFieldException e) {
                                     e.printStackTrace();
                                 } catch (IllegalAccessException e) {
@@ -80,14 +77,35 @@ public class ImageAdapter implements IWXImgLoaderAdapter {
                             }
                         }
                     }else {
-                        Glide.with(WXEnvironment.getApplication()).load(url).into(view);
+                        Glide.with(WXEnvironment.getApplication()).load(url).asGif().into(view);
                     }
                 } else {
-                    Glide.with(WXEnvironment.getApplication()).load(temp).into(view);
+                    Glide.with(WXEnvironment.getApplication()).load(temp).asBitmap().into(new WeeXImageTarget(strategy, url, view));
                 }
 
             }
         }, 0);
 
+    }
+
+    private class WeeXImageTarget extends SimpleTarget<Bitmap> {
+
+        private WXImageStrategy mWXImageStrategy;
+        private String mUrl;
+        private ImageView mImageView;
+
+        WeeXImageTarget(WXImageStrategy strategy, String url, ImageView imageView) {
+            mWXImageStrategy = strategy;
+            mUrl = url;
+            mImageView = imageView;
+        }
+
+        @Override
+        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+            mImageView.setImageBitmap(resource);
+        }
+
+        @Override
+        public void onLoadFailed(Exception e, Drawable errorDrawable) {}
     }
 }
