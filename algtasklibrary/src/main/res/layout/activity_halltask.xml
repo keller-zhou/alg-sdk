@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/bg_gray_color"
-    android:fitsSystemWindows="true">
+    android:background="@color/color_base"
+    android:paddingTop="30dp">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -61,7 +61,8 @@
         android:id="@+id/fragment"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_marginTop="44dp">
+        android:layout_marginTop="44dp"
+        android:background="@color/color_white">
     </FrameLayout>
 
 </FrameLayout>
