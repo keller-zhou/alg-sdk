@@ -96,8 +96,16 @@ public class SliceApp implements ILoginView {
 
         //初始化百度地图
         SDKInitializer.initialize(CONTEXT);
+        initWeex();
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+        builder.detectFileUriExposure();
 
+        ToastUtils.init(APPLICATION, new ToastAliPayStyle(CONTEXT));
+        JsConfigHelper.downLoadJsConfigJson(CONTEXT);
+    }
 
+    public void initWeex () {
         //初始化h5模块
         InitConfig config = new InitConfig.Builder().setImgAdapter(new ImageAdapter()).build();
         try {
@@ -121,13 +129,6 @@ public class SliceApp implements ILoginView {
         } catch (WXException e) {
             Log.d("----------------", "启动出现异常"+e);
         }
-
-        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-        StrictMode.setVmPolicy(builder.build());
-        builder.detectFileUriExposure();
-
-        ToastUtils.init(APPLICATION, new ToastAliPayStyle(CONTEXT));
-        JsConfigHelper.downLoadJsConfigJson(CONTEXT);
     }
 
     private void initImageLoader(Context context) {

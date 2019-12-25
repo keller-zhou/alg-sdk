@@ -7,7 +7,8 @@
     <com.slicejobs.algsdk.algtasklibrary.ui.widget.imagelook.ViewPagerFixed
         android:id="@+id/imageViewPager"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        android:background="@color/color_white">
     </com.slicejobs.algsdk.algtasklibrary.ui.widget.imagelook.ViewPagerFixed>
     <FrameLayout
         android:id="@+id/title_layout"

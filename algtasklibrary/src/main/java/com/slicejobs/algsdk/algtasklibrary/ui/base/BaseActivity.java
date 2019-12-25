@@ -408,12 +408,7 @@ public class BaseActivity extends SwipeBackActivity implements IWXRenderListener
 
     public void renderJs(String jsFileName, String jsonInitData, String viewName, IJsRenderListener iJsRenderListener){
         //初始化h5模块
-        InitConfig config = new InitConfig.Builder().setImgAdapter(new ImageAdapter()).build();
-        try {
-            WXSDKEngine.initialize(SliceApp.APPLICATION, config);
-        } catch (Exception e) {
-
-        }
+        SliceApp.getInstance().initWeex();
         this.jsFileName = jsFileName;
         this.jsonInitData = jsonInitData;
         this.viewName = viewName;

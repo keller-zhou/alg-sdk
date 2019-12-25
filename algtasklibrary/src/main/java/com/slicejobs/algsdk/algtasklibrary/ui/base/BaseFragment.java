@@ -260,12 +260,7 @@ public class BaseFragment extends Fragment implements IWXRenderListener {
 
     public void renderJs(View view, String jsFileName, String jsonInitData, String viewName, IJsRenderListener iJsRenderListener){
         //初始化h5模块
-        InitConfig config = new InitConfig.Builder().setImgAdapter(new ImageAdapter()).build();
-        try {
-            WXSDKEngine.initialize(SliceApp.APPLICATION, config);
-        } catch (Exception e) {
-
-        }
+        SliceApp.getInstance().initWeex();
         this.jsFileName = jsFileName;
         this.viewName = viewName;
         this.jsonInitData = jsonInitData;
