@@ -498,7 +498,7 @@ public class PickPhotoActivity extends BaseActivity {
                 public void defineClick() {
 
                 }
-            }, SliceApp.CONTEXT.getString(R.string.text_slicejobs_hint), "当前暂无已拍摄照片", "我知道了", true);
+            }, "", "当前暂无已拍摄照片", "我知道了", true);
         }
     }
 
