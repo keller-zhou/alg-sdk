@@ -11,7 +11,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.slicejobs.algsdk.algtasklibrary.R;
-import com.slicejobs.algsdk.algtasklibrary.R2;
 import com.slicejobs.algsdk.algtasklibrary.net.AppConfig;
 import com.slicejobs.algsdk.algtasklibrary.utils.StringUtil;
 import com.taobao.weex.WXEnvironment;
@@ -80,11 +79,32 @@ public class ImageAdapter implements IWXImgLoaderAdapter {
                         Glide.with(WXEnvironment.getApplication()).load(temp).asGif().into(view);
                     }
                 } else {
-                    Glide.with(WXEnvironment.getApplication()).load(temp).asBitmap().into(view);
+                    Glide.with(WXEnvironment.getApplication()).load(temp).asBitmap().into(new WeeXImageTarget(strategy, temp, view));
                 }
 
             }
         }, 0);
 
+    }
+
+    private class WeeXImageTarget extends SimpleTarget<Bitmap> {
+
+        private WXImageStrategy mWXImageStrategy;
+        private String mUrl;
+        private ImageView mImageView;
+
+        WeeXImageTarget(WXImageStrategy strategy, String url, ImageView imageView) {
+            mWXImageStrategy = strategy;
+            mUrl = url;
+            mImageView = imageView;
+        }
+
+        @Override
+        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+            mImageView.setImageBitmap(resource);
+        }
+
+        @Override
+        public void onLoadFailed(Exception e, Drawable errorDrawable) {}
     }
 }
