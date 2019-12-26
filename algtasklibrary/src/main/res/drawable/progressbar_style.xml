@@ -14,9 +14,9 @@
         <clip>
             <shape>
                 <corners android:radius="6dp" />
-                <gradient  android:startColor="#ffff9900"
-                    android:centerColor="#55ff9900"
-                    android:endColor="#ffff9900" />
+                <gradient  android:startColor="@color/color_base"
+                    android:centerColor="@color/btn_login_normal"
+                    android:endColor="@color/color_base" />
             </shape>
         </clip>
     </item>
