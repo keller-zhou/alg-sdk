@@ -77,35 +77,14 @@ public class ImageAdapter implements IWXImgLoaderAdapter {
                             }
                         }
                     }else {
-                        Glide.with(WXEnvironment.getApplication()).load(url).asGif().into(view);
+                        Glide.with(WXEnvironment.getApplication()).load(temp).asGif().into(view);
                     }
                 } else {
-                    Glide.with(WXEnvironment.getApplication()).load(temp).asBitmap().into(new WeeXImageTarget(strategy, url, view));
+                    Glide.with(WXEnvironment.getApplication()).load(temp).asBitmap().into(view);
                 }
 
             }
         }, 0);
 
-    }
-
-    private class WeeXImageTarget extends SimpleTarget<Bitmap> {
-
-        private WXImageStrategy mWXImageStrategy;
-        private String mUrl;
-        private ImageView mImageView;
-
-        WeeXImageTarget(WXImageStrategy strategy, String url, ImageView imageView) {
-            mWXImageStrategy = strategy;
-            mUrl = url;
-            mImageView = imageView;
-        }
-
-        @Override
-        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-            mImageView.setImageBitmap(resource);
-        }
-
-        @Override
-        public void onLoadFailed(Exception e, Drawable errorDrawable) {}
     }
 }
