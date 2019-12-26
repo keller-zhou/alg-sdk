@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.hjq.toast.ToastUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -34,6 +35,7 @@ import com.slicejobs.algsdk.algtasklibrary.model.JsConfig;
 import com.slicejobs.algsdk.algtasklibrary.model.JsFileConfig;
 import com.slicejobs.algsdk.algtasklibrary.net.AppConfig;
 import com.slicejobs.algsdk.algtasklibrary.ui.adapter.ImageAdapter;
+import com.slicejobs.algsdk.algtasklibrary.ui.weex.weexmodule.WXBaseEventModule;
 import com.slicejobs.algsdk.algtasklibrary.ui.widget.LoadingDialog;
 import com.slicejobs.algsdk.algtasklibrary.ui.widget.loading.LoadingAndRetryManager;
 import com.slicejobs.algsdk.algtasklibrary.ui.widget.loading.OnLoadingAndRetryListener;
@@ -49,12 +51,15 @@ import com.taobao.weex.IWXRenderListener;
 import com.taobao.weex.InitConfig;
 import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.WXSDKInstance;
+import com.taobao.weex.appfram.storage.WXStorageModule;
+import com.taobao.weex.bridge.JSCallback;
 import com.taobao.weex.common.WXRenderStrategy;
 import com.taobao.weex.utils.WXFileUtils;
 import com.taobao.weex.utils.WXViewUtils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Map;
 
 import me.imid.swipebacklayout.lib.SwipeBackLayout;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
@@ -409,6 +414,22 @@ public class BaseActivity extends SwipeBackActivity implements IWXRenderListener
     public void renderJs(String jsFileName, String jsonInitData, String viewName, IJsRenderListener iJsRenderListener){
         //初始化h5模块
         SliceApp.getInstance().initWeex();
+        WXStorageModule storageModule = new WXStorageModule();
+        storageModule.getItem("user_global", new JSCallback() {
+            @Override
+            public void invoke(Object data) {
+                Map<String,Object> dataMap = (Map<String, Object>) data;
+                String appConfigJson = (String) dataMap.get("data");
+                if (StringUtil.isNotBlank(appConfigJson) && appConfigJson.equals("undefined")) {
+                    WXBaseEventModule.writeStorage();
+                }
+            }
+
+            @Override
+            public void invokeAndKeepAlive(Object data) {
+
+            }
+        });
         this.jsFileName = jsFileName;
         this.jsonInitData = jsonInitData;
         this.viewName = viewName;
