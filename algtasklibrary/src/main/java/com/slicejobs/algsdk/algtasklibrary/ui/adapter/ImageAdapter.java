@@ -4,13 +4,21 @@ package com.slicejobs.algsdk.algtasklibrary.ui.adapter;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.slicejobs.algsdk.algtasklibrary.R;
+import com.slicejobs.algsdk.algtasklibrary.app.SliceApp;
 import com.slicejobs.algsdk.algtasklibrary.net.AppConfig;
 import com.slicejobs.algsdk.algtasklibrary.utils.StringUtil;
 import com.taobao.weex.WXEnvironment;
@@ -55,6 +63,14 @@ public class ImageAdapter implements IWXImgLoaderAdapter {
                     temp = AppConfig.webHost.getAppWebHost() + url;
                 }
 
+                DisplayImageOptions options = new DisplayImageOptions.Builder()
+                        .cacheInMemory(false)//这只图片不缓存在内存中，避免内存泄漏
+                        .cacheOnDisk(true)
+                        .bitmapConfig(Bitmap.Config.RGB_565)
+                        .showImageOnFail(R.drawable.ic_photo_default_show)
+                        .showImageOnLoading(R.drawable.ic_photo_default_show)
+                        .imageScaleType(ImageScaleType.IN_SAMPLE_INT)    //设置图片的缩放类型，该方法可以有效减少内存的占用
+                        .build();
 
                 if (url.endsWith(".gif")) {
                     if (url.contains("/large-image/")) {
@@ -79,32 +95,45 @@ public class ImageAdapter implements IWXImgLoaderAdapter {
                         Glide.with(WXEnvironment.getApplication()).load(temp).asGif().into(view);
                     }
                 } else {
-                    Glide.with(WXEnvironment.getApplication()).load(temp).asBitmap().into(new WeeXImageTarget(strategy, temp, view));
+                    //Glide.with(WXEnvironment.getApplication()).load(temp).asBitmap().into(new WeeXImageTarget(strategy, temp, view));
+                    ImageLoader.getInstance().displayImage(temp, view, options, new SimpleImageLoadingListener() {
+                        @Override
+                        public void onLoadingStarted(String imageUri, View view) {
+
+                        }
+
+                        @Override
+                        public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                            String message = null;
+                            switch (failReason.getType()) {
+                                case IO_ERROR:
+                                    message = "下载错误";
+                                    break;
+                                case DECODING_ERROR:
+                                    message = "图片无法显示";
+                                    break;
+                                case NETWORK_DENIED:
+                                    message = "网络有问题，无法下载";
+                                    break;
+                                case OUT_OF_MEMORY:
+                                    message = "图片太大无法显示";
+                                    break;
+                                case UNKNOWN:
+                                    message = "未知的错误";
+                                    break;
+                            }
+
+                        }
+
+                        @Override
+                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+
+                        }
+                    });
                 }
 
             }
         }, 0);
 
-    }
-
-    private class WeeXImageTarget extends SimpleTarget<Bitmap> {
-
-        private WXImageStrategy mWXImageStrategy;
-        private String mUrl;
-        private ImageView mImageView;
-
-        WeeXImageTarget(WXImageStrategy strategy, String url, ImageView imageView) {
-            mWXImageStrategy = strategy;
-            mUrl = url;
-            mImageView = imageView;
-        }
-
-        @Override
-        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-            mImageView.setImageBitmap(resource);
-        }
-
-        @Override
-        public void onLoadFailed(Exception e, Drawable errorDrawable) {}
     }
 }
