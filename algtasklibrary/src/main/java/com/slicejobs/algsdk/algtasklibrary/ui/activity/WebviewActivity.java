@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -341,13 +342,12 @@ public class WebviewActivity extends BaseActivity {
 
             // For Android > 5.0
             public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> uploadMsg, WebChromeClient.FileChooserParams fileChooserParams) {
-                openFileChooserImplForAndroid5(uploadMsg);
+                String[] s = fileChooserParams.getAcceptTypes();
+                openFileChooserImplForAndroid5(uploadMsg, s[0]);
                 return true;
             }
 
         });
-
-
 
 
         webView.addJavascriptInterface(new JSIntface(), "JSIntface");
@@ -366,11 +366,17 @@ public class WebviewActivity extends BaseActivity {
         startActivityForResult(Intent.createChooser(i, "File Chooser"), FILECHOOSER_RESULTCODE);
     }
 
-    private void openFileChooserImplForAndroid5(ValueCallback<Uri[]> uploadMsg) {
+    private void openFileChooserImplForAndroid5(ValueCallback<Uri[]> uploadMsg, String type) {
         mUploadMessageForAndroid5 = uploadMsg;
         Intent contentSelectionIntent = new Intent(Intent.ACTION_GET_CONTENT);
         contentSelectionIntent.addCategory(Intent.CATEGORY_OPENABLE);
-        contentSelectionIntent.setType("image/*");
+
+        boolean isVideo = type.contains("video");
+        if (isVideo) {
+            contentSelectionIntent.setType("video/*");
+        } else {
+            contentSelectionIntent.setType("image/*");
+        }
 
         Intent chooserIntent = new Intent(Intent.ACTION_CHOOSER);
         chooserIntent.putExtra(Intent.EXTRA_INTENT, contentSelectionIntent);
