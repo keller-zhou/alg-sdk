@@ -19,7 +19,7 @@
             android:layout_gravity="center"
             android:textColor="@color/color_white"
             android:textSize="15dp"
-            android:text="@string/bind" />
+            android:text="授权绑定" />
 
         <LinearLayout
             android:id="@+id/action_go_back"
@@ -39,58 +39,67 @@
 
         </LinearLayout>
     </FrameLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#EEEEEE"/>
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp">
 
-        <EditText
-            android:id="@+id/et_vcode"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@color/color_white"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="80dp"
-            android:inputType="number"
-            android:hint="@string/vcode_empty"
-            style="@style/LoginEditStyle"
-            android:textColorHint="#CCCCCC"/>
-
-        <TextView
-            android:id="@+id/tv_get_vcode"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right|center_vertical"
-            android:textColor="@color/color_base"
-            android:textSize="12sp"
-            android:text="@string/get_vcode"/>
+            android:layout_marginTop="50dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
 
-    </FrameLayout>
+            <EditText
+                android:id="@+id/et_vcode"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="80dp"
+                android:inputType="number"
+                android:hint="@string/vcode_empty"
+                style="@style/LoginEditStyle"
+                android:textColorHint="#CCCCCC"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:background="#EEEEEE"/>
+            <TextView
+                android:id="@+id/tv_get_vcode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:textColor="@color/color_base"
+                android:textSize="12sp"
+                android:text="@string/get_vcode"/>
+
+        </FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="#EEEEEE"/>
 
 
-    <Button
-        android:id="@+id/btn_bind"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/selector_button_big_corners_gradient"
-        android:gravity="center"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:textColor="#ffffff"
-        android:textSize="16sp"
-        android:text="@string/bind"/>
+        <Button
+            android:id="@+id/btn_bind"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/selector_button_big_corners_gradient"
+            android:gravity="center"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            android:text="@string/bind"/>
+
+    </LinearLayout>
+
+
 
 </LinearLayout>

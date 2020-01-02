@@ -19,6 +19,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -222,15 +223,13 @@ public class TaskStepsWebActivity extends PickPhotoActivity implements IJsRender
         LocationClientOption option = new LocationClientOption();
         option.setOpenGps(true);//是否打开GPS
         option.setCoorType("bd0911");//设置返回值的坐标类型。
-        option.setPriority(LocationClientOption.NetWorkFirst);//设置定位优先级
-        option.setScanSpan(45000);//设置定时定位的时间间隔。单位毫秒
         option.setLocationMode(LocationClientOption.LocationMode.Battery_Saving);
         locationClient.setLocOption(option);
         mBDLocationListener = new MyBDLocationListener();
         // 注册监听
         locationClient.registerLocationListener(mBDLocationListener);
         locationClient.start();
-        locationClient.requestLocation();
+//        locationClient.requestLocation();
 
         fragmentManager = getSupportFragmentManager();
         if(Build.VERSION.SDK_INT >= 28) {
@@ -1130,7 +1129,8 @@ public class TaskStepsWebActivity extends PickPhotoActivity implements IJsRender
                 // 根据BDLocation 对象获得经纬度以及详细地址信息
                 latitude = bdLocation.getLatitude();
                 longitude = bdLocation.getLongitude();
-                PrefUtil.make(TaskStepsWebActivity.this, PrefUtil.PREFERENCE_NAME).putObject(AppConfig.USER_LOCATION_INFO,bdLocation);
+              //  PrefUtil.make(TaskStepsWebActivity.this, PrefUtil.PREFERENCE_NAME).putObject(AppConfig.USER_LOCATION_INFO,bdLocation);
+                Log.d("--------------", "获取到了"+bdLocation.getLatitude()+"----"+bdLocation.getLongitude());
             }
         }
     }

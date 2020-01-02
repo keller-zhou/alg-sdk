@@ -33,10 +33,7 @@
     <application>
 
         <meta-data android:name="android.max_aspect" android:value="2.4" />
-        <!-- 百度定位 -->
-        <meta-data
-            android:name="com.baidu.lbsapi.API_KEY"
-            android:value="t787pNusCOwogDY63yx1FxFd" />
+
 
         <!-- 友盟 -->
         <meta-data

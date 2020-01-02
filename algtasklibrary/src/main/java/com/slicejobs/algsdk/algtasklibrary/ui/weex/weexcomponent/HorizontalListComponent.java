@@ -77,11 +77,6 @@ public class HorizontalListComponent extends WXComponent<RecyclerView> {
             }
         });
 
-
-
-        Log.d("------------------", "当前控件的宽"+rvStepPhotos.getWidth()+"------"+rvStepPhotos.getHeight());
-
-
         return rvStepPhotos;
     }
 
