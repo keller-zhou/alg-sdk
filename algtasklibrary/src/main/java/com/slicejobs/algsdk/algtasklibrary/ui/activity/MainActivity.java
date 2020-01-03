@@ -44,6 +44,7 @@ public class MainActivity extends BaseActivity implements IJsRenderListener {
         setContentView(R.layout.activity_index);
         applyForPermission();
         ButterKnife.bind(this);
+        WXBaseEventModule.writeStorage();
         BusProvider.getInstance().register(this);
         renderJs(AppConfig.HOME_VIEW_FILE,null,"首页",this);
     }

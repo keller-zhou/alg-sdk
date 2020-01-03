@@ -413,23 +413,24 @@ public class BaseActivity extends SwipeBackActivity implements IWXRenderListener
 
     public void renderJs(String jsFileName, String jsonInitData, String viewName, IJsRenderListener iJsRenderListener){
         //初始化h5模块
-        SliceApp.getInstance().initWeex();
-        WXStorageModule storageModule = new WXStorageModule();
-        storageModule.getItem("user_global", new JSCallback() {
-            @Override
-            public void invoke(Object data) {
-                Map<String,Object> dataMap = (Map<String, Object>) data;
-                String appConfigJson = (String) dataMap.get("data");
-                if (StringUtil.isNotBlank(appConfigJson) && appConfigJson.equals("undefined")) {
-                    WXBaseEventModule.writeStorage();
-                }
-            }
+//        SliceApp.getInstance().initWeex();
 
-            @Override
-            public void invokeAndKeepAlive(Object data) {
-
-            }
-        });
+//        WXStorageModule storageModule = new WXStorageModule();
+//        storageModule.getItem("user_global", new JSCallback() {
+//            @Override
+//            public void invoke(Object data) {
+//                Map<String,Object> dataMap = (Map<String, Object>) data;
+//                String appConfigJson = (String) dataMap.get("data");
+//                if (StringUtil.isNotBlank(appConfigJson) && appConfigJson.equals("undefined")) {
+//                    WXBaseEventModule.writeStorage();
+//                }
+//            }
+//
+//            @Override
+//            public void invokeAndKeepAlive(Object data) {
+//
+//            }
+//        });
         this.jsFileName = jsFileName;
         this.jsonInitData = jsonInitData;
         this.viewName = viewName;

@@ -13,11 +13,10 @@
         android:theme="@style/AppTheme"
         android:appComponentFactory="android.support.v4.app.CoreComponentFactory"
         tools:replace="android:appComponentFactory">
-
         <!-- 百度定位 -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="t787pNusCOwogDY63yx1FxFd" />
+            android:value="VyWg5pIwba9p8BSQ2Fa9ALocxyWf3orX" />
 
         <activity android:name=".MainActivity">
             <intent-filter>
