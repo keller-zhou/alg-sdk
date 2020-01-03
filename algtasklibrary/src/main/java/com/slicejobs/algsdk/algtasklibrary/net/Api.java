@@ -32,12 +32,14 @@ public interface Api {
             @Field("actionTime") String actionTime,
             @Field("sign") String sign);
 
-    @GET("/vcode")
+    @FormUrlEncoded
+    @POST("/app/authorize/vcode")
     public Observable<Response<List>> getVCode(
-            @Query("cellphone") String cellphone,
-            @Query("timestamp") String timestamp,
-            @Query("appId") String appId,
-            @Query("sig") String sig);
+            @Field("appId") String appId,
+            @Field("userId") String userId,
+            @Field("mobile") String mobile,
+            @Field("actionTime") String actionTime,
+            @Field("sign") String sign);
 
     @FormUrlEncoded
     @POST("/app/authorize/bind")

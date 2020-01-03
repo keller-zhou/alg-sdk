@@ -62,7 +62,11 @@ public class BindActivity extends BaseActivity implements IBindView{
                 bindPresenter.bind(appId, userId, mobile, actionTime, sign, etVCode.getText().toString());
             }
         } else if (view.getId() == R.id.tv_get_vcode) {
-            bindPresenter.getVCode(mobile);
+            String appId = PrefUtil.make(this, PrefUtil.PREFERENCE_NAME).getString(AppConfig.ZDD_APPID, "");
+            String userId = PrefUtil.make(this, PrefUtil.PREFERENCE_NAME).getString(AppConfig.ZDD_USERID, "");
+            String actionTime = PrefUtil.make(this, PrefUtil.PREFERENCE_NAME).getString(AppConfig.ZDD_ACTIONTIME, "");
+            String sign = PrefUtil.make(this, PrefUtil.PREFERENCE_NAME).getString(AppConfig.ZDD_SIGN, "");
+            bindPresenter.getVCode(appId,userId,mobile,actionTime,sign);
             colddownVCode();
         }
     }

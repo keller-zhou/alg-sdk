@@ -45,42 +45,54 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:layout_margin="10dp"
-        android:background="@drawable/bg_bank_item">
+        android:background="@color/color_white"
+        android:orientation="vertical"
+        >
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/upload_task_list"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:listDivider="@drawable/shape_list_divider"
-            android:background="@color/color_bg"
-            android:layout_margin="3dp"
-            android:overScrollMode="never"/>
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+           >
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/upload_task_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:listDivider="@drawable/shape_list_divider"
+                android:background="@color/color_bg"
+                android:layout_margin="3dp"
+                android:layout_marginBottom="80dp"
+                android:overScrollMode="never"/>
 
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/uploadNotice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="#0A06E4"
+            android:textSize="13sp"
+            android:text="必须在任务指定地址完成提交，否则无法完成该任务"/>
+
+        <Button
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:id="@+id/btn_onkey_upload"
+            android:layout_width="wrap_content"
+            android:minWidth="117dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center"
+            android:background="@drawable/selector_button"
+            android:textColor="@android:color/white"
+            android:textSize="13sp"
+            android:text="提交"/>
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/uploadNotice"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textColor="#0A06E4"
-        android:textSize="13sp"
-        android:text="必须在任务指定地址完成提交，否则无法完成该任务"/>
 
-    <Button
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:id="@+id/btn_onkey_upload"
-        android:layout_width="wrap_content"
-        android:minWidth="117dp"
-        android:layout_height="36dp"
-        android:layout_gravity="center"
-        android:background="@drawable/selector_button"
-        android:textColor="@android:color/white"
-        android:textSize="13sp"
-        android:text="提交"/>
+
+
 
 </LinearLayout>

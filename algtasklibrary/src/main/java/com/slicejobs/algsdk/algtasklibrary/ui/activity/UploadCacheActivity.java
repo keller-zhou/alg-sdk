@@ -9,6 +9,7 @@ import android.os.Message;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -948,7 +949,9 @@ public class UploadCacheActivity extends BaseActivity {
 
         if (StringUtil.isNotBlank(task.getRfversion()) && task.getRfversion().equals("1")) {
             newFinishTask(finishLocation);
+            Log.d("-----------------", "newFinishTask");
         } else {
+            Log.d("-----------------", "olaFinishTask");
             olaFinishTask(finishLocation);
         }
     }
@@ -1050,6 +1053,7 @@ public class UploadCacheActivity extends BaseActivity {
 
 
     private void newFinishTask( String finishLocation) {
+        Log.d("----------------", "newFinishTask"+task.getOrderid()+"------"+user.userid);
         String timestamp = DateUtil.getCurrentTime();
         String appId = PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).getString(AppConfig.ZDD_APPID);
         SignUtil.SignBuilder signBuilder = new SignUtil.SignBuilder();
@@ -1078,7 +1082,7 @@ public class UploadCacheActivity extends BaseActivity {
         if (location == null) {
             if(StringUtil.isNotBlank(marketGatherinfo)) {
                 taskObservable = api.newFinishOrder(user.userid, "finish", task.getOrderid(),
-                        resultJson, finishLocation, "0,0", cacheUploadStatus, timestamp, taskDuration, interruptedTimes, outrangeTimes, marketGatherinfo, sig);
+                        resultJson, finishLocation, "0,0", cacheUploadStatus, timestamp, taskDuration, interruptedTimes, outrangeTimes, marketGatherinfo,appId, sig);
             }else {
                 taskObservable = api.newFinishOrder(user.userid, "finish", task.getOrderid(),
                         resultJson, finishLocation, "0,0", cacheUploadStatus, timestamp, taskDuration, interruptedTimes, outrangeTimes,appId, sig);
@@ -1086,7 +1090,7 @@ public class UploadCacheActivity extends BaseActivity {
         } else {
             if(StringUtil.isNotBlank(marketGatherinfo)) {
                 taskObservable = api.newFinishOrder(user.userid, "finish", task.getOrderid(),
-                        resultJson, finishLocation, location, cacheUploadStatus, timestamp, taskDuration, interruptedTimes, outrangeTimes, marketGatherinfo, sig);
+                        resultJson, finishLocation, location, cacheUploadStatus, timestamp, taskDuration, interruptedTimes, outrangeTimes, marketGatherinfo, appId,sig);
             }else {
                 taskObservable = api.newFinishOrder(user.userid, "finish", task.getOrderid(),
                         resultJson, finishLocation, location, cacheUploadStatus, timestamp, taskDuration, interruptedTimes, outrangeTimes,appId, sig);

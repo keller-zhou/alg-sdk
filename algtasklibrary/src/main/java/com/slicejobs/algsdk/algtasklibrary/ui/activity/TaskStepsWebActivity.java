@@ -175,20 +175,10 @@ public class TaskStepsWebActivity extends PickPhotoActivity implements IJsRender
         setSwipeBackEnable(false);
         ButterKnife.bind(this);
         BusProvider.getInstance().register(this);
-
-
-
         Bundle bundle = getIntent().getExtras();
         SerializableBaseMap serializableBaseMap = (SerializableBaseMap) bundle.get("weex_data");
-
         Map<String, Object> data = serializableBaseMap.getMap();
-
-
-
-
-
         mGson = new GsonBuilder().registerTypeAdapter(Date.class, new ISODateAdapter()).create();
-
         TaskStepParams taskStepParams  =  mGson.fromJson(data.get("initData").toString(), TaskStepParams.class);
         task = taskStepParams.getTask();
 
@@ -1130,7 +1120,6 @@ public class TaskStepsWebActivity extends PickPhotoActivity implements IJsRender
                 latitude = bdLocation.getLatitude();
                 longitude = bdLocation.getLongitude();
               //  PrefUtil.make(TaskStepsWebActivity.this, PrefUtil.PREFERENCE_NAME).putObject(AppConfig.USER_LOCATION_INFO,bdLocation);
-                Log.d("--------------", "获取到了"+bdLocation.getLatitude()+"----"+bdLocation.getLongitude());
             }
         }
     }

@@ -19,6 +19,8 @@ import com.slicejobs.algsdk.algtasklibrary.utils.SignUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.StringUtil;
 import com.slicejobs.algsdk.algtasklibrary.view.IBindView;
 
+import java.util.List;
+
 import retrofit.RetrofitError;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -35,24 +37,20 @@ public class BindPresenter extends BasePresenter {
         this.view = view;
     }
 
-    public void getVCode(String cellphone) {
+    public void getVCode(String appId,String userId,String mobile,String actionTime,String sign) {
         view.showProgressDialog();
-        String timestamp = DateUtil.getCurrentTime();
-        String appId = PrefUtil.make(SliceApp.CONTEXT, PrefUtil.PREFERENCE_NAME).getString(AppConfig.ZDD_APPID);
-        String sig = new SignUtil.SignBuilder()
-                .put("cellphone", cellphone)
-                .put("timestamp", timestamp)
-                .put("appId", appId)
-                .build();
+        Observable<Response<List>> registerOb = restClient.provideOpenApi().getVCode(appId, userId, mobile, actionTime, sign);
 
-        restClient.provideApi().getVCode(cellphone, timestamp,appId ,sig)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(res -> {
-                    view.dismissProgressDialog();
-                    if (res.ret == 0) {
-                        view.sendVCodeSuccess();
-                    } else {
-                        view.sendVCodeFaild(res.msg);
+        registerOb.observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Response<List>>() {
+                    @Override
+                    public void call(Response<List> res) {
+                        view.dismissProgressDialog();
+                        if (res.ret == 0) {
+                            view.sendVCodeSuccess();
+                        } else {
+                            view.sendVCodeFaild(res.msg);
+                        }
                     }
                 }, e -> {
                     view.dismissProgressDialog();
