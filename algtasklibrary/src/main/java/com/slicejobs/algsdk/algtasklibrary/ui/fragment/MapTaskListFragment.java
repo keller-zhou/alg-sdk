@@ -198,6 +198,17 @@ public class MapTaskListFragment extends BaseFragment {
             bundle.putSerializable("weex_data", tmpmap);
             intent.putExtras(bundle);
             startActivity(intent);
+            if(currentSelectIndex == 0){
+                return;
+            }else {
+                currentSelectIndex = 0;
+                textNotPick.setTextColor(getActivity().getResources().getColor(R.color.color_base));
+                lineNotPick.setBackgroundColor(getActivity().getResources().getColor(R.color.color_base));
+                textPicked.setTextColor(getActivity().getResources().getColor(R.color.text_color6));
+                linePicked.setBackgroundColor(getActivity().getResources().getColor(R.color.text_color6));
+                taskListAdapter.updateTasks(notPickTaskList);
+            }
+
         });
 
         rvNearTaskList.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -500,7 +511,6 @@ public class MapTaskListFragment extends BaseFragment {
     @Subscribe
     public void onRefreshTaskEvent(AppEvent.RefreshTaskEvent event) {
         if (StringUtil.isNotBlank(event.status) && event.status.equals("map_task_list")) {
-            Log.d("-----------------", "收到消息，刷新地图任务");
             taskListAdapter.notifyDataSetChanged();
         }
     }

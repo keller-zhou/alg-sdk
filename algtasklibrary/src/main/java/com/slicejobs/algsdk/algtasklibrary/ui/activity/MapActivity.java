@@ -1060,7 +1060,6 @@ public class MapActivity extends BaseActivity implements MapTaskListFragment.Map
 
     @Override
     public void refreshTask(int start) {//提醒刷新
-
         if (start == 0 & !isLoadingMore) {//代表刷新
             startId = 0;
             isLoadingMore = true;
@@ -1328,7 +1327,6 @@ public class MapActivity extends BaseActivity implements MapTaskListFragment.Map
             lat = mCenterLatLng.latitude;
             lon = mCenterLatLng.longitude;
             zoom = mapStatus.zoom;
-
             showUserMarket();
             if (!isPlanRoute) {
                 if (presenter != null && lat != 39.914884096217335 && lon != 116.40388321804957) {
@@ -1348,6 +1346,7 @@ public class MapActivity extends BaseActivity implements MapTaskListFragment.Map
             }
         }
     }
+
 
 
     /**
