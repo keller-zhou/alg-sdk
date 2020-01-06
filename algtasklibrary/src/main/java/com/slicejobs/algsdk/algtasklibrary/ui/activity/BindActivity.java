@@ -34,6 +34,10 @@ public class BindActivity extends BaseActivity implements IBindView{
     EditText etVCode;
     @BindView(R2.id.tv_get_vcode)
     TextView getVcode;
+    @BindView(R2.id.et_phone)
+    EditText etPhone;
+
+
     private BindPresenter bindPresenter;
     private String mobile;
     private Subscription sub;
@@ -45,6 +49,9 @@ public class BindActivity extends BaseActivity implements IBindView{
         ButterKnife.bind(this);
         bindPresenter = new BindPresenter(this);
         mobile = PrefUtil.make(this, PrefUtil.PREFERENCE_NAME).getString(AppConfig.ZDD_MOBILE, "");
+        String mobileFrist = mobile.substring(0, 3);
+        String mobileEnd = mobile.substring(8, 12);
+        etPhone.setText(mobileFrist+"  ****  "+mobileEnd);
     }
 
     @OnClick({R2.id.action_go_back,R2.id.btn_bind, R2.id.tv_get_vcode})

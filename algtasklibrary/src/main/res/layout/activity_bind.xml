@@ -19,7 +19,7 @@
             android:layout_gravity="center"
             android:textColor="@color/color_white"
             android:textSize="15dp"
-            android:text="授权绑定" />
+            android:text="请验证您的身份" />
 
         <LinearLayout
             android:id="@+id/action_go_back"
@@ -56,13 +56,12 @@
             android:paddingRight="20dp">
 
             <EditText
-                android:id="@+id/et_vcode"
+                android:id="@+id/et_phone"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="80dp"
+                android:paddingLeft="40dp"
                 android:inputType="number"
-                android:hint="@string/vcode_empty"
+                android:focusable="false"
                 style="@style/LoginEditStyle"
                 android:textColorHint="#CCCCCC"/>
 
@@ -72,7 +71,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center_vertical"
                 android:textColor="@color/color_base"
-                android:textSize="12sp"
+                android:textSize="14sp"
+                android:paddingRight="50dp"
                 android:text="@string/get_vcode"/>
 
         </FrameLayout>
@@ -80,8 +80,36 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:background="#EEEEEE"/>
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+
+            <EditText
+                android:id="@+id/et_vcode"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="80dp"
+                android:inputType="number"
+                android:hint="@string/vcode_empty"
+                style="@style/LoginEditStyle"
+                android:textColorHint="#CCCCCC"/>
+
+        </FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
             android:background="#EEEEEE"/>
 
 
@@ -96,7 +124,7 @@
             android:layout_marginRight="15dp"
             android:textColor="#ffffff"
             android:textSize="16sp"
-            android:text="@string/bind"/>
+            android:text="确定进入"/>
 
     </LinearLayout>
 
