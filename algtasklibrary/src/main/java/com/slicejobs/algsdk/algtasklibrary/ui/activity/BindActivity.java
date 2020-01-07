@@ -49,9 +49,14 @@ public class BindActivity extends BaseActivity implements IBindView{
         ButterKnife.bind(this);
         bindPresenter = new BindPresenter(this);
         mobile = PrefUtil.make(this, PrefUtil.PREFERENCE_NAME).getString(AppConfig.ZDD_MOBILE, "");
-        String mobileFrist = mobile.substring(0, 3);
-        String mobileEnd = mobile.substring(8, 12);
-        etPhone.setText(mobileFrist+"  ****  "+mobileEnd);
+        if (StringUtil.isNotBlank(mobile)) {
+            String mobileFrist = mobile.substring(0, 3);
+            String mobileEnd = mobile.substring(7, mobile.length());
+            etPhone.setText(mobileFrist+"  ****  "+mobileEnd);
+        } else {
+            toast("手机号码为空!");
+        }
+
     }
 
     @OnClick({R2.id.action_go_back,R2.id.btn_bind, R2.id.tv_get_vcode})
