@@ -249,7 +249,7 @@ public class TaskWebDetailActivity extends BaseActivity implements IJsRenderList
                 taskMoreMenuItemList.add(new TaskMoreMenuItem("share",R.drawable.ic_task_share,"分享任务"));
             }*/
             if (isStoreTask) {
-                taskMoreMenuItemList.add(new TaskMoreMenuItem("routePlan",R.drawable.ic_route_plan,"路线规划"));
+               // taskMoreMenuItemList.add(new TaskMoreMenuItem("routePlan",R.drawable.ic_route_plan,"路线规划"));
             }
             if (StringUtil.isNotBlank(taskEvaluate)) {
                 taskMoreMenuItemList.add(new TaskMoreMenuItem("taskEvaluate",R.drawable.ic_star_gray,taskEvaluate));
