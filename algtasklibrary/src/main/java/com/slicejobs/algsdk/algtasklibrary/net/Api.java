@@ -6,6 +6,7 @@ import com.slicejobs.algsdk.algtasklibrary.net.response.LoginRes;
 import com.slicejobs.algsdk.algtasklibrary.net.response.RegisterRes;
 import com.slicejobs.algsdk.algtasklibrary.net.response.Response;
 import com.slicejobs.algsdk.algtasklibrary.net.response.TaskListRes;
+import com.slicejobs.algsdk.algtasklibrary.net.response.VCodeRes;
 import com.slicejobs.algsdk.algtasklibrary.net.response.ZddResponse;
 
 import java.util.List;
@@ -34,7 +35,7 @@ public interface Api {
 
     @FormUrlEncoded
     @POST("/app/authorize/vcode")
-    public Observable<Response<List>> getVCode(
+    public Observable<VCodeRes> getVCode(
             @Field("appId") String appId,
             @Field("userId") String userId,
             @Field("mobile") String mobile,

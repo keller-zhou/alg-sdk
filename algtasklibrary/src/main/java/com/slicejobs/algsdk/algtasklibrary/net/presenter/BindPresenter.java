@@ -11,6 +11,7 @@ import com.slicejobs.algsdk.algtasklibrary.net.RestClient;
 import com.slicejobs.algsdk.algtasklibrary.net.response.LoginRes;
 import com.slicejobs.algsdk.algtasklibrary.net.response.RegisterRes;
 import com.slicejobs.algsdk.algtasklibrary.net.response.Response;
+import com.slicejobs.algsdk.algtasklibrary.net.response.VCodeRes;
 import com.slicejobs.algsdk.algtasklibrary.net.response.ZddResponse;
 import com.slicejobs.algsdk.algtasklibrary.utils.BusProvider;
 import com.slicejobs.algsdk.algtasklibrary.utils.DateUtil;
@@ -39,17 +40,17 @@ public class BindPresenter extends BasePresenter {
 
     public void getVCode(String appId,String userId,String mobile,String actionTime,String sign) {
         view.showProgressDialog();
-        Observable<Response<List>> registerOb = restClient.provideOpenApi().getVCode(appId, userId, mobile, actionTime, sign);
+        Observable registerOb = restClient.provideOpenApi().getVCode(appId, userId, mobile, actionTime, sign);
 
         registerOb.observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Response<List>>() {
+                .subscribe(new Action1<VCodeRes>() {
                     @Override
-                    public void call(Response<List> res) {
+                    public void call(VCodeRes res) {
                         view.dismissProgressDialog();
-                        if (res.ret == 0) {
+                        if (res.code == 0) {
                             view.sendVCodeSuccess();
                         } else {
-                            view.sendVCodeFaild(res.msg);
+                            view.sendVCodeFaild(res.message);
                         }
                     }
                 }, e -> {

@@ -4,7 +4,6 @@ package com.slicejobs.algsdk.algtasklibrary.net.presenter;
 import android.os.Build;
 
 import com.slicejobs.algsdk.algtasklibrary.R;
-import com.slicejobs.algsdk.algtasklibrary.R2;
 import com.slicejobs.algsdk.algtasklibrary.app.SliceApp;
 import com.slicejobs.algsdk.algtasklibrary.net.AppConfig;
 import com.slicejobs.algsdk.algtasklibrary.net.RestClient;
