@@ -12,12 +12,9 @@ import com.slicejobs.algsdk.algtasklibrary.R2;
 import com.slicejobs.algsdk.algtasklibrary.net.AppConfig;
 import com.slicejobs.algsdk.algtasklibrary.net.presenter.BindPresenter;
 import com.slicejobs.algsdk.algtasklibrary.ui.base.BaseActivity;
-import com.slicejobs.algsdk.algtasklibrary.ui.weex.weexmodule.WXBaseEventModule;
 import com.slicejobs.algsdk.algtasklibrary.utils.PrefUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.StringUtil;
 import com.slicejobs.algsdk.algtasklibrary.view.IBindView;
-
-import org.w3c.dom.Text;
 
 import java.util.concurrent.TimeUnit;
 
@@ -45,7 +42,7 @@ public class BindActivity extends BaseActivity implements IBindView{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bind);
+        setContentView(R.layout.activity_alg_bind);
         ButterKnife.bind(this);
         bindPresenter = new BindPresenter(this);
         mobile = PrefUtil.make(this, PrefUtil.PREFERENCE_NAME).getString(AppConfig.ZDD_MOBILE, "");
