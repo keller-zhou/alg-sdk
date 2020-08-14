@@ -202,6 +202,12 @@ public class SliceApp implements ILoginView {
 
     @Override
     public void showProgressDialog() {
+        if (this.context instanceof Activity) {
+            Activity activity = (Activity) this.context;
+            if (activity.isFinishing()) {
+                return;
+            }
+        }
         LoadingDialog.Builder loadBuilder=new LoadingDialog.Builder(this.context)
                 .setShowMessage(false)
                 .setCancelable(true)
