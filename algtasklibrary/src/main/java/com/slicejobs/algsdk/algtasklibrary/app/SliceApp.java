@@ -222,6 +222,7 @@ public class SliceApp implements ILoginView {
     public void dismissProgressDialog() {
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
+            progressDialog = null;
         }
     }
 
