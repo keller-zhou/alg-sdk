@@ -3,6 +3,7 @@ package com.slicejobs.algsdk.algtasklibrary.service;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -23,6 +24,7 @@ import com.slicejobs.algsdk.algtasklibrary.model.JsFileConfig;
 import com.slicejobs.algsdk.algtasklibrary.net.AppConfig;
 import com.slicejobs.algsdk.algtasklibrary.utils.FileUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.PrefUtil;
+import com.slicejobs.algsdk.algtasklibrary.utils.ServiceUtils;
 
 import java.io.File;
 
@@ -46,6 +48,9 @@ public class JsDownloadService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            ServiceUtils.startForeground(this,1,"com.slicejobs.ailinggong.jsdownload","爱零工下载通知");
+        }
         downloadIndexJsFile(this,0);
         return super.onStartCommand(intent, flags, startId);
     }

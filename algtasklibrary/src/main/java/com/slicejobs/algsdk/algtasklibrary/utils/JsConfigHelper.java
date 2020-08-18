@@ -108,7 +108,7 @@ public class JsConfigHelper {
         Intent downloadJsIntent = new Intent();
         downloadJsIntent.setAction("com.slicejobs.algsdk.algtasklibrary.JS_DOWNLOAD_SERVICE");
         downloadJsIntent.setPackage(context.getPackageName());
-        context.startService(downloadJsIntent);
+        ServiceUtils.startService(context,downloadJsIntent);
     }
 
     /*

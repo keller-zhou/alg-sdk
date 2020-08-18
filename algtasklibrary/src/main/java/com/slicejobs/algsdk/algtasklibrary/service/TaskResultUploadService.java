@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
@@ -21,6 +22,7 @@ import com.slicejobs.algsdk.algtasklibrary.model.TempUploadTask;
 import com.slicejobs.algsdk.algtasklibrary.net.ISODateAdapter;
 import com.slicejobs.algsdk.algtasklibrary.net.UploadTaskStepResultTask;
 import com.slicejobs.algsdk.algtasklibrary.ui.activity.TaskStepsWebActivity;
+import com.slicejobs.algsdk.algtasklibrary.utils.ServiceUtils;
 import com.slicejobs.algsdk.algtasklibrary.utils.StringUtil;
 
 import java.util.ArrayList;
@@ -74,6 +76,9 @@ public class TaskResultUploadService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            ServiceUtils.startForeground(this,3,"com.slicejobs.ailinggong.cacheUpload","爱零工提交任务通知");
+        }
         if(intent != null){
             if(miniTask == null){
                 miniTask = (MiniTask) intent.getSerializableExtra(TaskStepsWebActivity.TEMP_UPLOAD_MINITASK_KEY);

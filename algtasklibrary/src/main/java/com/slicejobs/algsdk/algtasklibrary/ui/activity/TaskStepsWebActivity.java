@@ -68,6 +68,7 @@ import com.slicejobs.algsdk.algtasklibrary.utils.BusProvider;
 import com.slicejobs.algsdk.algtasklibrary.utils.FileUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.NetWorkUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.PrefUtil;
+import com.slicejobs.algsdk.algtasklibrary.utils.ServiceUtils;
 import com.slicejobs.algsdk.algtasklibrary.utils.StringUtil;
 import com.slicejobs.algsdk.algtasklibrary.view.IJsRenderListener;
 import com.squareup.otto.Subscribe;
@@ -294,7 +295,7 @@ public class TaskStepsWebActivity extends PickPhotoActivity implements IJsRender
                                            }
                                            if(tempUploadIntent != null){
                                                tempUploadIntent.putExtra(TEMP_UPLOAD_STATUS_KEY, "exit");
-                                               startService(tempUploadIntent);
+                                               ServiceUtils.startService(TaskStepsWebActivity.this,tempUploadIntent);
                                                stopService(tempUploadIntent);
                                                tempUploadIntent = null;
                                            }
@@ -314,7 +315,7 @@ public class TaskStepsWebActivity extends PickPhotoActivity implements IJsRender
                     }
                     if(tempUploadIntent != null){
                         tempUploadIntent.putExtra(TEMP_UPLOAD_STATUS_KEY, "exit");
-                        startService(tempUploadIntent);
+                        ServiceUtils.startService(TaskStepsWebActivity.this,tempUploadIntent);
                         stopService(tempUploadIntent);
                         tempUploadIntent = null;
                     }
@@ -627,7 +628,7 @@ public class TaskStepsWebActivity extends PickPhotoActivity implements IJsRender
         }
         if(tempUploadIntent != null){
             tempUploadIntent.putExtra(TEMP_UPLOAD_STATUS_KEY, "exit");
-            startService(tempUploadIntent);
+            ServiceUtils.startService(TaskStepsWebActivity.this,tempUploadIntent);
             stopService(tempUploadIntent);
             tempUploadIntent = null;
         }
@@ -724,7 +725,7 @@ public class TaskStepsWebActivity extends PickPhotoActivity implements IJsRender
         } else if (event.eventType.equals("popTaskStepView")) {
             if(tempUploadIntent != null){
                 tempUploadIntent.putExtra(TEMP_UPLOAD_STATUS_KEY, "exit");
-                startService(tempUploadIntent);
+                ServiceUtils.startService(TaskStepsWebActivity.this,tempUploadIntent);
                 stopService(tempUploadIntent);
                 tempUploadIntent = null;
             }
@@ -1007,7 +1008,7 @@ public class TaskStepsWebActivity extends PickPhotoActivity implements IJsRender
                 tempUploadIntent.putExtra(TEMP_UPLOAD_HASHMAP_JSON_KEY, tempJsonKey);
                 tempUploadIntent.putExtra(TEMP_UPLOAD_STEP_INDEX_KEY, stepIndex);
                 tempUploadIntent.putExtra(TEMP_UPLOAD_ISCOMMIT_KEY, isCommit);
-                startService(tempUploadIntent);
+                ServiceUtils.startService(TaskStepsWebActivity.this,tempUploadIntent);
 
                 uploadStatusIndicator.setVisibility(View.VISIBLE);
                 uploadStatusIndicator.setBackgroundResource(R.drawable.shape_orange_circle);
@@ -1168,7 +1169,7 @@ public class TaskStepsWebActivity extends PickPhotoActivity implements IJsRender
                                        }
                                        if(tempUploadIntent != null){
                                            tempUploadIntent.putExtra(TEMP_UPLOAD_STATUS_KEY, "exit");
-                                           startService(tempUploadIntent);
+                                           ServiceUtils.startService(TaskStepsWebActivity.this,tempUploadIntent);
                                            stopService(tempUploadIntent);
                                            tempUploadIntent = null;
                                        }
@@ -1188,7 +1189,7 @@ public class TaskStepsWebActivity extends PickPhotoActivity implements IJsRender
                 }
                 if(tempUploadIntent != null){
                     tempUploadIntent.putExtra(TEMP_UPLOAD_STATUS_KEY, "exit");
-                    startService(tempUploadIntent);
+                    ServiceUtils.startService(TaskStepsWebActivity.this,tempUploadIntent);
                     stopService(tempUploadIntent);
                     tempUploadIntent = null;
                 }
@@ -1597,7 +1598,7 @@ public class TaskStepsWebActivity extends PickPhotoActivity implements IJsRender
         }
         floatRecordIntent.putExtra(CURRENT_RECORD_STATUS_KEY, recordStatus);
         floatRecordIntent.putExtra(CURRENT_RECORD_TIME_KEY, currentRecordTime);
-        startService(floatRecordIntent);
+        ServiceUtils.startService(TaskStepsWebActivity.this,floatRecordIntent);
     }
 
     private class HomeKeyReceiver extends BroadcastReceiver {
@@ -1641,7 +1642,7 @@ public class TaskStepsWebActivity extends PickPhotoActivity implements IJsRender
         UPLOADJSONMAP.put(tempJsonKey, failTempUploadTask.getResultJson());
         tempUploadIntent.putExtra(TEMP_UPLOAD_HASHMAP_JSON_KEY, tempJsonKey);
         tempUploadIntent.putExtra(TEMP_UPLOAD_ISCOMMIT_KEY, isCommit);
-        startService(tempUploadIntent);
+        ServiceUtils.startService(TaskStepsWebActivity.this,tempUploadIntent);
 
     }
 

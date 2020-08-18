@@ -22,6 +22,7 @@ import com.slicejobs.algsdk.algtasklibrary.R2;
 import com.slicejobs.algsdk.algtasklibrary.ui.activity.TaskStepsWebActivity;
 import com.slicejobs.algsdk.algtasklibrary.utils.DateUtil;
 import com.slicejobs.algsdk.algtasklibrary.utils.DensityUtil;
+import com.slicejobs.algsdk.algtasklibrary.utils.ServiceUtils;
 
 
 public class FloatingRecordService extends Service {
@@ -46,6 +47,9 @@ public class FloatingRecordService extends Service {
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            ServiceUtils.startForeground(this,2,"com.slicejobs.ailinggong.floatRecord","爱零工录音通知");
+        }
         if(intent != null) {
             int currentRecordStatus = intent.getIntExtra(TaskStepsWebActivity.CURRENT_RECORD_STATUS_KEY, -1);
             int currentRecordTime = intent.getIntExtra(TaskStepsWebActivity.CURRENT_RECORD_TIME_KEY, 0);
