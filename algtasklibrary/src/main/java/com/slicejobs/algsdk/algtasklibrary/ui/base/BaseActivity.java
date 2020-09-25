@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.view.Display;
@@ -75,6 +76,8 @@ import permissions.dispatcher.RuntimePermissions;
  */
 @RuntimePermissions
 public class BaseActivity extends SwipeBackActivity implements IWXRenderListener {
+    private static final int DELAY_RENDER_MSG_WHAT = 111;
+
     public LoadingDialog progressDialog;
     WXSDKInstance mWXSDKInstance;
     LoadingAndRetryManager mLoadingAndRetryManager;
@@ -83,6 +86,16 @@ public class BaseActivity extends SwipeBackActivity implements IWXRenderListener
     private String viewName;
     private IJsRenderListener iJsRenderListener;
     private boolean ifRenderFromServer;
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == DELAY_RENDER_MSG_WHAT) {
+                asyncRenderJs(jsFileName, jsonInitData, viewName, iJsRenderListener);
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,14 +121,14 @@ public class BaseActivity extends SwipeBackActivity implements IWXRenderListener
     @Override
     protected void onResume() {
         super.onResume();
-        if(mWXSDKInstance!=null){
+        if (mWXSDKInstance != null) {
             mWXSDKInstance.onActivityResume();
         }
     }
 
     public void onPause() {
         super.onPause();
-        if(mWXSDKInstance!=null){
+        if (mWXSDKInstance != null) {
             mWXSDKInstance.onActivityPause();
         }
     }
@@ -123,7 +136,7 @@ public class BaseActivity extends SwipeBackActivity implements IWXRenderListener
     @Override
     protected void onStop() {
         super.onStop();
-        if(mWXSDKInstance!=null){
+        if (mWXSDKInstance != null) {
             mWXSDKInstance.onActivityStop();
         }
     }
@@ -134,23 +147,23 @@ public class BaseActivity extends SwipeBackActivity implements IWXRenderListener
     }
 
     public void showProgressDialog() {
-        LoadingDialog.Builder loadBuilder=new LoadingDialog.Builder(this)
+        LoadingDialog.Builder loadBuilder = new LoadingDialog.Builder(this)
                 .setShowMessage(false)
                 .setCancelable(true)
                 .setCancelOutside(true);
-        if(progressDialog == null) {
+        if (progressDialog == null) {
             progressDialog = loadBuilder.create();
         }
         progressDialog.show();
     }
 
     public void showTextProgressDialog(String text) {
-        LoadingDialog.Builder loadBuilder=new LoadingDialog.Builder(this)
+        LoadingDialog.Builder loadBuilder = new LoadingDialog.Builder(this)
                 .setShowMessage(true)
                 .setMessage(text)
                 .setCancelable(false)
                 .setCancelOutside(false);
-        progressDialog=loadBuilder.create();
+        progressDialog = loadBuilder.create();
         progressDialog.show();
     }
 
@@ -159,7 +172,8 @@ public class BaseActivity extends SwipeBackActivity implements IWXRenderListener
             progressDialog.dismiss();
         }
     }
-    public void toast(String msg){
+
+    public void toast(String msg) {
         ToastUtils.show(msg);
     }
 
@@ -169,18 +183,19 @@ public class BaseActivity extends SwipeBackActivity implements IWXRenderListener
 
     /**
      * 适合简单提示
+     *
      * @param msgTitle
      * @param msg
      * @param posiText
      */
     public void showHintDialog(DialogDefineClick dialogDefineClick, String msgTitle, String msg, String posiText, boolean isCancellab) {
-        AlertDialog.Builder builer = new  AlertDialog.Builder(this, R.style.Dialog_Fullscreen);
+        AlertDialog.Builder builer = new AlertDialog.Builder(this, R.style.Dialog_Fullscreen);
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         View view = layoutInflater.inflate(R.layout.dialog_base_hint, null);
-        TextView tvTitle = (TextView)view.findViewById(R.id.dialog_title);
-        TextView tvMsg = (TextView)view.findViewById(R.id.dialog_msg);
+        TextView tvTitle = (TextView) view.findViewById(R.id.dialog_title);
+        TextView tvMsg = (TextView) view.findViewById(R.id.dialog_msg);
         tvMsg.setText(msg);
-        TextView tvBt = (TextView)view.findViewById(R.id.dialog_bt_hint);
+        TextView tvBt = (TextView) view.findViewById(R.id.dialog_bt_hint);
         tvBt.setText(posiText);
         if (StringUtil.isBlank(msgTitle)) {
             tvTitle.setVisibility(View.GONE);
@@ -210,27 +225,28 @@ public class BaseActivity extends SwipeBackActivity implements IWXRenderListener
     }
 
     /**
-     *适合有确定按钮的提示对话框
+     * 适合有确定按钮的提示对话框
+     *
      * @param msgTitle
      * @param msg
      * @param
      */
     public void showHintDialog(DialogClickLinear linear, String msgTitle, String msg, String cancelText, String defineText, boolean isCancellab) {
 
-        AlertDialog.Builder builer = new  AlertDialog.Builder(this,R.style.Dialog_Fullscreen);
+        AlertDialog.Builder builer = new AlertDialog.Builder(this, R.style.Dialog_Fullscreen);
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         View view = layoutInflater.inflate(R.layout.dialog_base_hint, null);
-        TextView tvTitle = (TextView)view.findViewById(R.id.dialog_title);
-        TextView tvMsg = (TextView)view.findViewById(R.id.dialog_msg);
+        TextView tvTitle = (TextView) view.findViewById(R.id.dialog_title);
+        TextView tvMsg = (TextView) view.findViewById(R.id.dialog_msg);
         tvMsg.setText(msg);
-        TextView tvBt = (TextView)view.findViewById(R.id.dialog_bt_hint);
-            tvBt.setVisibility(View.GONE);
-        LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.dialog_bt_layout);
+        TextView tvBt = (TextView) view.findViewById(R.id.dialog_bt_hint);
+        tvBt.setVisibility(View.GONE);
+        LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.dialog_bt_layout);
         linearLayout.setVisibility(View.VISIBLE);
         Button btCancel = (Button) view.findViewById(R.id.dialog_cancel);
-            btCancel.setText(cancelText);
+        btCancel.setText(cancelText);
         Button btDefine = (Button) view.findViewById(R.id.dialog_define);
-            btDefine.setText(defineText);
+        btDefine.setText(defineText);
         builer.setCancelable(isCancellab);
         if (StringUtil.isBlank(msgTitle)) {
             tvTitle.setVisibility(View.GONE);
@@ -265,22 +281,23 @@ public class BaseActivity extends SwipeBackActivity implements IWXRenderListener
     }
 
     /**
-     *适合有三个按钮的提示对话框
+     * 适合有三个按钮的提示对话框
+     *
      * @param msgTitle
      * @param msg
      * @param
      */
     public void showHintDialog(DialogThreeClickLinear linear, String msgTitle, String msg, String cancelText, String defineText, String middleText, boolean isCancellab) {
 
-        AlertDialog.Builder builer = new  AlertDialog.Builder(this,R.style.Dialog_Fullscreen);
+        AlertDialog.Builder builer = new AlertDialog.Builder(this, R.style.Dialog_Fullscreen);
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         View view = layoutInflater.inflate(R.layout.dialog_base_hint, null);
-        TextView tvTitle = (TextView)view.findViewById(R.id.dialog_title);
-        TextView tvMsg = (TextView)view.findViewById(R.id.dialog_msg);
+        TextView tvTitle = (TextView) view.findViewById(R.id.dialog_title);
+        TextView tvMsg = (TextView) view.findViewById(R.id.dialog_msg);
         tvMsg.setText(msg);
-        TextView tvBt = (TextView)view.findViewById(R.id.dialog_bt_hint);
+        TextView tvBt = (TextView) view.findViewById(R.id.dialog_bt_hint);
         tvBt.setVisibility(View.GONE);
-        LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.dialog_three_bt_layout);
+        LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.dialog_three_bt_layout);
         linearLayout.setVisibility(View.VISIBLE);
         Button btCancel = (Button) view.findViewById(R.id.bt_cancel);
         btCancel.setText(cancelText);
@@ -328,7 +345,7 @@ public class BaseActivity extends SwipeBackActivity implements IWXRenderListener
     }
 
 
-    public interface  DialogClickLinear {
+    public interface DialogClickLinear {
 
         public void cancelClick();
 
@@ -336,19 +353,21 @@ public class BaseActivity extends SwipeBackActivity implements IWXRenderListener
 
     }
 
-    public interface  DialogThreeClickLinear {
+    public interface DialogThreeClickLinear {
 
         public void cancelClick();
+
         public void middleClick();
+
         public void defineClick();
 
     }
 
-    public interface  DialogDefineClick {
+    public interface DialogDefineClick {
         public void defineClick();
     }
 
-    public void addNetErrorView(OnNetErrorRefreshClick refreshClick){
+    public void addNetErrorView(OnNetErrorRefreshClick refreshClick) {
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         View view = layoutInflater.inflate(R.layout.view_net_error, null);
         Button refresh = (Button) view.findViewById(R.id.operate);
@@ -360,19 +379,19 @@ public class BaseActivity extends SwipeBackActivity implements IWXRenderListener
             }
         });
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-        params.topMargin = DensityUtil.getStatusBarHeight(this) + DensityUtil.dip2px(this,43);
-        this.addContentView(view,params);
+        params.topMargin = DensityUtil.getStatusBarHeight(this) + DensityUtil.dip2px(this, 43);
+        this.addContentView(view, params);
     }
 
-    public interface OnNetErrorRefreshClick{
+    public interface OnNetErrorRefreshClick {
         public void onRefreshClick();
     }
 
 
     @Override
     public void onViewCreated(WXSDKInstance instance, View view) {
-        if(iJsRenderListener != null){
-            iJsRenderListener.onViewCreated(instance,view);
+        if (iJsRenderListener != null) {
+            iJsRenderListener.onViewCreated(instance, view);
         }
     }
 
@@ -382,14 +401,14 @@ public class BaseActivity extends SwipeBackActivity implements IWXRenderListener
             @Override
             public void run() {
                 mLoadingAndRetryManager.showContent();
-                if(ifRenderFromServer){//如果加载的是服务器上的js文件,下载下来
+                if (ifRenderFromServer) {//如果加载的是服务器上的js文件,下载下来
                     JsFileConfig jsFileConfig = getLocalJsFileConfig(jsFileName);
-                    if(jsFileConfig != null){
-                        JsConfigHelper.downloadJsFile(BaseActivity.this,jsFileName,jsFileConfig.getDownloadUrl());
+                    if (jsFileConfig != null) {
+                        JsConfigHelper.downloadJsFile(BaseActivity.this, jsFileName, jsFileConfig.getDownloadUrl());
                     }
                 }
             }
-        },200);
+        }, 200);
     }
 
     @Override
@@ -411,93 +430,74 @@ public class BaseActivity extends SwipeBackActivity implements IWXRenderListener
         }
     }
 
-    public void renderJs(String jsFileName, String jsonInitData, String viewName, IJsRenderListener iJsRenderListener){
-        //初始化h5模块
-//        SliceApp.getInstance().initWeex();
+    public void renderJs(String jsFileName, String jsonInitData, String viewName, IJsRenderListener iJsRenderListener) {
+        /**
+         * 此处一定要判断WXSDKEngine是否已经成功初始化了，由于WXSDKEngine底层初始化的库非常多
+         * 导致整个的初始化非常的耗时，并且这个初始化是异步执行的，尤其是初始化JS引擎部分的代码（WXBridgeManager）。
+         * 因此有非常大的概率导致当第一次使用Week的API的时候，底层还没有完成初始化
+         * 导致出现错信息 "degradeToH5|createInstance fail|wx_create_instance_error isJSFrameworkInit==false reInitCount == 1"
+         * 这段耗时可以通过在程序启动的时候增加启动等待页面来人性化的忽略这部分耗时。
+         **/
 
-//        WXStorageModule storageModule = new WXStorageModule();
-//        storageModule.getItem("user_global", new JSCallback() {
-//            @Override
-//            public void invoke(Object data) {
-//                Map<String,Object> dataMap = (Map<String, Object>) data;
-//                String appConfigJson = (String) dataMap.get("data");
-//                if (StringUtil.isNotBlank(appConfigJson) && appConfigJson.equals("undefined")) {
-//                    WXBaseEventModule.writeStorage();
-//                }
-//            }
-//
-//            @Override
-//            public void invokeAndKeepAlive(Object data) {
-//
-//            }
-//        });
         this.jsFileName = jsFileName;
         this.jsonInitData = jsonInitData;
         this.viewName = viewName;
         this.iJsRenderListener = iJsRenderListener;
         mWXSDKInstance = new WXSDKInstance(this);
         mWXSDKInstance.registerRenderListener(this);
-        mLoadingAndRetryManager = LoadingAndRetryManager.generate(this, new OnLoadingAndRetryListener() {
-            @Override
-            public void setRetryEvent(View retryView) {
-                View view = retryView.findViewById(R.id.operate);
-                view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        loadJs(mWXSDKInstance,jsFileName,jsonInitData);
-                    }
-                });
-            }
-        });
-        BaseActivityPermissionsDispatcher.loadJsWithCheck(this,mWXSDKInstance,jsFileName,jsonInitData);
+        if (!WXSDKEngine.isInitialized()) {
+            handler.sendEmptyMessageDelayed(DELAY_RENDER_MSG_WHAT, 1000);
+        } else {
+            asyncRenderJs(jsFileName, jsonInitData, viewName, iJsRenderListener);
+        }
     }
 
     @NeedsPermission({Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE})
-    void loadJs(WXSDKInstance mWXSDKInstance, String jsFileName, String jsonInitData){
+    void loadJs(WXSDKInstance mWXSDKInstance, String jsFileName, String jsonInitData) {
         JsFileConfig jsFileConfig = getLocalJsFileConfig(jsFileName);
-        if(jsFileConfig != null){//先判断本地配置json是否存在
-            if(FileUtil.fileIsExists(AppConfig.LOCAL_JS_DIR + File.separator + jsFileName)){//本地js文件存在
-                String localJsMd5 = SignUtil.md5(WXFileUtils.loadFileOrAsset(AppConfig.LOCAL_JS_DIR + File.separator + jsFileName,mWXSDKInstance.getContext()));
-                if(localJsMd5.equals(jsFileConfig.getFileMD5())){//md5匹配用本地js
-                    if(!jsFileConfig.isUseOnline){//不要求使用线上
+        if (jsFileConfig != null) {//先判断本地配置json是否存在
+            if (FileUtil.fileIsExists(AppConfig.LOCAL_JS_DIR + File.separator + jsFileName)) {//本地js文件存在
+                String localJsMd5 = SignUtil.md5(WXFileUtils.loadFileOrAsset(AppConfig.LOCAL_JS_DIR + File.separator + jsFileName, mWXSDKInstance.getContext()));
+                if (localJsMd5.equals(jsFileConfig.getFileMD5())) {//md5匹配用本地js
+                    if (!jsFileConfig.isUseOnline) {//不要求使用线上
                         loadJsFromLocal(mWXSDKInstance, jsFileName, jsonInitData);
-                    }else {
-                        loadJsFromServer(mWXSDKInstance,jsFileName,jsonInitData);
+                    } else {
+                        loadJsFromServer(mWXSDKInstance, jsFileName, jsonInitData);
                     }
-                }else {//md5不匹配用服务器js
+                } else {//md5不匹配用服务器js
                     FileUtil.deleteFile(AppConfig.LOCAL_JS_DIR + File.separator + jsFileName);//md5不匹配删除本地js文件
                     ifRenderFromServer = true;
-                    loadJsFromServer(mWXSDKInstance,jsFileName,jsonInitData);
+                    loadJsFromServer(mWXSDKInstance, jsFileName, jsonInitData);
                 }
-            }else {
+            } else {
                 ifRenderFromServer = true;
-                loadJsFromServer(mWXSDKInstance,jsFileName,jsonInitData);
+                loadJsFromServer(mWXSDKInstance, jsFileName, jsonInitData);
             }
-        }else {//本地文件不存在用服务器js
+        } else {//本地文件不存在用服务器js
             ifRenderFromServer = true;
-            loadJsFromServer(mWXSDKInstance,jsFileName,jsonInitData);
+            loadJsFromServer(mWXSDKInstance, jsFileName, jsonInitData);
         }
     }
 
     @OnPermissionDenied({Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE})
-    void onWriteReadDenied(){
+    void onWriteReadDenied() {
         ifRenderFromServer = true;
-        loadJsFromServer(mWXSDKInstance,jsFileName,jsonInitData);
+        loadJsFromServer(mWXSDKInstance, jsFileName, jsonInitData);
     }
 
     @OnShowRationale({Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE})
-    void showRationaleForWriteRead(PermissionRequest request){
+    void showRationaleForWriteRead(PermissionRequest request) {
         showHintDialog(new DialogClickLinear() {
             @Override
             public void cancelClick() {
                 ifRenderFromServer = true;
-                loadJsFromServer(mWXSDKInstance,jsFileName,jsonInitData);
+                loadJsFromServer(mWXSDKInstance, jsFileName, jsonInitData);
             }
 
             @Override
             public void defineClick() {
                 Intent intent = new Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS);
-                startActivityForResult(intent,111);
+                startActivityForResult(intent, 111);
             }
         }, "读取手机文件被禁止", "请在手机“设置-应用程序权限管理-选择本App”允许存储", "以后再说", "打开", false);
     }
@@ -508,25 +508,25 @@ public class BaseActivity extends SwipeBackActivity implements IWXRenderListener
             @Override
             public void cancelClick() {
                 ifRenderFromServer = true;
-                loadJsFromServer(mWXSDKInstance,jsFileName,jsonInitData);
+                loadJsFromServer(mWXSDKInstance, jsFileName, jsonInitData);
             }
 
             @Override
             public void defineClick() {
                 Intent intent = new Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS);
-                startActivityForResult(intent,111);
+                startActivityForResult(intent, 111);
             }
         }, "读取手机文件被禁止", "请在手机“设置-应用程序权限管理-选择本App”允许存储", "以后再说", "打开", false);
     }
 
-    private void loadJsFromServer(WXSDKInstance mWXSDKInstance, String jsFileName, String jsonInitData){
+    private void loadJsFromServer(WXSDKInstance mWXSDKInstance, String jsFileName, String jsonInitData) {
         mWXSDKInstance.renderByUrl(this.getPackageName(), AppConfig.JS_SERVER_DIR + jsFileName, null, jsonInitData, WXViewUtils.getScreenWidth(this), WXViewUtils.getScreenHeight(this) - DensityUtil.dip2px(this, 56), WXRenderStrategy.APPEND_ASYNC);
     }
 
-    private void loadJsFromLocal(WXSDKInstance mWXSDKInstance, String jsFileName, String jsonInitData){
+    private void loadJsFromLocal(WXSDKInstance mWXSDKInstance, String jsFileName, String jsonInitData) {
         mWXSDKInstance.render(
                 this.getPackageName(),
-                WXFileUtils.loadFileOrAsset(AppConfig.LOCAL_JS_DIR + File.separator + jsFileName,this),
+                WXFileUtils.loadFileOrAsset(AppConfig.LOCAL_JS_DIR + File.separator + jsFileName, this),
                 null,
                 jsonInitData,
                 WXViewUtils.getScreenWidth(this),
@@ -534,11 +534,11 @@ public class BaseActivity extends SwipeBackActivity implements IWXRenderListener
                 WXRenderStrategy.APPEND_ASYNC);
     }
 
-    private JsFileConfig getLocalJsFileConfig(String jsFileName){
+    private JsFileConfig getLocalJsFileConfig(String jsFileName) {
         JsConfig jsConfig = (JsConfig) PrefUtil.make(this, PrefUtil.PREFERENCE_NAME).getObject(AppConfig.JS_CONFIG_OBJECT_KEY, JsConfig.class);
-        if(jsConfig != null){
+        if (jsConfig != null) {
             JsFileConfig[] jsFileConfigArray = jsConfig.getList();
-            if(jsFileConfigArray != null && jsFileConfigArray.length != 0) {
+            if (jsFileConfigArray != null && jsFileConfigArray.length != 0) {
                 for (JsFileConfig jsFileConfig : jsFileConfigArray) {
                     if (jsFileConfig.getFileName().equals(jsFileName)) {
                         return jsFileConfig;
@@ -552,16 +552,33 @@ public class BaseActivity extends SwipeBackActivity implements IWXRenderListener
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        BaseActivityPermissionsDispatcher.onRequestPermissionsResult(this,requestCode, grantResults);
+        BaseActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 111){
-            BaseActivityPermissionsDispatcher.loadJsWithCheck(this,mWXSDKInstance,jsFileName,jsonInitData);
+        if (requestCode == 111) {
+            BaseActivityPermissionsDispatcher.loadJsWithCheck(this, mWXSDKInstance, jsFileName, jsonInitData);
         }
     }
+
+    private void asyncRenderJs(String jsFileName, String jsonInitData, String viewName, IJsRenderListener iJsRenderListener) {
+        mLoadingAndRetryManager = LoadingAndRetryManager.generate(this, new OnLoadingAndRetryListener() {
+            @Override
+            public void setRetryEvent(View retryView) {
+                View view = retryView.findViewById(R.id.operate);
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        loadJs(mWXSDKInstance, jsFileName, jsonInitData);
+                    }
+                });
+            }
+        });
+        BaseActivityPermissionsDispatcher.loadJsWithCheck(this, mWXSDKInstance, jsFileName, jsonInitData);
+    }
+
 }
 
 

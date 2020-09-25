@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Handler;
+import android.os.Message;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -60,10 +61,13 @@ import permissions.dispatcher.RuntimePermissions;
 @RuntimePermissions
 public class BaseFragment extends Fragment implements IWXRenderListener {
 
+    private static final int DELAY_RENDER_MSG_WHAT = 111;
+
     protected LoadingDialog progressDialog;
     protected FragmentActivity mActivity;
     WXSDKInstance mWXSDKInstance;
     LoadingAndRetryManager mLoadingAndRetryManager;
+    private View jsView;
     private String jsFileName;
     private String jsonInitData;
     private String viewName;
@@ -76,13 +80,23 @@ public class BaseFragment extends Fragment implements IWXRenderListener {
         mActivity = (FragmentActivity) activity;
     }
 
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == DELAY_RENDER_MSG_WHAT) {
+                asyncRenderJs(jsView, jsFileName, jsonInitData, viewName, iJsRenderListener);
+            }
+        }
+    };
+
     public void showProgressDialog() {
-        LoadingDialog.Builder loadBuilder=new LoadingDialog.Builder(mActivity)
+        LoadingDialog.Builder loadBuilder = new LoadingDialog.Builder(mActivity)
                 .setShowMessage(false)
                 .setCancelable(true)
                 .setCancelOutside(true);
         if (progressDialog == null) {
-            progressDialog=loadBuilder.create();
+            progressDialog = loadBuilder.create();
         }
         progressDialog.show();
     }
@@ -94,7 +108,7 @@ public class BaseFragment extends Fragment implements IWXRenderListener {
     }
 
 
-    public void toast(String msg){
+    public void toast(String msg) {
         ToastUtils.show(msg);
     }
 
@@ -134,27 +148,28 @@ public class BaseFragment extends Fragment implements IWXRenderListener {
             //p.height = (int) (d.getHeight() * 0.3); // 高度设置为屏幕的0.3，根据实际情况调整
             p.width = (int) (d.getWidth() * 0.73); // 宽度设置为屏幕的0.7，根据实际情况调整
             dialogWindow.setAttributes(p);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.getStackTrace();
-            umengCustomErrorLog("showHintDialog报错"  + e.getMessage());
+            umengCustomErrorLog("showHintDialog报错" + e.getMessage());
         }
     }
 
     /**
-     *适合有确定按钮的提示对话框
+     * 适合有确定按钮的提示对话框
+     *
      * @param msgTitle
      * @param msg
      * @param
      */
     public void showHintDialog(DialogClickLinear linear, String msgTitle, String msg, String cancelText, String defineText, boolean isCancellab) {
-        try{
-            AlertDialog.Builder builer = new  AlertDialog.Builder(mActivity,R.style.Dialog_Fullscreen);
+        try {
+            AlertDialog.Builder builer = new AlertDialog.Builder(mActivity, R.style.Dialog_Fullscreen);
             LayoutInflater layoutInflater = LayoutInflater.from(mActivity);
             View view = layoutInflater.inflate(R.layout.dialog_base_hint, null);
-            TextView tvTitle = (TextView)view.findViewById(R.id.dialog_title);
-            TextView tvMsg = (TextView)view.findViewById(R.id.dialog_msg);
+            TextView tvTitle = (TextView) view.findViewById(R.id.dialog_title);
+            TextView tvMsg = (TextView) view.findViewById(R.id.dialog_msg);
             tvMsg.setText(msg);
-            TextView tvBt = (TextView)view.findViewById(R.id.dialog_bt_hint);
+            TextView tvBt = (TextView) view.findViewById(R.id.dialog_bt_hint);
             tvBt.setVisibility(View.GONE);
             if (StringUtil.isBlank(msgTitle) || msgTitle.equals(getResources().getString(R.string.text_slicejobs_hint))) {
                 tvTitle.setVisibility(View.GONE);
@@ -162,7 +177,7 @@ public class BaseFragment extends Fragment implements IWXRenderListener {
                 tvTitle.setVisibility(View.VISIBLE);
                 tvTitle.setText(msgTitle);
             }
-            LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.dialog_bt_layout);
+            LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.dialog_bt_layout);
             linearLayout.setVisibility(View.VISIBLE);
             Button btCancel = (Button) view.findViewById(R.id.dialog_cancel);
             btCancel.setText(cancelText);
@@ -193,15 +208,14 @@ public class BaseFragment extends Fragment implements IWXRenderListener {
             //p.height = (int) (d.getHeight() * 0.3); // 高度设置为屏幕的0.3，根据实际情况调整
             p.width = (int) (d.getWidth() * 0.73); // 宽度设置为屏幕的0.7，根据实际情况调整
             dialogWindow.setAttributes(p);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.getStackTrace();
-            umengCustomErrorLog("showHintDialog报错"  + e.getMessage());
+            umengCustomErrorLog("showHintDialog报错" + e.getMessage());
         }
     }
 
 
-
-    public interface  DialogClickLinear {
+    public interface DialogClickLinear {
 
         public void cancelClick();
 
@@ -209,7 +223,7 @@ public class BaseFragment extends Fragment implements IWXRenderListener {
 
     }
 
-    public interface  DialogDefineClick {
+    public interface DialogDefineClick {
         public void defineClick();
     }
 
@@ -218,8 +232,8 @@ public class BaseFragment extends Fragment implements IWXRenderListener {
 
     @Override
     public void onViewCreated(WXSDKInstance instance, View view) {
-        if(iJsRenderListener != null){
-            iJsRenderListener.onViewCreated(instance,view);
+        if (iJsRenderListener != null) {
+            iJsRenderListener.onViewCreated(instance, view);
         }
     }
 
@@ -229,14 +243,14 @@ public class BaseFragment extends Fragment implements IWXRenderListener {
             @Override
             public void run() {
                 mLoadingAndRetryManager.showContent();
-                if(ifRenderFromServer){//如果加载的是服务器上的js文件,下载下来
+                if (ifRenderFromServer) {//如果加载的是服务器上的js文件,下载下来
                     JsFileConfig jsFileConfig = getLocalJsFileConfig(jsFileName);
-                    if(jsFileConfig != null){
-                        JsConfigHelper.downloadJsFile(getActivity(),jsFileName,jsFileConfig.getDownloadUrl());
+                    if (jsFileConfig != null) {
+                        JsConfigHelper.downloadJsFile(getActivity(), jsFileName, jsFileConfig.getDownloadUrl());
                     }
                 }
             }
-        },200);
+        }, 200);
     }
 
     @Override
@@ -258,9 +272,10 @@ public class BaseFragment extends Fragment implements IWXRenderListener {
         }
     }
 
-    public void renderJs(View view, String jsFileName, String jsonInitData, String viewName, IJsRenderListener iJsRenderListener){
+    public void renderJs(View view, String jsFileName, String jsonInitData, String viewName, IJsRenderListener iJsRenderListener) {
         //初始化h5模块
         SliceApp.getInstance().initWeex();
+        this.jsView =view;
         this.jsFileName = jsFileName;
         this.viewName = viewName;
         this.jsonInitData = jsonInitData;
@@ -268,79 +283,72 @@ public class BaseFragment extends Fragment implements IWXRenderListener {
         this.iJsRenderListener = iJsRenderListener;
         mWXSDKInstance = new WXSDKInstance(getActivity());
         mWXSDKInstance.registerRenderListener(this);
-        mLoadingAndRetryManager = LoadingAndRetryManager.generate(view, new OnLoadingAndRetryListener() {
-            @Override
-            public void setRetryEvent(View retryView) {
-                View view = retryView.findViewById(R.id.operate);
-                view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        loadJs(mWXSDKInstance,jsFileName,jsonInitData);
-                    }
-                });
-            }
-        });
-        BaseFragmentPermissionsDispatcher.loadJsWithCheck(this,mWXSDKInstance,jsFileName,jsonInitData);
+        if (!WXSDKEngine.isInitialized()) {
+            handler.sendEmptyMessageDelayed(DELAY_RENDER_MSG_WHAT, 1000);
+        } else {
+            asyncRenderJs(view, jsFileName, jsonInitData, viewName, iJsRenderListener);
+        }
+
     }
 
     @NeedsPermission({Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE})
-    void loadJs(WXSDKInstance mWXSDKInstance, String jsFileName, String jsonInitData){
+    void loadJs(WXSDKInstance mWXSDKInstance, String jsFileName, String jsonInitData) {
         JsFileConfig jsFileConfig = getLocalJsFileConfig(jsFileName);
-        if(jsFileConfig != null){//先判断本地配置json是否存在
-            if(FileUtil.fileIsExists(AppConfig.LOCAL_JS_DIR + File.separator + jsFileName)){//本地js文件存在
-                String localJsMd5 = SignUtil.md5(WXFileUtils.loadFileOrAsset(AppConfig.LOCAL_JS_DIR + File.separator + jsFileName,mWXSDKInstance.getContext()));
-                if(localJsMd5.equals(jsFileConfig.getFileMD5())){//md5匹配用本地js
-                    if(!jsFileConfig.isUseOnline) {//不要求使用线上
+        if (jsFileConfig != null) {//先判断本地配置json是否存在
+            if (FileUtil.fileIsExists(AppConfig.LOCAL_JS_DIR + File.separator + jsFileName)) {//本地js文件存在
+                String localJsMd5 = SignUtil.md5(WXFileUtils.loadFileOrAsset(AppConfig.LOCAL_JS_DIR + File.separator + jsFileName, mWXSDKInstance.getContext()));
+                if (localJsMd5.equals(jsFileConfig.getFileMD5())) {//md5匹配用本地js
+                    if (!jsFileConfig.isUseOnline) {//不要求使用线上
                         loadJsFromLocal(mWXSDKInstance, jsFileName, jsonInitData);
-                    }else {
-                        loadJsFromServer(mWXSDKInstance,jsFileName,jsonInitData);
+                    } else {
+                        loadJsFromServer(mWXSDKInstance, jsFileName, jsonInitData);
                     }
-                }else {//md5不匹配用服务器js
+                } else {//md5不匹配用服务器js
                     FileUtil.deleteFile(AppConfig.LOCAL_JS_DIR + File.separator + jsFileName);//md5不匹配删除本地js文件
                     ifRenderFromServer = true;
-                    loadJsFromServer(mWXSDKInstance,jsFileName,jsonInitData);
+                    loadJsFromServer(mWXSDKInstance, jsFileName, jsonInitData);
                 }
-            }else {
+            } else {
                 ifRenderFromServer = true;
-                loadJsFromServer(mWXSDKInstance,jsFileName,jsonInitData);
+                loadJsFromServer(mWXSDKInstance, jsFileName, jsonInitData);
             }
-        }else {//本地文件不存在用服务器js
+        } else {//本地文件不存在用服务器js
             ifRenderFromServer = true;
-            loadJsFromServer(mWXSDKInstance,jsFileName,jsonInitData);
+            loadJsFromServer(mWXSDKInstance, jsFileName, jsonInitData);
         }
     }
 
     @OnPermissionDenied({Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE})
-    void onWriteReadDenied(){
+    void onWriteReadDenied() {
         ifRenderFromServer = true;
-        loadJsFromServer(mWXSDKInstance,jsFileName,jsonInitData);
+        loadJsFromServer(mWXSDKInstance, jsFileName, jsonInitData);
     }
 
     @OnShowRationale({Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE})
-    void showRationaleForWriteRead(PermissionRequest request){
+    void showRationaleForWriteRead(PermissionRequest request) {
         showHintDialog(new BaseFragment.DialogClickLinear() {
             @Override
             public void cancelClick() {
                 ifRenderFromServer = true;
-                loadJsFromServer(mWXSDKInstance,jsFileName,jsonInitData);
+                loadJsFromServer(mWXSDKInstance, jsFileName, jsonInitData);
             }
 
             @Override
             public void defineClick() {
                 Intent intent = new Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS);
-                startActivityForResult(intent,222);
+                startActivityForResult(intent, 222);
             }
         }, "读取手机文件被禁止", "请在手机“设置-应用程序权限管理-选择本App”允许存储", "以后再说", "打开", false);
     }
 
-    private void loadJsFromServer(WXSDKInstance mWXSDKInstance, String jsFileName, String jsonInitData){
+    private void loadJsFromServer(WXSDKInstance mWXSDKInstance, String jsFileName, String jsonInitData) {
         mWXSDKInstance.renderByUrl(mActivity.getPackageName(), AppConfig.JS_SERVER_DIR + jsFileName, null, jsonInitData, WXViewUtils.getScreenWidth(mActivity), WXViewUtils.getScreenHeight(mActivity) - DensityUtil.dip2px(mActivity, 56), WXRenderStrategy.APPEND_ASYNC);
     }
 
-    private void loadJsFromLocal(WXSDKInstance mWXSDKInstance, String jsFileName, String jsonInitData){
+    private void loadJsFromLocal(WXSDKInstance mWXSDKInstance, String jsFileName, String jsonInitData) {
         mWXSDKInstance.render(
                 mActivity.getPackageName(),
-                WXFileUtils.loadFileOrAsset(AppConfig.LOCAL_JS_DIR + File.separator + jsFileName,mActivity),
+                WXFileUtils.loadFileOrAsset(AppConfig.LOCAL_JS_DIR + File.separator + jsFileName, mActivity),
                 null,
                 jsonInitData,
                 WXViewUtils.getScreenWidth(mActivity),
@@ -348,11 +356,11 @@ public class BaseFragment extends Fragment implements IWXRenderListener {
                 WXRenderStrategy.APPEND_ASYNC);
     }
 
-    private JsFileConfig getLocalJsFileConfig(String jsFileName){
+    private JsFileConfig getLocalJsFileConfig(String jsFileName) {
         JsConfig jsConfig = (JsConfig) PrefUtil.make(getActivity(), PrefUtil.PREFERENCE_NAME).getObject(AppConfig.JS_CONFIG_OBJECT_KEY, JsConfig.class);
-        if(jsConfig != null){
+        if (jsConfig != null) {
             JsFileConfig[] jsFileConfigArray = jsConfig.getList();
-            if(jsFileConfigArray != null && jsFileConfigArray.length != 0) {
+            if (jsFileConfigArray != null && jsFileConfigArray.length != 0) {
                 for (JsFileConfig jsFileConfig : jsFileConfigArray) {
                     if (jsFileConfig.getFileName().equals(jsFileName)) {
                         return jsFileConfig;
@@ -366,14 +374,30 @@ public class BaseFragment extends Fragment implements IWXRenderListener {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        BaseFragmentPermissionsDispatcher.onRequestPermissionsResult(this,requestCode, grantResults);
+        BaseFragmentPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 222){
-            BaseFragmentPermissionsDispatcher.loadJsWithCheck(this,mWXSDKInstance,jsFileName,jsonInitData);
+        if (requestCode == 222) {
+            BaseFragmentPermissionsDispatcher.loadJsWithCheck(this, mWXSDKInstance, jsFileName, jsonInitData);
         }
+    }
+
+    private void asyncRenderJs(View view, String jsFileName, String jsonInitData, String viewName, IJsRenderListener iJsRenderListener) {
+        mLoadingAndRetryManager = LoadingAndRetryManager.generate(view, new OnLoadingAndRetryListener() {
+            @Override
+            public void setRetryEvent(View retryView) {
+                View view = retryView.findViewById(R.id.operate);
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        loadJs(mWXSDKInstance, jsFileName, jsonInitData);
+                    }
+                });
+            }
+        });
+        BaseFragmentPermissionsDispatcher.loadJsWithCheck(this, mWXSDKInstance, jsFileName, jsonInitData);
     }
 }
