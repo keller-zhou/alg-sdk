@@ -88,9 +88,9 @@ public class JsConfigHelper {
                                         }
                                     }
                                 }
-                                if(jsConfig != null){
-                                    JsConfigHelper.startDownloadJsService(context);
-                                }
+//                                if(jsConfig != null){
+//                                    JsConfigHelper.startDownloadJsService(context);
+//                                }
                             } catch (JSONException e) {//配置文件解析异常
 
                             }
